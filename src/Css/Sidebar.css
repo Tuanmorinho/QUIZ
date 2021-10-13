@@ -1,0 +1,82 @@
+/* Sidebar */
+.App_sidebarWrap {
+    flex-shrink: 0;
+}
+.Sidebar_wrapper {
+    position: fixed;
+    left: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 75px;
+}
+.Sidebar_list {
+    font-weight: 600;
+    font-size: 12px;
+
+    display: block;
+}
+.Sidebar_list li {
+    list-style-type: none;
+    border-radius: 16px;
+
+    width: 72px;
+    height: 72px;
+    padding: auto;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    opacity: 0.75;
+    transition: opacity 0.2s ease;
+}
+.Sidebar_list li:hover {
+    opacity: 1;
+    background:rgba(239, 239, 239, 0.65);
+}
+/* Choosed */
+li.active {
+    opacity: 1;
+    background: #F0F0F0;
+}
+.Sidebar_list a {
+    text-decoration: none;
+
+    margin-bottom: 4.5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+span.icon_home {
+    color: #11998E;
+}
+span.icon_exam {
+    color: #11998E;
+}
+span.icon_grade {
+    color: #FF7600;
+}
+span.icon_me {
+    color: #4B3869;
+}
+.Sidebar_menu {
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+
+    margin-top: 4.5px;
+}
+.home,
+.exam {
+    color: #11998E;
+}
+.grade {
+    color: #FF7600;
+}
+.me{
+    color: #4B3869;
+}
