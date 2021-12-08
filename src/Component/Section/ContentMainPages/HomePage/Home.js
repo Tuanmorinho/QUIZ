@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../../../Css/Home.css'
 import HomeContent from './HomeContent/HomeContent'
 import HomeHeader from './HomeHeader'
 

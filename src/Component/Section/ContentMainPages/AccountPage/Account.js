@@ -1,11 +1,11 @@
 import React from 'react'
 
-function HomeHeader() {
+function Account() {
     return (
         <div>
-            
+
         </div>
     )
 }
 
-export default HomeHeader
+export default Account

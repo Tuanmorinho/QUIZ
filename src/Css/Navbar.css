@@ -103,6 +103,12 @@ span.account_circle {
     margin-left: 57px;
 }
 
-.disable {
+.disable_for_StartPage {
+    display: none;
+}
+.disable_for_MainPage {
+    display: none;
+}
+.disable_for_TestingPage {
     display: none;
 }
