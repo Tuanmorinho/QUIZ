@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react';
 import '../Css/Navbar.css'
 import { NavbarLogo } from './Img'
 
@@ -11,21 +12,21 @@ function Navbar() {
                 <div>
                     <img src={NavbarLogo} alt='...' />
                 </div>
-                <h4 className="NavBar_logoHeading disable_for_TestingPage">Hệ thống thi trực tuyến</h4>
+                <h4 className="NavBar_logoHeading">Hệ thống thi trực tuyến</h4>
             </div>
             {/* Navbar_body */}
-            <div className="NavBar_body disable_for_TestingPage">
+            <div className="NavBar_body">
                 <div>
                     <div className="Search_wrapper">
                         <span className="material-icons icon-search"> search </span>
-                        <input className="Search_input" spellcheck="false" placeholder="Tìm kiếm bài thi" />
+                        <input className="Search_input" spellCheck="false" placeholder="Tìm kiếm bài thi" />
                     </div>
                 </div>
             </div>
             {/* NavBar_actions */}
-            <div className="NavBar_actions disable_for_TestingPage">
+            <div className="NavBar_actions">
                 <button className="loginButton">Đăng xuất</button>
-                <button className="registerButton">Đăng nhập</button>
+                <button className="registerButton disable_for_MainPage">Đăng nhập</button>
                 <span className="material-icons account_circle"> account_circle </span>
             </div>
         </div>

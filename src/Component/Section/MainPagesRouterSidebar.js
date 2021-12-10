@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { useLocation } from 'react-router'
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 import '../../Css/Section.css'
 import '../../Css/Sidebar.css'
@@ -15,24 +16,24 @@ const routes = [
     {
         path: '/',
         exact: true,
-        CSSclassName: 'activeHome',
-        component: () => <Home />
+        component: Home
     },
     {
         path: '/exam',
-        component: () => <Exam />
+        component: Exam
     },
     {
         path: '/grade',
-        component: () => <Grade />
+        component: Grade
     },
     {
         path: '/acount',
-        component: () => <Account />
+        component: Account
     }
 ]
 
 function MainPagesRouterSidebar() {
+
     //State chứa trạng thái css active của sidebar khi chọn home/exam/grade/account
     const [ClassNameActive, setClassNameActive] = useState({
         home: 'active',
@@ -40,6 +41,45 @@ function MainPagesRouterSidebar() {
         grade: '',
         account: ''
     });
+
+    let location = useLocation();
+
+    // Mỗi khi MainPagesRouterSidebar mounted sẽ kiểm tra xem url là gì để set thái trạng thái css active của sidebar
+    // MainPagesRouterSidebar mounted khi nhập url tay hoặc setState
+    useEffect(() => {
+        if (location.pathname === '/home') {
+            setClassNameActive({
+                home: 'active',
+                exam: '',
+                grade: '',
+                account: ''
+            })
+        }
+        if (location.pathname === '/exam') {
+            setClassNameActive({
+                home: '',
+                exam: 'active',
+                grade: '',
+                account: ''
+            })
+        }
+        if (location.pathname === '/grade') {
+            setClassNameActive({
+                home: '',
+                exam: '',
+                grade: 'active',
+                account: ''
+            })
+        }
+        if (location.pathname === '/account') {
+            setClassNameActive({
+                home: '',
+                exam: '',
+                grade: '',
+                account: 'active'
+            })
+        }
+    }, [location.pathname]);
 
     // Thay đổi state để thay trạng thái ccs active
     const ActiveHome = () => {
@@ -79,7 +119,7 @@ function MainPagesRouterSidebar() {
         <Router>
             <div className="App_withSidebar">
                 {/* SideBar */}
-                <div classNameName="App_sidebarWrap">
+                <div className="App_sidebarWrap">
                     <div className="Sidebar_wrapper">
                         <div className="Sidebar_list">
                             <li className={ClassNameActive.home}>
@@ -108,16 +148,21 @@ function MainPagesRouterSidebar() {
                             </li>
                         </div>
                     </div>
-                </div>\
+                </div>
 
 
                 {/* APP Content */}
                 <div className="App_withSidebarContent">
                     <section className="Section_content">
                         <Switch>
-                            {routes.forEach((route) => {
-                                <Route path={route.path} exact={route.exact} component={<route.component />} />
-                            })}
+                            {routes.map((route, index) => (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    exact={route.exact}
+                                    children={<route.component />}
+                                />
+                            ))}
                         </Switch>
                     </section>
                 </div>
