@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import '../../../Css/TestingPage.css'
 
-function ContentTestingPage({ question }) {
-
+function ContentTestingPage({ question, index }) {
     return (
         <div className="QuestionContent_wrapper">
             <div className="Question_wrapper">
                 <div className="Question">
-                    <h3>Câu {question.ordinal}:&ensp;<span>({question.typeQuestion})</span></h3>
+                    <h3>Câu {index}:&ensp;<span>({question.typeQuestion})</span></h3>
                     <br />
                     <label>{question.question}</label>
                 </div>

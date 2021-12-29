@@ -1,7 +1,5 @@
 const questions = [{
     idQuestion: 1,
-    idTest: 654321,
-    ordinal: 1,
     typeQuestion: 'Select one',
     question: 'Nếu không thiết lập thuộc tính truy cập cho thành phần của lớp thì thành phần đó sẽ có phạm vi truy cập gì?',
     answers: [
@@ -13,8 +11,6 @@ const questions = [{
 },
 {
     idQuestion: 2,
-    idTest: 654321,
-    ordinal: 2,
     typeQuestion: 'Select one',
     question: 'Biểu đồ Use case mô tả:',
     answers: [
@@ -26,8 +22,6 @@ const questions = [{
 },
 {
     idQuestion: 3,
-    idTest: 654321,
-    ordinal: 3,
     typeQuestion: 'Select one',
     question: 'Một thể hiện của một lớp generic là:',
     answers: [
@@ -39,8 +33,6 @@ const questions = [{
 },
 {
     idQuestion: 4,
-    idTest: 654321,
-    ordinal: 4,
     typeQuestion: 'Select one',
     question: 'Một lớp có thể định nghĩa tối đa bao nhiêu hàm thiết lập?',
     answers: [
@@ -52,8 +44,6 @@ const questions = [{
 },
 {
     idQuestion: 5,
-    idTest: 654321,
-    ordinal: 5,
     typeQuestion: 'Select one',
     question: 'Đâu là đặc điểm của hình mẫu Adapter:',
     answers: [
@@ -65,8 +55,6 @@ const questions = [{
 },
 {
     idQuestion: 6,
-    idTest: 654321,
-    ordinal: 6,
     typeQuestion: 'Select one',
     question: 'Trong sử dụng package, thao tác import  một package nghĩa là :',
     answers: [
@@ -78,8 +66,6 @@ const questions = [{
 },
 {
     idQuestion: 7,
-    idTest: 654321,
-    ordinal: 7,
     typeQuestion: 'Select one',
     question: 'Thuộc tính của một lớp là gì?',
     answers: [
@@ -91,8 +77,6 @@ const questions = [{
 },
 {
     idQuestion: 8,
-    idTest: 654321,
-    ordinal: 8,
     typeQuestion: 'Select one',
     question: 'Hình mẫu thiết kế Factory có mục đích chính là gì:',
     answers: [
@@ -104,8 +88,6 @@ const questions = [{
 },
 {
     idQuestion: 9,
-    idTest: 654321,
-    ordinal: 9,
     typeQuestion: 'Select one',
     question: 'Ý nào sai khi nói đến khả năng truy cập thành phần tĩnh?',
     answers: [
@@ -117,8 +99,6 @@ const questions = [{
 },
 {
     idQuestion: 10,
-    idTest: 654321,
-    ordinal: 10,
     typeQuestion: 'Select one',
     question: 'Biểu đồ Class mô tả:',
     answers: [
@@ -137,7 +117,7 @@ const tests = [
         nameTest: 'Bài KTGK OOP',
         class: '63IT4',
         teacher: 'Trần Văn Thọ',
-        status: 1,
+        status: 0,
         time: 180
     },
     {
@@ -145,7 +125,7 @@ const tests = [
         nameTest: 'Bài KTGK môn LTDM',
         class: '63IT2',
         teacher: 'Lê Đức Quang',
-        status: 2,
+        status: 1,
         time: 120
     },
     {

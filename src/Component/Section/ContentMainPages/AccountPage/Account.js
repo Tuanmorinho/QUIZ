@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom';
 
-function Account() {
+function Account({getLocation}) {
+
+    let location = useLocation();
+    useEffect(() => {
+        getLocation(location.pathname);
+    },[getLocation, location.pathname]);
+
     return (
         <div>
-
+            
         </div>
     )
 }

@@ -27,7 +27,7 @@ const routes = [
         component: Grade
     },
     {
-        path: '/acount',
+        path: '/account',
         component: Account
     }
 ]
@@ -41,13 +41,17 @@ function MainPagesRouterSidebar() {
         grade: '',
         account: ''
     });
+    const [pathname, setPathname] = useState('/');
 
-    let location = useLocation();
+    const getLocation = (path) => {
+        setPathname(path);
+    }
+    const location = useLocation();
 
     // Mỗi khi MainPagesRouterSidebar mounted sẽ kiểm tra xem url là gì để set thái trạng thái css active của sidebar
     // MainPagesRouterSidebar mounted khi nhập url tay hoặc setState
     useEffect(() => {
-        if (location.pathname === '/home') {
+        if (pathname === '/' || location.pathname === '/') {
             setClassNameActive({
                 home: 'active',
                 exam: '',
@@ -55,7 +59,7 @@ function MainPagesRouterSidebar() {
                 account: ''
             })
         }
-        if (location.pathname === '/exam') {
+        if (pathname === '/exam') {
             setClassNameActive({
                 home: '',
                 exam: 'active',
@@ -63,7 +67,7 @@ function MainPagesRouterSidebar() {
                 account: ''
             })
         }
-        if (location.pathname === '/grade') {
+        if (pathname === '/grade') {
             setClassNameActive({
                 home: '',
                 exam: '',
@@ -71,7 +75,7 @@ function MainPagesRouterSidebar() {
                 account: ''
             })
         }
-        if (location.pathname === '/account') {
+        if (pathname === '/account') {
             setClassNameActive({
                 home: '',
                 exam: '',
@@ -79,7 +83,7 @@ function MainPagesRouterSidebar() {
                 account: 'active'
             })
         }
-    }, [location.pathname]);
+    }, [pathname, location.pathname]);
 
     // Thay đổi state để thay trạng thái ccs active
     const ActiveHome = () => {
@@ -113,6 +117,15 @@ function MainPagesRouterSidebar() {
             grade: '',
             account: 'active'
         })
+    }
+
+    const Active = (value) => {
+        if (value === 0) {
+            ActiveExam();
+        }
+        if (value === 1) {
+            ActiveGrade();
+        }
     }
 
     return (
@@ -160,7 +173,7 @@ function MainPagesRouterSidebar() {
                                     key={index}
                                     path={route.path}
                                     exact={route.exact}
-                                    children={<route.component />}
+                                    children={<route.component route={Active} getLocation={getLocation} />}
                                 />
                             ))}
                         </Switch>

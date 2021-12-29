@@ -1,0 +1,210 @@
+/* CONTENT */
+.App_withSidebarContent {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.Section_content {
+    overflow-y: scroll;
+}
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track:hover{
+    background-color:rgba(0,0,0,.05);
+    box-shadow:inset 1px 0 0 rgba(0,0,0,.1)
+}
+::-webkit-scrollbar-thumb{
+    border: 1px;
+    background:rgba(0, 0, 0, .2);
+    box-shadow: inset 0 0 5px rgba(255,255,255,.1); 
+}
+::-webkit-scrollbar-thumb:window-inactive{
+    background: #fff;
+    border: 1px;
+}
+
+/* Body-student */
+.Home_wrapper-exam2 {
+    position: absolute;
+    left: 110px;
+    top: 95px;
+}
+.SectionList_wrapper2 {
+    width: 1775px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.SectionList_headingWrap2 {
+    margin-bottom: 26px;
+}
+.SectionList_heading2 {
+    margin-left: 24px;
+
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.SectionList_bodyWrap2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.Exam_examItem2 {
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 0px 0px 40px 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 18px;
+
+    width: 1775px;
+    height: 99px;
+    margin-bottom: 32px;
+}
+.green_retangle2 {
+    width: 5px;
+    height: 98px;
+    background: #11998E;
+}
+.examItem_wrapper2 {
+    width: 1770px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.item_label-red2 {
+    height: 57px;
+    width: 1020px;
+    margin-left: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.item_label-red2 label {
+    font-weight: normal;
+    font-size: 18px;
+    color: #000000;
+}
+.item_label-red2 span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #DF2E2E;
+}
+.item_label-red2 h1 {
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+}
+
+.item_infomation2 {
+    width: 486px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.item_infomation2 div {
+    margin-right: 47px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.item_infomation2 label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000000;
+
+    margin-top: 4px;
+    margin-left: 8px;
+}
+.item_infomation2 p {
+    font-weight: normal;
+    font-size: 14px;
+    color: #000000;
+
+    margin-top: 3.4px;
+    margin-left: 8px;
+}
+.item_infomation2 span {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000000;
+
+    margin-top: 4px;
+    margin-left: 8px;
+}
+a.icon_teacher2 {
+    color: #65D6CE;
+}
+a.icon_timer2 {
+    color: #FA9579;
+}
+
+.examItem_wrapper2 button {
+    background: #1AAD8A;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: #FFFFFF;
+
+    margin-right: 75px;
+    width: 156px;
+    height: 39px;
+}
+
+.disable_countdown2 {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0px 0px 40px 0px;
+
+    width: 1775px;
+    height: 99px;
+
+    position: absolute;
+    z-index: 4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Bg_countdown-white2 {
+    background: #FFFFFF;
+    border-radius: 20px 0px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+    width: 320px;
+    height: 70px;
+}
+.Timer_wrapper2 {
+    height: 70px;
+    margin-left: 27px;
+    margin-right: 27px;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+}
+.Timer_wrapper2 h1 {
+    font-weight: normal;
+    font-size: 24px;
+}
+.Timer_wrapper2 label {
+    font-weight: 500;
+    font-size: 12px;
+}
+.Timer2 {
+    color: #000000;
+    width: 66.5px;
+    margin-top: 9px;
+    margin-bottom: 9px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
