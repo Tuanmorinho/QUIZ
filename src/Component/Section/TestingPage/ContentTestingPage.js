@@ -1,34 +1,126 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../Css/TestingPage.css'
 
-function ContentTestingPage({ question, index }) {
-    return (
-        <div className="QuestionContent_wrapper">
-            <div className="Question_wrapper">
-                <div className="Question">
-                    <h3>Câu {index}:&ensp;<span>({question.typeQuestion})</span></h3>
-                    <br />
-                    <label>{question.question}</label>
+function ContentTestingPage({ question, index, checked }) {
+
+    const [type, setType] = useState("radio");
+    const [selectedCheckBox, setSelectedCheckBox] = useState([]);
+    const [selectedRadio, setSelectedRadio] = useState([{
+        idQuestion: '',
+        idAnswer: ''
+    }]);
+    //console.log("checkbox", selectedCheckBox);
+    console.log("radio", selectedRadio);
+
+
+    useEffect(() => {
+        const typeQuestion = () => {
+            if (question.typeQuestion === 1) {
+                setType("checkbox");
+            } else {
+                setType("radio");
+                setSelectedRadio([{
+                    idQuestion: question.idQuestion,
+                    idAnswer: ''
+                }]);
+            }
+        }
+
+        typeQuestion();
+    }, [question.typeQuestion]);
+
+    const handleChecked = (idAnswerSelected) => {
+        if (type === "checkbox") {
+            setSelectedCheckBox(prev => {
+                const isSelected = selectedCheckBox.includes(idAnswerSelected);
+                if (isSelected) {
+                    return selectedCheckBox.filter(item => item !== idAnswerSelected);
+                } else {
+                    return [...prev, idAnswerSelected]
+                }
+            });
+        }
+
+        if (type === "radio") {
+            for (let i = 0; i < question.answers.length; i++) {
+                question.answers[i].your_choice = false;
+                if (question.answers[i].idAnswer === idAnswerSelected) {
+                    question.answers[i].your_choice = true;
+                    setSelectedRadio(prev => [...prev, {
+                        idQuestion: question.idQuestion,
+                        idAnswer: idAnswerSelected
+                    }]);
+
+                }
+            }
+        }
+    }
+
+    if (type === "radio") {
+        return (
+            <div className="QuestionContent_wrapper">
+                <div className="Question_wrapper">
+                    <div className="Question">
+                        <h3>Câu {index}:&ensp;<span>({question.typeQuestionContent})</span></h3>
+                        <br />
+                        <label>{question.question}</label>
+                    </div>
+                    <div className="Answer">
+                        <div className="answer_items">
+                            {
+                                question.answers.map((answer, index) => (
+                                    <div key={index}>
+                                        <input type="radio"
+                                            checked={answer.your_choice === true}
+                                            onChange={() => { handleChecked(answer.idAnswer) }}
+                                        />&emsp;<label>{answer.answer}</label>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div className="Answer">
-                    <div className="answer_items">
-                        {
-                            question.answers.map((answer, index) => (
-                                <div key={index}>
-                                    <input type="radio" />&emsp;<label>{answer.answer}</label>
-                                </div>
-                            ))
-                        }
+                <div className="Image_wrapper">
+                    <div className="image_place">
+                        <span className="material-icons-outlined"> image </span>
                     </div>
                 </div>
             </div>
-            <div className="Image_wrapper">
-                <div className="image_place">
-                    <span className="material-icons-outlined"> image </span>
+        )
+    }
+    
+    if (type === "checkbox") {
+        return (
+            <div className="QuestionContent_wrapper">
+                <div className="Question_wrapper">
+                    <div className="Question">
+                        <h3>Câu {index}:&ensp;<span>({question.typeQuestionContent})</span></h3>
+                        <br />
+                        <label>{question.question}</label>
+                    </div>
+                    <div className="Answer">
+                        <div className="answer_items">
+                            {
+                                question.answers.map((answer, index) => (
+                                    <div key={index}>
+                                        <input type="checkbox"
+                                            checked={selectedCheckBox.includes(answer.idAnswer)}
+                                            onChange={() => { handleChecked(answer.idAnswer) }}
+                                        />&emsp;<label>{answer.answer}</label>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div className="Image_wrapper">
+                    <div className="image_place">
+                        <span className="material-icons-outlined"> image </span>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default ContentTestingPage

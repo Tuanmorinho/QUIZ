@@ -1,13 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../Css/TestingPage.css'
 
-function SideBarTestingPage({ listQuestions, getIndex }) {
+function SideBarTestingPage({ listQuestions, getIndex, active }) {
 
-    let [choose, setChoose] = useState(
-        'ordinalNumQuestion_square status_unchoose'
-    );
+    let [choose, setChoose] = useState('status_select');
+
+    useEffect(() => {
+        const activeCSS = () => {
+            if (active === 2) {
+                setChoose('status_choosed');
+            } else if (active === 1) {
+                setChoose('status_select');
+            } else {
+                setChoose('status_unchoose');
+            }
+        };
+
+        activeCSS();
+    }, [active])
 
     let [choosedCount, setChoosedCount] = useState(0);
+
+    const handleOnClickOrdinalNumQuestion = (idQuestionSelected) => {
+        getIndex(idQuestionSelected);
+    }
+
+    const handleSubmit = () => {
+        // submit bài thi ở đây
+    }
 
     return (
         <div className="Sidebar_wrapperTest">
@@ -27,12 +47,10 @@ function SideBarTestingPage({ listQuestions, getIndex }) {
                 <div className="Testing_time_actions">
                     <div className="Time_Actions_wrapper">
                         <div className="time_wrapper">
-                            <h4>Thời
-                                gian:&nbsp;<span>02</span>&nbsp;giờ&nbsp;<span>40</span>&nbsp;phút&nbsp;<span>12</span>&nbsp;giây
-                            </h4>
+                            <h4>Thời gian:&nbsp;<span>02</span>&nbsp;giờ&nbsp;<span>40</span>&nbsp;phút&nbsp;<span>12</span>&nbsp;giây</h4>
                         </div>
                         <div className="actions_wrapper">
-                            <button className="status_unfinish">Nộp bài</button>
+                            <button className="status_unfinish" onClick={handleSubmit}>Nộp bài</button>
                         </div>
                     </div>
                 </div>
@@ -43,7 +61,11 @@ function SideBarTestingPage({ listQuestions, getIndex }) {
                         <div className="ordinalNumQuestion_wrapper">
                             {
                                 listQuestions.map((question, index) => (
-                                    <button key={index} className={choose} onClick={() => {getIndex(question.idQuestion)}}>{question.ordinal}</button>
+                                    <button
+                                        key={index}
+                                        className={`ordinalNumQuestion_square ${choose}`}
+                                        onClick={() => {handleOnClickOrdinalNumQuestion(question.idQuestion)}}
+                                    >{index + 1}</button>
                                 ))
                             }
                         </div>

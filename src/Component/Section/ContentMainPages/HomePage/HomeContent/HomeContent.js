@@ -7,19 +7,21 @@ import { tests } from '../../../../MockupData';
 
 function HomeContent({ route }) {
 
-    const [test, setTest] = useState([]);
+    const [test, setTest] = useState(tests);
     const [grade, setGrade] = useState([]);
 
     useEffect(() => {
-        for (let i = 0; i < tests.length; i++) {
-            if (tests[i].status === 0 || tests[i].status === 1) {
-                setTest([...test, tests[i]]);
-                console.log(i);
-                console.log(test);
-            } else {
-                setGrade(tests[i]);
-            }
+        const getData = () => {
+            for (let i = 0; i < tests.length; i++) {
+                if (tests[i].status === 0 || tests[i].status === 1) {
+                    setTest([tests[i]]);
+                } else {
+                    setGrade([tests[i]]);
+                }
+            }   
         }
+
+        getData();
     }, [])
 
     return (

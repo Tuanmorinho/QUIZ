@@ -6,6 +6,10 @@ const ExamApi = {
         const url = `/get/exam/${id}`;
         return axiosClient.get(url);
     },
+    
+    // Nộp bài
+
+    // Trả về điểm thi
 }
 
 export default ExamApi;
