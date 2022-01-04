@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../../../Css/TestingPage.css'
 
-function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, submit }) {
+function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexCss, submit }) {
  
     const [submitActive, setSubmitActive] = useState('unfinish');
 
-    console.log(idCss);
+    console.log(indexCss);
 
     useEffect(() => {
         const finsishSubmit = () => {
@@ -63,7 +63,7 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, submit
                                 listQuestions.map((question, index) => (
                                     <button
                                         key={index}
-                                        className= {`ordinalNumQuestion_square ${(idCss.includes(question.idQuestion)) ? "status_choosed" : "status_unchoose"}`}
+                                        className= {`ordinalNumQuestion_square ${(idCss.includes(question.idQuestion)) ? "status_choosed" : "status_unchoose"} ${(index === indexCss - 1) ? "status_select": ""}`}
                                         onClick={() => { handleOnClickOrdinalNumQuestion(question.idQuestion) }}
                                     >{index + 1}</button>
                                 ))

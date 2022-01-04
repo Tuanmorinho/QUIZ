@@ -57,7 +57,7 @@ function TestingPage() {
     return (
         <div className="App_withSidebar">
             <div className="App_sidebarWrap">
-                <SideBarTestingPage listQuestions={tests} getIndex={getIDListQuestion} countCheck={choosedCount} idCss={idStore.current} submit={submit} />
+                <SideBarTestingPage listQuestions={tests} getIndex={getIDListQuestion} countCheck={choosedCount} idCss={idStore.current} indexCss={index} submit={submit} />
                 <div className="App_withSidebarContent">
                     <section className="Section_content">
                         <ContentTestingPage question={test} index={index} checked={getChecked} />
