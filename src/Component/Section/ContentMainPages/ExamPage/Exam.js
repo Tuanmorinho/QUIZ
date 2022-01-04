@@ -11,12 +11,12 @@ function Exam({ getLocation }) {
     }, [getLocation, location.pathname]);
 
     return (
-        <div class="Home_wrapper-exam2">
-            <div class="SectionList_wrapper2">
-                <div class="SectionList_headingWrap2">
-                    <h2 class="SectionList_heading2">Bài thi sắp diễn ra</h2>
+        <div className="Home_wrapper-exam2">
+            <div className="SectionList_wrapper2">
+                <div className="SectionList_headingWrap2">
+                    <h2 className="SectionList_heading2">Bài thi sắp diễn ra</h2>
                 </div>
-                <div class="SectionList_bodyWrap2">
+                <div className="SectionList_bodyWrap2">
                     <ExamList />
                 </div>
             </div>

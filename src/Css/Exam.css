@@ -131,7 +131,7 @@
     margin-top: 3.4px;
     margin-left: 8px;
 }
-.item_infomation2 span {
+.item_infomation2 h5 {
     font-weight: bold;
     font-size: 14px;
     color: #000000;
@@ -139,10 +139,10 @@
     margin-top: 4px;
     margin-left: 8px;
 }
-a.icon_teacher2 {
+span.icon_teacher2 {
     color: #65D6CE;
 }
-a.icon_timer2 {
+span.icon_timer2 {
     color: #FA9579;
 }
 

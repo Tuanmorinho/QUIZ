@@ -7,7 +7,7 @@ function ExamListHChild({testContent}) {
         if(testContent.status === 0) {
             setDisable('countdown');
         }
-    },[])
+    },[testContent.status])
 
     return (
         <section className="Home_examItem">
@@ -18,11 +18,11 @@ function ExamListHChild({testContent}) {
                 </div>
                 <div className="item_infomation">
                     <div>
-                        <a className="material-icons icon_teacher"> account_box </a>
-                        <p>Giảng viên:<span>{testContent.teacher}</span></p>
+                        <span className="material-icons icon_teacher"> account_box </span>
+                        <p>Giảng viên:</p><h5>{testContent.teacher}</h5>
                     </div>
                     <div>
-                        <a className="material-icons icon_timer"> alarm </a>
+                        <span className="material-icons icon_timer"> alarm </span>
                         <label className="font_weight-bold">{testContent.time}&nbsp;phút</label>
                     </div>
                 </div>

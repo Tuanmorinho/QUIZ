@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import '../../../Css/TestingPage.css'
 
-function SideBarTestingPage({ listQuestions, getIndex, active }) {
+function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, submit }) {
+ 
+    const [submitActive, setSubmitActive] = useState('unfinish');
 
-    let [choose, setChoose] = useState('status_select');
+    console.log(idCss);
 
     useEffect(() => {
-        const activeCSS = () => {
-            if (active === 2) {
-                setChoose('status_choosed');
-            } else if (active === 1) {
-                setChoose('status_select');
+        const finsishSubmit = () => {
+            if (listQuestions.length === 0) {
+                setSubmitActive('unfinish');
+            } else if (countCheck === listQuestions.length) {
+                setSubmitActive('finish');
             } else {
-                setChoose('status_unchoose');
+                setSubmitActive('unfinish');
             }
-        };
+        }
 
-        activeCSS();
-    }, [active])
+        finsishSubmit();
+    },[countCheck]);
 
-    let [choosedCount, setChoosedCount] = useState(0);
 
     const handleOnClickOrdinalNumQuestion = (idQuestionSelected) => {
         getIndex(idQuestionSelected);
     }
 
     const handleSubmit = () => {
-        // submit bài thi ở đây
+        submit();
     }
 
     return (
         <div className="Sidebar_wrapperTest">
             <div className="Sidebar_ListTest">
-
                 <div className="Testing_infor">
                     <div className="Infor_wrapper">
                         <label>Mã bài thi:&ensp;<span className="IDTest">654321</span></label>
@@ -50,7 +50,7 @@ function SideBarTestingPage({ listQuestions, getIndex, active }) {
                             <h4>Thời gian:&nbsp;<span>02</span>&nbsp;giờ&nbsp;<span>40</span>&nbsp;phút&nbsp;<span>12</span>&nbsp;giây</h4>
                         </div>
                         <div className="actions_wrapper">
-                            <button className="status_unfinish" onClick={handleSubmit}>Nộp bài</button>
+                            <button className={`status_${submitActive}`} onClick={handleSubmit}>Nộp bài</button>
                         </div>
                     </div>
                 </div>
@@ -63,8 +63,8 @@ function SideBarTestingPage({ listQuestions, getIndex, active }) {
                                 listQuestions.map((question, index) => (
                                     <button
                                         key={index}
-                                        className={`ordinalNumQuestion_square ${choose}`}
-                                        onClick={() => {handleOnClickOrdinalNumQuestion(question.idQuestion)}}
+                                        className= {`ordinalNumQuestion_square ${(idCss.includes(question.idQuestion)) ? "status_choosed" : "status_unchoose"}`}
+                                        onClick={() => { handleOnClickOrdinalNumQuestion(question.idQuestion) }}
                                     >{index + 1}</button>
                                 ))
                             }
@@ -75,7 +75,7 @@ function SideBarTestingPage({ listQuestions, getIndex, active }) {
                 <div className="Testing_countQuestion">
                     <div className="countQuestion_wrapper">
                         <h4>Tổng số câu:&ensp;<span className="sumQuestion">{listQuestions.length}</span></h4>
-                        <h4>Số câu đã chọn:&ensp;<span className="choosedQuestion">{choosedCount}</span></h4>
+                        <h4>Số câu đã chọn:&ensp;<span className="choosedQuestion">{countCheck}</span></h4>
                     </div>
                 </div>
             </div>

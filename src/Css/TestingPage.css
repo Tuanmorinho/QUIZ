@@ -200,8 +200,7 @@ span.TeacherTest {
     background: #E5E5E5;
 }
 .status_select {
-    color: #FFFFFF;
-    background: #FF7600;
+    border: 2px solid #FF7600;
 }  
 
 .Testing_countQuestion {

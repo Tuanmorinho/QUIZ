@@ -9,9 +9,6 @@ function ContentTestingPage({ question, index, checked }) {
         idQuestion: '',
         idAnswer: ''
     }]);
-    //console.log("checkbox", selectedCheckBox);
-    console.log("radio", selectedRadio);
-
 
     useEffect(() => {
         const typeQuestion = () => {
@@ -19,10 +16,6 @@ function ContentTestingPage({ question, index, checked }) {
                 setType("checkbox");
             } else {
                 setType("radio");
-                setSelectedRadio([{
-                    idQuestion: question.idQuestion,
-                    idAnswer: ''
-                }]);
             }
         }
 
@@ -30,6 +23,16 @@ function ContentTestingPage({ question, index, checked }) {
     }, [question.typeQuestion]);
 
     const handleChecked = (idAnswerSelected) => {
+        for (let i = 0; i < question.answers.length; i++) {
+            if (question.answers[i].idAnswer === idAnswerSelected && question.answers[i].your_choice === false) {
+                question.answers[i].your_choice = true;
+                break;
+            }
+            if (question.answers[i].idAnswer === idAnswerSelected && question.answers[i].your_choice === true) {
+                question.answers[i].your_choice = false;
+                break;
+            }
+        }
         if (type === "checkbox") {
             setSelectedCheckBox(prev => {
                 const isSelected = selectedCheckBox.includes(idAnswerSelected);
@@ -50,10 +53,11 @@ function ContentTestingPage({ question, index, checked }) {
                         idQuestion: question.idQuestion,
                         idAnswer: idAnswerSelected
                     }]);
-
                 }
             }
         }
+
+        checked(question.idQuestion, question.answers);
     }
 
     if (type === "radio") {

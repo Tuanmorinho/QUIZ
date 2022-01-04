@@ -10,8 +10,8 @@ function GradeListHChild() {
                 </div>
                 <div className="item_infomation itemGrade">
                     <div>
-                        <a className="material-icons icon_teacher"> account_box </a>
-                        <p>Giảng viên:<span>Lê Đức Quang</span></p>
+                        <span className="material-icons icon_teacher"> account_box </span>
+                        <p>Giảng viên:</p><h5>Lê Đức Quang</h5>
                     </div>
                 </div>
                 <div className="item_bottom orangeBottom">
