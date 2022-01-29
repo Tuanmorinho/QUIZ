@@ -55,7 +55,10 @@ span.icon_home {
     color: #11998E;
 }
 span.icon_exam {
-    color: #11998E;
+    color: #2D4263;
+}
+span.icon_join {
+    color: #81913c;
 }
 span.icon_grade {
     color: #FF7600;
@@ -65,17 +68,22 @@ span.icon_me {
 }
 .Sidebar_menu {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
 
     margin-top: 4.5px;
 }
-.home,
-.exam {
+.home {
     color: #11998E;
+}
+.exam {
+    color: #2D4263;
 }
 .grade {
     color: #FF7600;
+}
+.join {
+    color: #81913c;
 }
 .me{
     color: #4B3869;

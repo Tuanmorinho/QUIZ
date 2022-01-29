@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import '../../../Css/TestingPage.css'
 
 function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexCss, submit }) {
- 
-    const [submitActive, setSubmitActive] = useState('unfinish');
 
-    console.log(indexCss);
+    const [submitActive, setSubmitActive] = useState('unfinish');
 
     useEffect(() => {
         const finsishSubmit = () => {
@@ -19,7 +16,7 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
         }
 
         finsishSubmit();
-    },[countCheck]);
+    }, [countCheck, listQuestions.length]);
 
 
     const handleOnClickOrdinalNumQuestion = (idQuestionSelected) => {
@@ -27,7 +24,9 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
     }
 
     const handleSubmit = () => {
-        submit();
+        if (submitActive === 'finish') {
+            submit();
+        }
     }
 
     return (
@@ -63,7 +62,7 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
                                 listQuestions.map((question, index) => (
                                     <button
                                         key={index}
-                                        className= {`ordinalNumQuestion_square ${(idCss.includes(question.idQuestion)) ? "status_choosed" : "status_unchoose"} ${(index === indexCss - 1) ? "status_select": ""}`}
+                                        className={`ordinalNumQuestion_square ${(idCss.includes(question.idQuestion)) ? "status_choosed" : "status_unchoose"} ${(index === indexCss - 1) ? "status_select" : ""}`}
                                         onClick={() => { handleOnClickOrdinalNumQuestion(question.idQuestion) }}
                                     >{index + 1}</button>
                                 ))
@@ -79,7 +78,7 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

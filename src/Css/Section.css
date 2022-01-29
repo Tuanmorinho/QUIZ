@@ -1,7 +1,6 @@
 /* Section App */
 .App_withSidebar {
     min-height: 100vh;
-
     display: flex;
 }
 /* CONTENT */

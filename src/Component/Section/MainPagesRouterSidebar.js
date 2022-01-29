@@ -8,14 +8,11 @@ import Home from './ContentMainPages/HomePage/Home'
 import Exam from './ContentMainPages/ExamPage/Exam'
 import Grade from './ContentMainPages/GradePage/Grade'
 import Account from './ContentMainPages/AccountPage/Account'
-
-// StartPage dành cho phần đăng nhập sau
-// import StartPage from '../StartPage/StartPage'
+import Join from './ContentMainPages/JoinPage/Join'
 
 const routes = [
     {
-        path: '/',
-        exact: true,
+        path: '/home',
         component: Home
     },
     {
@@ -25,6 +22,10 @@ const routes = [
     {
         path: '/grade',
         component: Grade
+    },
+    {
+        path: '/join',
+        component: Join
     },
     {
         path: '/account',
@@ -39,6 +40,7 @@ function MainPagesRouterSidebar() {
         home: 'active',
         exam: '',
         grade: '',
+        join: '',
         account: ''
     });
     const [pathname, setPathname] = useState('/');
@@ -51,11 +53,12 @@ function MainPagesRouterSidebar() {
     // Mỗi khi MainPagesRouterSidebar mounted sẽ kiểm tra xem url là gì để set thái trạng thái css active của sidebar
     // MainPagesRouterSidebar mounted khi nhập url tay hoặc setState
     useEffect(() => {
-        if (pathname === '/' || location.pathname === '/') {
+        if (pathname === '/home' || location.pathname === '/home') {
             setClassNameActive({
                 home: 'active',
                 exam: '',
                 grade: '',
+                join: '',
                 account: ''
             })
         }
@@ -64,6 +67,7 @@ function MainPagesRouterSidebar() {
                 home: '',
                 exam: 'active',
                 grade: '',
+                join: '',
                 account: ''
             })
         }
@@ -72,6 +76,16 @@ function MainPagesRouterSidebar() {
                 home: '',
                 exam: '',
                 grade: 'active',
+                join: '',
+                account: ''
+            })
+        }
+        if (pathname === '/join') {
+            setClassNameActive({
+                home: '',
+                exam: '',
+                grade: '',
+                join: 'active',
                 account: ''
             })
         }
@@ -80,6 +94,7 @@ function MainPagesRouterSidebar() {
                 home: '',
                 exam: '',
                 grade: '',
+                join: '',
                 account: 'active'
             })
         }
@@ -91,6 +106,7 @@ function MainPagesRouterSidebar() {
             home: 'active',
             exam: '',
             grade: '',
+            join: '',
             account: ''
         })
     }
@@ -99,6 +115,7 @@ function MainPagesRouterSidebar() {
             home: '',
             exam: 'active',
             grade: '',
+            join: '',
             account: ''
         })
     }
@@ -107,6 +124,16 @@ function MainPagesRouterSidebar() {
             home: '',
             exam: '',
             grade: 'active',
+            join: '',
+            account: ''
+        })
+    }
+    const ActiveJoin = () => {
+        setClassNameActive({
+            home: '',
+            exam: '',
+            grade: '',
+            join: 'active',
             account: ''
         })
     }
@@ -115,6 +142,7 @@ function MainPagesRouterSidebar() {
             home: '',
             exam: '',
             grade: '',
+            join: '',
             account: 'active'
         })
     }
@@ -136,7 +164,7 @@ function MainPagesRouterSidebar() {
                     <div className="Sidebar_wrapper">
                         <div className="Sidebar_list">
                             <li className={ClassNameActive.home}>
-                                <Link to='/' onClick={ActiveHome}>
+                                <Link to='/home' onClick={ActiveHome}>
                                     <span className="material-icons icon_home"> account_balance </span>
                                     <span className="Sidebar_menu home">Home</span>
                                 </Link>
@@ -153,10 +181,16 @@ function MainPagesRouterSidebar() {
                                     <span className="Sidebar_menu grade">Grade</span>
                                 </Link>
                             </li>
+                            <li className={ClassNameActive.join}>
+                                <Link to='/join' onClick={ActiveJoin}>
+                                    <span className="material-icons icon_join"> join_inner </span>
+                                    <span className="Sidebar_menu join">Join</span>
+                                </Link>
+                            </li>
                             <li className={ClassNameActive.account}>
                                 <Link to='/account' onClick={ActiveAccount}>
                                     <span className="material-icons icon_me"> account_circle </span>
-                                    <span className="Sidebar_menu me">Me</span>
+                                    <span className="Sidebar_menu me">Account</span>
                                 </Link>
                             </li>
                         </div>
@@ -171,8 +205,7 @@ function MainPagesRouterSidebar() {
                             {routes.map((route, index) => (
                                 <Route
                                     key={index}
-                                    path={route.path}
-                                    exact={route.exact}
+                                    exact path={route.path}
                                     children={<route.component route={Active} getLocation={getLocation} />}
                                 />
                             ))}

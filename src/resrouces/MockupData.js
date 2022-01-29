@@ -4,10 +4,10 @@ const questions = [{
     typeQuestionContent: 'Chọn một hoặc nhiều đáp án',
     question: 'Nếu không thiết lập thuộc tính truy cập cho thành phần của lớp thì thành phần đó sẽ có phạm vi truy cập gì?',
     answers: [
-        { idAnswer: 1, answer: 'Bên trong lớp', your_choice: false},
-        { idAnswer: 2, answer: 'Không ý nào đúng', your_choice: false},
-        { idAnswer: 3, answer: 'Bên ngoài gói', your_choice: false},
-        { idAnswer: 4, answer: 'Bên trong gói', your_choice: false}
+        { idAnswer: 1, answer: 'Bên trong lớp', your_choice: false },
+        { idAnswer: 2, answer: 'Không ý nào đúng', your_choice: false },
+        { idAnswer: 3, answer: 'Bên ngoài gói', your_choice: false },
+        { idAnswer: 4, answer: 'Bên trong gói', your_choice: false }
     ]
 },
 {
@@ -124,14 +124,18 @@ const questions = [{
 const tests = [
     {
         idTest: 654321,
+        isActived: true,
         nameTest: 'Bài KTGK OOP',
         class: '63IT4',
         teacher: 'Trần Văn Thọ',
         status: 0,
-        time: 180
+        time: 180,
+        // start_time: '2022-24-01T15:00.0007Z',
+        // end_time: '2021-08-29T:35:21.057Z',
     },
     {
         idTest: 123456,
+        isActived: true,
         nameTest: 'Bài KTGK môn LTDM',
         class: '63IT2',
         teacher: 'Lê Đức Quang',
@@ -140,6 +144,7 @@ const tests = [
     },
     {
         idTest: 171200,
+        isActived: true,
         nameTest: 'Bài TH3 môn LTDM',
         class: '63IT2',
         teacher: 'Lê Đức Quang',

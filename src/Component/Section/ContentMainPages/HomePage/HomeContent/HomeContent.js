@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ExamListH from './ExamListHome/ExamListH'
 import GradeListH from './GradeListHome/GradeListH'
 
-import { tests } from '../../../../MockupData';
+import { tests } from '../../../../../resrouces/MockupData';
 
 function HomeContent({ route }) {
 

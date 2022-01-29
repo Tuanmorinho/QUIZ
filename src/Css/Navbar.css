@@ -57,6 +57,8 @@
     justify-content: center;
     align-items: center;
 
+    width: 480px;
+
     padding: 0 16px;
 }
 .Search_wrapper input {
@@ -66,14 +68,32 @@
     border: none;
     padding: 0 10px;
 
-    width: 352px;
-    height: 38px;
+    width: 480px;
+    height: 39px;
     padding-left: 10px;
     padding-right: 10px;
+
+    caret-color: #DA1212
 }
+.border-red {
+    border: 1px solid #DA1212;
+}
+
 span.icon-search {
     color: #999999;
 }
+span.close-btn {
+    display: none;
+    font-size: 16px;
+    font-weight: 800;
+    color: #999999;
+    cursor: pointer;
+}
+span.display-btn {
+    display: flex;
+    margin-left: 5px;
+}
+
 /* NavBar_actions */
 .NavBar_actions {
     display: flex;
@@ -95,20 +115,15 @@ span.icon-search {
     width: 132px;
     height: 39px;
     padding: auto;
+
+    cursor: pointer;
+}
+.NavBar_actions button:hover {
+    opacity: 0.8;
 }
 span.account_circle {
     color: #1AAD8A;
     font-size: 48px;
     
     margin-left: 57px;
-}
-
-.disable_for_StartPage {
-    display: none;
-}
-.disable_for_MainPage {
-    display: none;
-}
-.disable_for_TestingPage {
-    display: none;
 }

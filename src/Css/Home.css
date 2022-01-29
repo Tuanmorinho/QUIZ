@@ -34,18 +34,21 @@
 /* Header-student */
 .Home_header-student {
     position: absolute;
+    width: 1785px;
     left: 110px;
+    right: 0px;
     top: 76px;
 }
 .Header_wrapper-student {
     width: 1785px;
-    height: 236px;
+    height: 225px;
+    right: 0px;
 }
 .BackgroundImg-student {
     border-radius: 40px 0px;
 
     width: 1785px;
-    height: 236px;
+    height: 225px;
 
     opacity: 0.8;
 
@@ -57,9 +60,9 @@
 
     position: absolute;
     width: 1738px;
-    height: 204px;
+    height: 195px;
     left: 26px;
-    top: 16px;
+    top: 15px;
 
     display: flex;
     align-items: center;
@@ -99,10 +102,11 @@
 /* Body-student */
 .Home_wrapper-student {
     left: 110px;
+    right: 0px;
     top: 320px;
 
     width: 1785px;;
-    height: 600px;
+    height: 585px;
 
     position: absolute;
     display: flex;
@@ -141,7 +145,7 @@
 .SectionList_bodyWrap {
     height: 200px;
 
-    margin-top: 25px;
+    margin-top: 20px;
 
     display: flex;
     align-items: stretch;

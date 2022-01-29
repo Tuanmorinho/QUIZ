@@ -1,0 +1,107 @@
+.auth-form {
+    background: url('../assets/BackgroundImg.png');
+    background-size: cover;
+
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form_broad {
+    background: white;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    
+    border-radius: 50px;
+    text-align: center;
+
+    width: 719px;
+    height: 719px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.auth-form_header {
+    margin-top: 68px;
+}
+.auth-form_header img {
+    width: 64px;
+    height: 64px;
+
+    object-fit: cover;
+}
+
+
+.auth-form_heading {
+    font-weight: bold;
+    font-size: 26px;
+    margin-top: 40px;
+}
+.auth-form_aside {
+    font-size: 28px;
+    margin-top: 70px;
+}
+.auth-form_policy-link {
+    font-weight: 700;
+    color: rgb(4 170 109);
+    text-decoration: none;
+    
+}
+
+.auth-form_text {
+    font-size: 55px;
+    margin-top: 40px;
+    color: #FF7600;
+
+}
+.auth-form_policy-text {
+    font-weight: 700;
+    
+    text-decoration: none;
+    
+}
+.auth-form_number {
+    font-size: 35px;
+    
+    color: #FF7600;
+    margin-top: 20px;
+   
+}
+.auth-form_policy-number {
+    font-style: italic;
+    font-weight: 500;
+    
+    text-decoration: none;
+    
+}
+
+.form-submit {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    background: linear-gradient(270deg, rgba(26, 173, 138, 0.7) 0%, #38EF7D 103.14%);
+
+    outline: none;
+    border: none;    
+    border-radius: 50px;
+
+    width: 338px;
+    height: 40px;
+
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    margin-top: 100px;
+}
+.form-submit:hover {
+    opacity: 0.8;
+}

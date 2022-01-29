@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../../../../Css/Home.css'
-import { BackgroundImg, LogoHUCE } from '../../../Img'
+import { BackgroundImg, LogoHUCE } from '../../../../resrouces/Img'
 
-import { myAccount } from '../../../MockupData'
+import { myAccount } from '../../../../resrouces/MockupData'
 
 function HomeHeader() {
     const [account, setAccount] = useState([]);
-    console.log(account);
 
     useEffect(() => {
         setAccount(myAccount);
@@ -14,7 +13,7 @@ function HomeHeader() {
 
     return (
         <div className="Home_header-student">
-            <div className="Header_wrapper">
+            <div className="Header_wrapper-student">
                 <img className="BackgroundImg-student" src={BackgroundImg} alt='QuangTuan' />
                 <div className="White_broad-student">
                     <img src={LogoHUCE} alt='LogoHUCE' />

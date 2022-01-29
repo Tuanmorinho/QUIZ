@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import '../../../Css/TestingPage.css'
 
 function ContentTestingPage({ question, index, checked }) {
 

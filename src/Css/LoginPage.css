@@ -1,0 +1,112 @@
+.auth-form2 {
+    background: url('../assets/BackgroundImg.png');
+    background-size: cover;
+
+    top: 0;
+    width: 1920px;
+    height: 929px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form-broad2 {
+    width: 719px;
+    height: 719px;
+    background: white;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    border-radius: 50px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-form-header2 {
+    margin-top: 90px;
+}
+.auth-form-header2 img {
+    width: 64px;
+    height: 64px;
+
+    object-fit: cover;
+}
+.auth-form-heading2 {
+    font-weight: bold;
+    font-size: 26px;
+    margin-top: 30px;
+}
+
+.auth-form-form2 {
+    height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.auth-form-input2 {
+    border: 1px solid #C4C4C4;
+    background: #E5E5E5;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 0 16px;
+}
+.auth-form-input2 input {
+    font-size: 14px;
+    background: #E5E5E5;
+
+    outline: none;
+    border: none;
+    padding: 0 10px;
+
+    width: 300px;
+    height: 40px;
+}
+span.icon-login2 {
+    color: #C4C4C4;
+}
+
+.form-submit2 {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    background: linear-gradient(270deg, rgba(26, 173, 138, 0.7) 0%, #38EF7D 103.14%);
+
+    outline: none;
+    border: none;    
+    border-radius: 50px;
+
+    width: 358px;
+    height: 40px;
+    margin-top: 30px;
+
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+.form-submit2:hover {
+    opacity: 0.8;
+}
+
+.auth-form-aside2 {
+    font-size: 20px;
+    margin-bottom: 120px;
+}
+
+.auth-form-policy-text2 {
+    font-weight: 500;
+    font-size: 16px;
+}
+.auth-form-policy-link2 {
+    font-weight: 700;
+    color: rgb(4 170 109);
+    text-decoration: none;
+}
