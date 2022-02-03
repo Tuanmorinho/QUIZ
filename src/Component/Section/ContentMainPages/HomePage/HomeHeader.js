@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import '../../../../Css/Home.css'
 import { BackgroundImg, LogoHUCE } from '../../../../resrouces/Img'
-
-import { myAccount } from '../../../../resrouces/MockupData'
+import StudentApi from '../../../../API/studentApi';
 
 function HomeHeader() {
     const [account, setAccount] = useState([]);
 
     useEffect(() => {
-        setAccount(myAccount);
+        const fetchProfile = async () => {
+            try {
+                const response = await StudentApi.getProfile();
+                console.log(response);
+                setAccount(response.data);
+            } catch(error) {
+                console.log('Get profile error', error);
+            }
+        }
+
+        fetchProfile();
     },[]);
 
     return (

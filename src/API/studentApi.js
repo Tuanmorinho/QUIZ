@@ -1,9 +1,9 @@
 import axiosClient from "./axiosClient";
 
 const StudentApi = {
-    // getAll
-    getAll: () => {
-        const url = `/student/all`;
+    // getProfile
+    getProfile: () => {
+        const url = `/student/my-profile`;
         return axiosClient.get(url);
     }
 }

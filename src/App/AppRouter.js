@@ -5,6 +5,7 @@ import TestingPage from '../Component/TestingPage/TestingPage';
 import PageNotFound from '../Component/PageNotFound';
 import { RefreshRoute } from '../Route/RefreshRoute';
 import { LoginRoute } from '../Route/LoginRoutes';
+import APP_CONSTANTS from '../Constants/appConstants'
 
 function AppRouter() {
   return (
@@ -12,7 +13,7 @@ function AppRouter() {
       <Switch>
 
         <Route exact path='/' render={() => {
-          if (localStorage.getItem("us") !== null && localStorage.getItem("ps") !== null) {
+          if (localStorage.getItem(APP_CONSTANTS.USER_TOKEN)) {
             return <Redirect to='/home' />
           } else {
             return <CoverPage />
@@ -20,7 +21,7 @@ function AppRouter() {
         }} />
 
         <Route exact path='/cover' render={() => {
-          if (localStorage.getItem("us") !== null && localStorage.getItem("ps") !== null) {
+          if (localStorage.getItem(APP_CONSTANTS.USER_TOKEN)) {
             return <Redirect to='/' />
           } else {
             return <CoverPage />

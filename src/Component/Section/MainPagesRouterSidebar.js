@@ -9,6 +9,7 @@ import Exam from './ContentMainPages/ExamPage/Exam'
 import Grade from './ContentMainPages/GradePage/Grade'
 import Account from './ContentMainPages/AccountPage/Account'
 import Join from './ContentMainPages/JoinPage/Join'
+import ResultSearch from '../Popup/ResultSearchPopup/ResultSearch'
 
 const routes = [
     {
@@ -33,7 +34,7 @@ const routes = [
     }
 ]
 
-function MainPagesRouterSidebar() {
+function MainPagesRouterSidebar({searchTerms, clear}) {
 
     //State chứa trạng thái css active của sidebar khi chọn home/exam/grade/account
     const [ClassNameActive, setClassNameActive] = useState({
@@ -44,6 +45,8 @@ function MainPagesRouterSidebar() {
         account: ''
     });
     const [pathname, setPathname] = useState('/');
+
+
 
     const getLocation = (path) => {
         setPathname(path);
@@ -156,8 +159,13 @@ function MainPagesRouterSidebar() {
         }
     }
 
+    const isEmpty = (needCheck) => {
+        return (needCheck !== '' && needCheck.length !== 0) ? true : false
+    }
+
     return (
         <Router>
+            <ResultSearch trigger={isEmpty(searchTerms)} valueInput={searchTerms} clearText={clear} />
             <div className="App_withSidebar">
                 {/* SideBar */}
                 <div className="App_sidebarWrap">

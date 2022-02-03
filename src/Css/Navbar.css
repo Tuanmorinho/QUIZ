@@ -73,10 +73,10 @@
     padding-left: 10px;
     padding-right: 10px;
 
-    caret-color: #DA1212
+    caret-color: #FF7600;
 }
 .border-red {
-    border: 1px solid #DA1212;
+    border: 1px solid #FF7600;
 }
 
 span.icon-search {

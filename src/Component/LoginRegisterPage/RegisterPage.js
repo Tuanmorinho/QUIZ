@@ -3,39 +3,78 @@ import '../../Css/RegisterPage.css';
 import { NavbarLogo } from '../../resrouces/Img';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import Popup from '../Popup/NotiPopup/Popup';
+import NotiPopup from '../Popup/NotiPopup/NotiPopup';
+import ErrorPopup from '../Popup/ErrorPopup/ErrorPopup';
+import logApi from '../../API/logApi';
+import NotiSuccessPopup from '../Popup/NotiPopup/NotiSuccessPopup';
 
 function RegisterPage() {
 
-    const [fullName, setFullName] = useState('');
-    const [studentCode, setStudentCode] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
-    const [address, setAddress] = useState('');
-    const [email, setEmail] = useState('');
-    const [newUsername, setNewUsername] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-
+    const [fullName, setFullName] = useState("");
+    const [studentCode, setStudentCode] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [address, setAddress] = useState("");
+    const [email, setEmail] = useState("");
+    const [newUsername, setNewUsername] = useState("");
+    const [newPassword, setNewPassword] = useState("");
     const [checkedGender, setCheckedGender] = useState(1);
-    const [checkedRole, setCheckedRole] = useState(0);
+    const [checkedRoleRegister, setCheckedRoleRegister] = useState(["student"]);
 
     const [triggerPopup, setTriggerPopup] = useState(false);
+    const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
+    const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
 
     let history = useHistory();
 
-    // Cần API để xác thực thông tin điền vào đã tồn tại hay chưa
-
-    const handleRegister = () => {
+    const handleRegister = async () => {
         if (isEmpty(fullName) && isEmpty(studentCode) && isEmpty(dateOfBirth) && isEmpty(address) && isEmpty(email) && isEmpty(newUsername) && isEmpty(newPassword)) {
 
             localStorage.clear();
             localStorage.setItem("us", newUsername);
             localStorage.setItem("ps", newPassword);
 
-            history.replace('/');
+            const params = {
+                "studentCode": studentCode,
+                "fullname": fullName,
+                "dob": "2000-12-17T17:00:00.000+00:00",
+                "address": address,
+                "gender": checkedGender,
+                "email": email,
+                "username": newUsername,
+                "password": newPassword,
+                "role": checkedRoleRegister[0]
+            }
+
+            try {
+                const response = await logApi.register(params);
+                console.log(response);
+                if (response.data && response.data.code === 0) {
+                    setTriggerSuccessPopup(true);
+                    setTimeout(() => {
+                        setTriggerSuccessPopup(false);
+                        history.replace('/login');
+                    }, 1800);
+                } else {
+                    setTriggerErrorPopup(true);
+                }
+            } catch (error) {
+                console.log(params)
+                console.log('error login: ', error);
+            }
         } else {
-            // alert('Please enter full information!');
             setTriggerPopup(true);
         }
+    }
+
+    const handleCheckRole = (value) => {
+        setCheckedRoleRegister(prev => {
+            const isSelected = checkedRoleRegister.includes(value);
+            if (isSelected) {
+                return checkedRoleRegister.filter(item => item !== value);
+            } else {
+                return [...prev, value]
+            }
+        });
     }
 
     const isEmpty = (needCheck) => {
@@ -44,7 +83,7 @@ function RegisterPage() {
 
     return (
         <React.Fragment>
-            <Popup trigger={triggerPopup} setTrigger={setTriggerPopup}>
+            <NotiPopup trigger={triggerPopup} setTrigger={setTriggerPopup}>
                 <div style={{
                     'display': 'flex',
                     'alignItems': 'center'
@@ -59,8 +98,42 @@ function RegisterPage() {
                         'marginTop': 2.5
                     }}>Thông báo</h1>
                 </div>
-                <p style={{ 'fontSize': 19 }}>Vui lòng điền đầy đủ thông tin đăng ký tài khoản!</p>
-            </Popup>
+                <p style={{ 'fontSize': 19 }}>Vui lòng điền đầy đủ thông tin đăng ký.</p>
+            </NotiPopup>
+            <ErrorPopup trigger={triggerErrorPopup} setTrigger={setTriggerErrorPopup}>
+                <div style={{
+                    'display': 'flex',
+                    'alignItems': 'center'
+                }}>
+                    <span className="material-icons" style={{
+                        'color': '#FC4F4F',
+                        'fontSize': 38
+                    }}> error </span>
+                    <h1 style={{
+                        'fontSize': 24,
+                        'marginLeft': 10,
+                        'marginTop': 2.5
+                    }}>Lỗi</h1>
+                </div>
+                <p style={{ 'fontSize': 19 }}>Lỗi đăng ký tài khoản QUIZ, vui lòng thử lại.</p>
+            </ErrorPopup>
+            <NotiSuccessPopup trigger={triggerSuccessPopup} setTrigger={setTriggerSuccessPopup}>
+                <div style={{
+                    'display': 'flex',
+                    'alignItems': 'center'
+                }}>
+                    <span className="material-icons" style={{
+                        'color': '#91C483',
+                        'fontSize': 38
+                    }}> verified </span>
+                    <h1 style={{
+                        'fontSize': 24,
+                        'marginLeft': 10,
+                        'marginTop': 2.5
+                    }}>Thành công</h1>
+                </div>
+                <p style={{ 'fontSize': 19 }}>Đăng kí tài khoản QUIZ thành công.</p>
+            </NotiSuccessPopup>
             <div className="auth-form3">
                 <div className="auth-form-broad3">
                     <div className="auth-form-header3">
@@ -158,7 +231,7 @@ function RegisterPage() {
                             <div className="auth-form-input3">
                                 <span className="material-icons icon-register3"> lock </span>
                                 <input
-                                    type="text"
+                                    type="password"
                                     className="Register-input3"
                                     spellCheck="false"
                                     placeholder="Mật khẩu"
@@ -168,17 +241,10 @@ function RegisterPage() {
                             <div className="inputRadio">
                                 <div className="inputRadio_wrapper">
                                     <input
-                                        type="radio"
-                                        checked={checkedRole === 0}
-                                        onChange={() => { setCheckedRole(0) }}
-                                    /><label>Sinh viên</label>
-                                </div>
-                                <div className="inputRadio_wrapper">
-                                    <input
-                                        type="radio"
-                                        checked={checkedRole === 1}
-                                        onChange={() => { setCheckedRole(1) }}
-                                    /><label>Giáo viên</label>
+                                        type="checkbox"
+                                        checked={checkedRoleRegister.includes("lecture")}
+                                        onChange={() => { handleCheckRole("lecture") }}
+                                    /><label>Đăng ký với tư cách giảng viên</label>
                                 </div>
                             </div>
                         </div>

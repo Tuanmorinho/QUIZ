@@ -41,7 +41,7 @@
 }
 
 .auth-form-form2 {
-    height: 200px;
+    height: 240px;
 
     display: flex;
     flex-direction: column;
@@ -72,6 +72,25 @@
 }
 span.icon-login2 {
     color: #C4C4C4;
+}
+
+.inputRadio2 {
+    width: 357px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.inputRadio2_wrapper {
+    display: flex;
+    align-items: center;
+}
+.inputRadio2_wrapper label{
+    font-size: 14px;
+}
+.inputRadio2 input {
+    height: 16px;
+    margin-right: 10px;
 }
 
 .form-submit2 {
