@@ -19,8 +19,6 @@ function LoginPage() {
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
 
-    const timeOutSuccessPopup = useRef(null);
-
     useEffect(() => {
         if (localStorage.getItem("us") && localStorage.getItem("ps")) {
             setUsername(localStorage.getItem("us"));
@@ -46,10 +44,10 @@ function LoginPage() {
                 if (response.data && response.data.code === 0) {
                     localStorage.setItem(APP_CONSTANTS.USER_TOKEN, response.data.jwt);
                     setTriggerSuccessPopup(true);
-                    timeOutSuccessPopup.current = setTimeout(() => {
+                    setTimeout(() => {
                         setTriggerSuccessPopup(false);
                         history.replace('/');
-                    }, 1800);
+                    }, 1200);
                 } else {
                     setTriggerErrorPopup(true);
                 }

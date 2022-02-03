@@ -4,29 +4,14 @@ import CoverPage from '../Component/CoverPage';
 import TestingPage from '../Component/TestingPage/TestingPage';
 import PageNotFound from '../Component/PageNotFound';
 import { RefreshRoute } from '../Route/RefreshRoute';
-import { LoginRoute } from '../Route/LoginRoutes';
-import APP_CONSTANTS from '../Constants/appConstants'
+import { LoginRoute } from '../Route/LoginRoute';
+import { ProtectedRoute } from '../Route/ProtectedRoute';
+import APP_CONSTANTS from '../Constants/appConstants';
 
 function AppRouter() {
   return (
     <Router>
       <Switch>
-
-        <Route exact path='/' render={() => {
-          if (localStorage.getItem(APP_CONSTANTS.USER_TOKEN)) {
-            return <Redirect to='/home' />
-          } else {
-            return <CoverPage />
-          }
-        }} />
-
-        <Route exact path='/cover' render={() => {
-          if (localStorage.getItem(APP_CONSTANTS.USER_TOKEN)) {
-            return <Redirect to='/' />
-          } else {
-            return <CoverPage />
-          }
-        }} />
 
         <RefreshRoute path='/home' />
         <RefreshRoute path='/exam' />
@@ -37,9 +22,10 @@ function AppRouter() {
         <LoginRoute path='/login' />
         <LoginRoute path='/register' />
 
-        <Route exact path="/test/:id" component={TestingPage} />
+        <ProtectedRoute path='/' />
+        <ProtectedRoute path='/cover' />
 
-        <Route path="*" component={PageNotFound} />
+        <Route exact path="/test/:id" component={TestingPage} />
 
       </Switch>
     </Router>

@@ -24,6 +24,8 @@ function RegisterPage() {
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
 
+    const [inputDate, setInputDate] = useState("text")
+
     let history = useHistory();
 
     const handleRegister = async () => {
@@ -36,7 +38,7 @@ function RegisterPage() {
             const params = {
                 "studentCode": studentCode,
                 "fullname": fullName,
-                "dob": "2000-12-17T17:00:00.000+00:00",
+                "dob": `${dateOfBirth}T17:00:00.000+00:00`,
                 "address": address,
                 "gender": checkedGender,
                 "email": email,
@@ -44,21 +46,20 @@ function RegisterPage() {
                 "password": newPassword,
                 "role": checkedRoleRegister[0]
             }
+            console.log(params)
 
             try {
                 const response = await logApi.register(params);
-                console.log(response);
                 if (response.data && response.data.code === 0) {
                     setTriggerSuccessPopup(true);
                     setTimeout(() => {
                         setTriggerSuccessPopup(false);
                         history.replace('/login');
-                    }, 1800);
+                    }, 1200);
                 } else {
                     setTriggerErrorPopup(true);
                 }
             } catch (error) {
-                console.log(params)
                 console.log('error login: ', error);
             }
         } else {
@@ -170,10 +171,12 @@ function RegisterPage() {
                             <div className="auth-form-input3">
                                 <span className="material-icons icon-register3"> event </span>
                                 <input
-                                    type="text"
+                                    type={inputDate}
                                     className="Register-input3"
                                     spellCheck="false"
                                     placeholder="Ngày sinh"
+                                    onFocus={() => {setInputDate("date")}}
+                                    onBlur={() => {setInputDate("text")}}
                                     onChange={(e) => { setDateOfBirth(e.target.value) }}
                                 />
                             </div>
