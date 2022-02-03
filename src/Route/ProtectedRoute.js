@@ -5,7 +5,6 @@ import PageNotFound from '../Component/PageNotFound';
 import APP_CONSTANTS from '../Constants/appConstants'
 
 export const ProtectedRoute = (procPath) => {
-    console.log(procPath)
     return (procPath.location.pathname === "/" || procPath.location.pathname === '/cover') ? (
         <Route exact path={procPath.location.pathname} render={() => {
             if (localStorage.getItem(APP_CONSTANTS.USER_TOKEN)) {
@@ -22,6 +21,6 @@ export const ProtectedRoute = (procPath) => {
             }
         }} />
     ) : (
-        <Route path="*" component={PageNotFound} /> 
+        <Route path="*" component={PageNotFound} />
     )
 }

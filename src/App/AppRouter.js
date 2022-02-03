@@ -1,12 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import CoverPage from '../Component/CoverPage';
-import TestingPage from '../Component/TestingPage/TestingPage';
-import PageNotFound from '../Component/PageNotFound';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { RefreshRoute } from '../Route/RefreshRoute';
 import { LoginRoute } from '../Route/LoginRoute';
 import { ProtectedRoute } from '../Route/ProtectedRoute';
-import APP_CONSTANTS from '../Constants/appConstants';
+import { ProtectedTestRoute } from '../Route/ProtectedTestRoute';
 
 function AppRouter() {
   return (
@@ -22,10 +19,10 @@ function AppRouter() {
         <LoginRoute path='/login' />
         <LoginRoute path='/register' />
 
+        <ProtectedTestRoute path="/test/:id" />
+
         <ProtectedRoute path='/' />
         <ProtectedRoute path='/cover' />
-
-        <Route exact path="/test/:id" component={TestingPage} />
 
       </Switch>
     </Router>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../Css/LoginPage.css';
 import { NavbarLogo } from '../../resrouces/Img';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ function LoginPage() {
     const handleLogIn = async () => {
         if (isEmpty(username) && isEmpty(password)) {
             localStorage.clear();
-            localStorage.setItem("rl", checkedRoleLogin);
+            localStorage.setItem("rl", checkedRoleLogin[0]);
 
             const params = {
                 "username": username,
@@ -53,6 +53,7 @@ function LoginPage() {
                 }
                 return await logApi.login(params).then(res => console.log(res.data));
             } catch (error) {
+                setTriggerErrorPopup(true);
                 console.log('error login: ', error);
             }
         } else {

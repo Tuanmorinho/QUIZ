@@ -7,6 +7,7 @@ import NotiPopup from '../Popup/NotiPopup/NotiPopup';
 import ErrorPopup from '../Popup/ErrorPopup/ErrorPopup';
 import logApi from '../../API/logApi';
 import NotiSuccessPopup from '../Popup/NotiPopup/NotiSuccessPopup';
+import APP_CONSTANTS from '../../Constants/appConstants';
 
 function RegisterPage() {
 
@@ -28,14 +29,26 @@ function RegisterPage() {
 
     let history = useHistory();
 
+    const loginAfterRegister = async (params) => {
+        try {
+            const responseLog = await logApi.login(params);
+            if (responseLog.data && responseLog.data.code === 0) {
+                localStorage.setItem(APP_CONSTANTS.USER_TOKEN, responseLog.data.jwt);
+            } else {
+                setTriggerErrorPopup(true);
+            }
+        } catch (error) {
+            console.log('error login: ', error);
+        }
+    }
+
     const handleRegister = async () => {
         if (isEmpty(fullName) && isEmpty(studentCode) && isEmpty(dateOfBirth) && isEmpty(address) && isEmpty(email) && isEmpty(newUsername) && isEmpty(newPassword)) {
 
             localStorage.clear();
-            localStorage.setItem("us", newUsername);
-            localStorage.setItem("ps", newPassword);
+            localStorage.setItem("rl", checkedRoleRegister[0]);
 
-            const params = {
+            const paramRegister = {
                 "studentCode": studentCode,
                 "fullname": fullName,
                 "dob": `${dateOfBirth}T17:00:00.000+00:00`,
@@ -46,20 +59,27 @@ function RegisterPage() {
                 "password": newPassword,
                 "role": checkedRoleRegister[0]
             }
-            console.log(params)
+
+            const paramLogin = {
+                "username": newUsername,
+                "password": newPassword
+                // "role": checkedRoleRegister[0]
+            }
 
             try {
-                const response = await logApi.register(params);
+                const response = await logApi.register(paramRegister);
                 if (response.data && response.data.code === 0) {
                     setTriggerSuccessPopup(true);
+                    loginAfterRegister(paramLogin);
                     setTimeout(() => {
                         setTriggerSuccessPopup(false);
-                        history.replace('/login');
+                        history.replace('/');
                     }, 1200);
                 } else {
                     setTriggerErrorPopup(true);
                 }
             } catch (error) {
+                setTriggerErrorPopup(true);
                 console.log('error login: ', error);
             }
         } else {
@@ -175,8 +195,8 @@ function RegisterPage() {
                                     className="Register-input3"
                                     spellCheck="false"
                                     placeholder="Ngày sinh"
-                                    onFocus={() => {setInputDate("date")}}
-                                    onBlur={() => {setInputDate("text")}}
+                                    onFocus={() => { setInputDate("date") }}
+                                    onBlur={() => { setInputDate("text") }}
                                     onChange={(e) => { setDateOfBirth(e.target.value) }}
                                 />
                             </div>
