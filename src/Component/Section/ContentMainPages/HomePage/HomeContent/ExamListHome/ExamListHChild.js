@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
 function ExamListHChild({testContent}) {
+    console.log(testContent)
     const [disable, setDisable] = useState('disable_countdown');
 
     useEffect(() => {
-        if(testContent.status === 0) {
+        if(testContent.status === "waiting") {
             setDisable('countdown');
         }
     },[testContent.status])
@@ -13,13 +14,13 @@ function ExamListHChild({testContent}) {
         <section className="Home_examItem">
             <div className="examItem_wrapper">
                 <div className="item_label red">
-                    <label>Mã bài thi:&ensp;<span>{testContent.idTest}</span></label>
-                    <h1>{testContent.nameTest}&ensp;-&ensp;{testContent.class}</h1>
+                    <label>Mã bài thi:&ensp;<span>{testContent.id}</span></label>
+                    <h1>{testContent.title}&ensp;-&ensp;{testContent.exam_code}</h1>
                 </div>
                 <div className="item_infomation">
                     <div>
                         <span className="material-icons icon_teacher"> account_box </span>
-                        <p>Giảng viên:</p><h5>{testContent.teacher}</h5>
+                        <p>Giảng viên:</p><h5>{testContent.professor}</h5>
                     </div>
                     <div>
                         <span className="material-icons icon_timer"> alarm </span>

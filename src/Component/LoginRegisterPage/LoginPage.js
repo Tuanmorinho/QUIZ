@@ -64,7 +64,6 @@ function LoginPage() {
     const handleCheckRole = (value) => {
         setCheckedRoleLogin(prev => {
             const isSelected = checkedRoleLogin.includes(value);
-            console.log(isSelected);
             if (isSelected) {
                 return checkedRoleLogin.filter(item => item !== value);
             } else {

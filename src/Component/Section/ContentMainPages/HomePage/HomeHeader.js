@@ -4,14 +4,18 @@ import { BackgroundImg, LogoHUCE } from '../../../../resrouces/Img'
 import StudentApi from '../../../../API/studentApi';
 
 function HomeHeader() {
-    const [account, setAccount] = useState([]);
+    const [account, setAccount] = useState({
+        'fullname': '',
+        'studentCode': ''
+    });
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const response = await StudentApi.getProfile();
-                console.log(response);
-                setAccount(response.data);
+                if (response) {
+                    setAccount(response);
+                }
             } catch(error) {
                 console.log('Get profile error', error);
             }
@@ -31,7 +35,7 @@ function HomeHeader() {
                             <h1>Hệ thống thi trực tuyến - QUIZ</h1>
                             <h3>Trường Đại học Xây dựng Hà Nội</h3>
                         </div>
-                        <p>Welcome, {account.name} - {account.id}</p>
+                        <p>Welcome, {account.fullname} - {account.studentCode}</p>
                     </div>
                 </div>
             </div>

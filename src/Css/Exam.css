@@ -159,6 +159,9 @@ span.icon_timer2 {
 }
 
 .disable_countdown2 {
+    display: none;
+}
+.countdown2 {
     background: rgba(0, 0, 0, 0.5);
     border-radius: 0px 0px 40px 0px;
 
