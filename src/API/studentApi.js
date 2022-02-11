@@ -5,6 +5,12 @@ const StudentApi = {
     getProfile: () => {
         const url = `/student/my-profile`;
         return axiosClient.get(url);
+    },
+
+    // editProfile
+    editProfile: () => {
+        const url = '/student/edit';
+        return axiosClient.put(url);
     }
 }
 

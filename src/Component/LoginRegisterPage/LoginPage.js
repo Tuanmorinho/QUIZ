@@ -24,6 +24,7 @@ function LoginPage() {
             setUsername(localStorage.getItem("us"));
             setPassword(localStorage.getItem("ps"));
         }
+
     },[]);
 
     let history = useHistory();
@@ -41,8 +42,8 @@ function LoginPage() {
 
             try {
                 const response = await logApi.login(params);
-                if (response.data && response.data.code === 0) {
-                    localStorage.setItem(APP_CONSTANTS.USER_TOKEN, response.data.jwt);
+                if (response && response.code === 0) {
+                    localStorage.setItem(APP_CONSTANTS.USER_TOKEN, response.jwt);
                     setTriggerSuccessPopup(true);
                     setTimeout(() => {
                         setTriggerSuccessPopup(false);
@@ -51,10 +52,9 @@ function LoginPage() {
                 } else {
                     setTriggerErrorPopup(true);
                 }
-                return await logApi.login(params).then(res => console.log(res.data));
             } catch (error) {
-                setTriggerErrorPopup(true);
                 console.log('error login: ', error);
+                setTriggerErrorPopup(true);
             }
         } else {
             setTriggerNotiPopup(true);
@@ -169,7 +169,7 @@ function LoginPage() {
                             <div className="inputRadio2_wrapper">
                                 <input
                                     type="checkbox"
-                                    checked={checkedRoleLogin[0] === "lecture"}
+                                    checked={checkedRoleLogin.includes("lecture")}
                                     onChange={() => { handleCheckRole("lecture") }}
                                 /><label>Đăng nhập với tư cách giảng viên</label>
                             </div>

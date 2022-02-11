@@ -51,8 +51,6 @@
 }
 
 .result_wrapper {
-    /* background-color: aqua; */
-    /* height: 185px; */
     max-height: 185px;
 
     margin-top: 25px;
@@ -69,6 +67,11 @@
     opacity: 0.8;
 }
 
+.result {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .link-searchPage {
     cursor: pointer;
     font-size: 14px;
@@ -83,4 +86,135 @@ hr {
     border: none;
     height: 1.2px;
     margin-top: 10px;
+}
+
+
+/* ----- */
+.Exam_examItem4 {
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 18px;
+
+    width: 100%;
+    height: 80px;
+    max-width: 480px;
+    max-height: 80px;
+}
+.green_retangle4 {
+    width: 5px;
+    height: 80px;
+    background: #11998E;
+}
+.examItem_wrapper4 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.item_label-red4 {
+    height: 50px;
+    width: 260px;
+    margin-left: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.item_label-red4 label {
+    font-weight: normal;
+    font-size: 13px;
+    color: #000000;
+}
+.item_label-red4 span {
+    font-weight: bold;
+    font-size: 14px;
+    color: #DF2E2E;
+}
+.item_label-red4 h1 {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+}
+
+.item_infomation4 {
+    width: 135px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.item_infomation4 div {
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.item_infomation4 label {
+    font-weight: bold;
+    font-size: 12px;
+    color: #000000;
+
+    margin-top: 4px;
+    margin-left: 8px;
+}
+.item_infomation4 h5 {
+    font-weight: bold;
+    font-size: 12px;
+    color: #000000;
+
+    margin-top: 4px;
+    margin-left: 8px;
+}
+span.icon_teacher4 {
+    font-size: 18px;
+    color: #65D6CE;
+}
+span.icon_timer4 {
+    font-size: 18px;
+    color: #FA9579;
+}
+
+.examItem_wrapper4 button {
+    background: #1AAD8A;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+    color: #FFFFFF;
+
+    width: 50px;
+    height: 80px;
+    
+    cursor: pointer;
+}
+.examItem_wrapper4 button:hover {
+    opacity: 0.8;
+}
+
+
+.green-orange-gradient_retangle2 {
+    width: 5px;
+    height: 80px;
+    background: linear-gradient(180deg, rgba(17, 153, 142, 0.5) 0%, rgba(255, 118, 0, 0.5) 100%);
+}
+.bg_gradeInfomation-orange2 {
+    background: #FF7600;
+
+    width: 90px;
+    height: 78px;
+    margin-bottom: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grade_itemExam2 h1 {
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+    text-align: center;
 }

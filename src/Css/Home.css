@@ -323,7 +323,7 @@ span.icon_timer {
     display: none;
 }
 .countdown {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 0px 0px 37px 0px;
 
     width: 320px;
@@ -337,36 +337,30 @@ span.icon_timer {
     justify-content: center;
 }
 .Bg_countdown-white {
-    background: #FFFFFF;
+    background: #323232;
 
     width: 320px;
     height: 65px;
-}
-.Timer_wrapper {
-    height: 65px;
-    margin-left: 10px;
-    margin-right: 10px;
 
     display: flex;
-    align-items: stretch;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: center;
 }
-.Timer_wrapper h1 {
-    font-weight: normal;
-    font-size: 24px;
-}
-.Timer_wrapper label {
-    font-weight: 500;
-    font-size: 12px;
-}
-.Timer {
-    color: #000000;
-    width: 75px;
-    margin-top: 9px;
-    margin-bottom: 9px;
+.Timer_wrapper {
+    height: 54px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+.Timer_wrapper h1 {
+    color: white;
+    font-weight: normal;
+    font-size: 14px;
+}
+.Timer_wrapper label {
+    color: white;
+    font-weight: 650;
+    font-size: 15px;
 }

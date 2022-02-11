@@ -1,24 +1,27 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useHistory } from 'react-router'
 import '../Css/Navbar.css'
 import { NavbarLogo } from '../resrouces/Img'
 import NotiSuccessPopup from './Popup/NotiPopup/NotiSuccessPopup';
 
-function Navbar({ getInputValue, valueInput, clearText }) {
+function Navbar({ getInputValue, valueInput, clearText, onSubmitSearch }) {
 
     const [borderSearch, setBorderSearch] = useState('');
-
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
+
+    const typingTimeoutRef = useRef(null);
 
     let history = useHistory();
 
-    // useEffect(() => {
-
-    // }, []);
-
-
     const handleSearch = (e) => {
+        if (typingTimeoutRef.current) {
+            clearTimeout(typingTimeoutRef.current);
+        };
+        typingTimeoutRef.current = setTimeout(() => {
+            const id = e.target.value;
+            onSubmitSearch(id);
+        },300);
         getInputValue(e.target.value);
     }
 
@@ -66,14 +69,14 @@ function Navbar({ getInputValue, valueInput, clearText }) {
                             <input
                                 className="Search_input"
                                 type='text'
-                                placeholder="Tìm kiếm lớp / bài thi"
+                                placeholder="Tìm kiếm lớp / bài thi theo ID"
                                 value={valueInput}
                                 onFocus={() => { setBorderSearch('border-red') }}
                                 onBlur={() => { setBorderSearch('') }}
                                 onChange={handleSearch}
                             />
-                            <div onClick={() => { clearText('') }}>
-                                <span className={`material-icons close-btn ${valueInput !== '' ? 'display-btn' : ''}`}> close </span>
+                            <div onClick={() => { clearText() }}>
+                                <span className={`material-icons close-btn ${valueInput ? 'display-btn' : ''}`}> close </span>
                             </div>
                         </div>
                     </div>

@@ -1,14 +1,55 @@
-import React, { useEffect, useState } from 'react'
+import { stringify } from 'query-string';
+import React, { useEffect, useRef, useState } from 'react'
+import { Link, Redirect } from 'react-router-dom';
 
-function ExamListHChild({testContent}) {
-    console.log(testContent)
-    const [disable, setDisable] = useState('disable_countdown');
+function ExamListHChild({ testContent }) {
+    const [disable, setDisable] = useState('countdown');
+    const [timeDisplay, setTimeDisplay] = useState('');
+
+    let timeOutTest = useRef(null);
 
     useEffect(() => {
-        if(testContent.status === "waiting") {
-            setDisable('countdown');
+        let startTime = new Date(testContent.startTime);
+        let realTime = new Date(testContent.realTime);
+        console.log('real: ', realTime);
+        console.log('start: ', startTime);
+
+        const displayTime = () => {
+            let hours = startTime.toString().slice(16, 18);
+            let minute = startTime.toString().slice(19, 21);
+            // let second = startTime.toString().slice(22,24);
+
+            let hoursDisplay = '';
+
+            if (hours >= 0 && hours <= 12) {
+                hoursDisplay = 'AM'
+            } else {
+                hours = hours % 12;
+                hoursDisplay = 'PM'
+            }
+
+            return String(String(startTime).slice(8, 10) + ' ' + String(startTime).slice(4, 7) + ' ' + String(startTime).slice(11, 15) + ', ' + hours + ':' + minute + ' ' + hoursDisplay);
         }
-    },[testContent.status])
+
+        const differentTime = () => {
+            console.log('sub: ', startTime - realTime);
+            if (startTime - realTime >= 0) { return startTime - realTime };
+        }
+
+        const setTimeOutOpenTest = () => {
+            setTimeDisplay(displayTime());
+            if (timeOutTest.current) {
+                clearTimeout(timeOutTest.current);
+            };
+            timeOutTest.current = setTimeout(() => {
+                setDisable('disable_countdown');
+            }, differentTime());
+        }
+
+        displayTime();
+        setTimeOutOpenTest();
+
+    }, [testContent.status])
 
     return (
         <section className="Home_examItem">
@@ -28,27 +69,15 @@ function ExamListHChild({testContent}) {
                     </div>
                 </div>
                 <div className="item_bottom greenBottom">
-                    <button>Bắt đầu thi</button>
+                    <a href={`/testing/${testContent.id}`}>
+                        <button>Bắt đầu thi</button>
+                    </a>
                 </div>
                 <div className={disable}>
                     <div className="Bg_countdown-white">
                         <div className="Timer_wrapper">
-                            <div className="Timer count_days">
-                                <h1>05</h1>
-                                <label>Days</label>
-                            </div>
-                            <div className="Timer count_hours">
-                                <h1>11</h1>
-                                <label>Hours</label>
-                            </div>
-                            <div className="Timer count_minutes">
-                                <h1>56</h1>
-                                <label>Minutes</label>
-                            </div>
-                            <div className="Timer count_seconds">
-                                <h1>20</h1>
-                                <label>Seconds</label>
-                            </div>
+                            <h1>Bài thi sẽ được mở lúc:</h1>
+                            <label>{timeDisplay}</label>
                         </div>
                     </div>
                 </div>

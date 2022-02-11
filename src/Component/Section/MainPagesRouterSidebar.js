@@ -17,7 +17,7 @@ const routes = [
         component: Home
     },
     {
-        path: '/exam',
+        path: '/test',
         component: Exam
     },
     {
@@ -34,7 +34,7 @@ const routes = [
     }
 ]
 
-function MainPagesRouterSidebar({searchTerms, clear}) {
+function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam}) {
 
     //State chứa trạng thái css active của sidebar khi chọn home/exam/grade/account
     const [ClassNameActive, setClassNameActive] = useState({
@@ -65,7 +65,7 @@ function MainPagesRouterSidebar({searchTerms, clear}) {
                 account: ''
             })
         }
-        if (pathname === '/exam') {
+        if (pathname === '/test') {
             setClassNameActive({
                 home: '',
                 exam: 'active',
@@ -160,12 +160,12 @@ function MainPagesRouterSidebar({searchTerms, clear}) {
     }
 
     const isEmpty = (needCheck) => {
-        return (needCheck !== '' && needCheck.length !== 0) ? true : false
+        return (needCheck !== '' || needCheck.length !== 0) ? true : false
     }
 
     return (
         <Router>
-            <ResultSearch trigger={isEmpty(searchTerms)} valueInput={searchTerms} clearText={clear} />
+            <ResultSearch trigger={isEmpty(searchTerms)} valueInput={searchTerms} clearText={clear} testResult={resultTest} examResult={resultExam} />
             <div className="App_withSidebar">
                 {/* SideBar */}
                 <div className="App_sidebarWrap">
@@ -178,9 +178,9 @@ function MainPagesRouterSidebar({searchTerms, clear}) {
                                 </Link>
                             </li>
                             <li className={ClassNameActive.exam}>
-                                <Link to='/exam' onClick={ActiveExam}>
+                                <Link to='/test' onClick={ActiveExam}>
                                     <span className="material-icons icon_exam"> school </span>
-                                    <span className="Sidebar_menu exam">Exam</span>
+                                    <span className="Sidebar_menu exam">Test</span>
                                 </Link>
                             </li>
                             <li className={ClassNameActive.grade}>

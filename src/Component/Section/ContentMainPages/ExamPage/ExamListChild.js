@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react'
 
-function ExamListChild({ testContent }) {
+function ExamListChild({ testWaitingContent }) {
+
     const [disable, setDisable] = useState('disable_countdown');
 
     useEffect(() => {
-        if (testContent.status === "waiting") {
+        if (testWaitingContent.status === "waiting") {
             setDisable('countdown2');
         }
-    }, [testContent.status])
+    }, [testWaitingContent.status])
 
     return (
         <section className="Exam_examItem2">
             <div className="examItem_wrapper2">
                 <div className="green_retangle2"></div>
                 <div className="item_label-red2">
-                    <label>Mã bài thi:&ensp;<span>{testContent.id}</span></label>
-                    <h1>{testContent.title}&ensp;-&ensp;{testContent.class}</h1>
+                    <label>Mã bài thi:&ensp;<span>{testWaitingContent.id}</span></label>
+                    <h1>{testWaitingContent.title}&ensp;-&ensp;{testWaitingContent.class}</h1>
                 </div>
                 <div className="item_infomation2">
                     <div>
                         <span className="material-icons icon_teacher2"> account_box </span>
-                        <p>Giảng viên:&nbsp;</p><h5>{testContent.teacher}</h5>
+                        <p>Giảng viên:&nbsp;</p><h5>{testWaitingContent.professor}</h5>
                     </div>
                     <div>
                         <span className="material-icons icon_timer2"> alarm </span>
-                        <label className="font_weight-bold2">{testContent.time}&nbsp;phút</label>
+                        <label className="font_weight-bold2">{testWaitingContent.time}&nbsp;phút</label>
                     </div>
                 </div>
                 <button>Bắt đầu thi</button>

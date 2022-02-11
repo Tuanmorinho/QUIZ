@@ -32,8 +32,8 @@ function RegisterPage() {
     const loginAfterRegister = async (params) => {
         try {
             const responseLog = await logApi.login(params);
-            if (responseLog.data && responseLog.data.code === 0) {
-                localStorage.setItem(APP_CONSTANTS.USER_TOKEN, responseLog.data.jwt);
+            if (responseLog && responseLog.code === 0) {
+                localStorage.setItem(APP_CONSTANTS.USER_TOKEN, responseLog.jwt);
             } else {
                 setTriggerErrorPopup(true);
             }
@@ -68,7 +68,7 @@ function RegisterPage() {
 
             try {
                 const response = await logApi.register(paramRegister);
-                if (response.data && response.data.code === 0) {
+                if (response && response.code === 0) {
                     setTriggerSuccessPopup(true);
                     loginAfterRegister(paramLogin);
                     setTimeout(() => {

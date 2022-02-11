@@ -1,0 +1,182 @@
+/* CONTENT */
+.App_withSidebarContent {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.Section_content {
+    overflow-y: scroll;
+}
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track:hover{
+    background-color:rgba(0,0,0,.05);
+    box-shadow:inset 1px 0 0 rgba(0,0,0,.1)
+}
+::-webkit-scrollbar-thumb{
+    border: 1px;
+    background:rgba(0, 0, 0, .2);
+    box-shadow: inset 0 0 5px rgba(255,255,255,.1); 
+}
+::-webkit-scrollbar-thumb:window-inactive{
+    background: #fff;
+    border: 1px;
+}
+
+/* Body-student */
+.Home_wrapper-grade {
+    position: absolute;
+    left: 110px;
+    top: 95px;
+}
+.SectionList_wrapper3 {
+    width: 1775px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.SectionList_headingWrap3 {
+    margin-bottom: 26px;
+}
+.SectionList_heading3 {
+    margin-left: 24px;
+
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.SectionList_bodyWrap3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.Grade_gradeItem {
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 0px 0px 40px 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 18px;
+
+    width: 1775px;
+    height: 99px;
+    margin-bottom: 32px;
+}
+.green-orange-gradient_retangle {
+    width: 5px;
+    height: 98px;
+    background: linear-gradient(180deg, rgba(17, 153, 142, 0.5) 0%, rgba(255, 118, 0, 0.5) 100%);
+}
+.gradeItem_wrapper {
+    width: 1770px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.item_label3 {
+    height: 57px;
+    width: 1020px;
+    margin-left: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.item_label3 label {
+    font-weight: normal;
+    font-size: 18px;
+    color: #000000;
+}
+.item_label3 span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #FF7600;
+}
+.item_label3 h1 {
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+}
+
+.item_infomation3 {
+    width: 486px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item_infomation3 div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.item_infomation3 label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000000;
+
+    margin-top: 4px;
+    margin-left: 8px;
+}
+.item_infomation3 p {
+    font-weight: normal;
+    font-size: 14px;
+    color: #000000;
+
+    margin-top: 3.4px;
+    margin-left: 8px;
+}
+.item_infomation3 h5 {
+    font-weight: bold;
+    font-size: 14px;
+    color: #000000;
+
+    margin-top: 4px;
+    margin-left: 8px;
+}
+a.icon_teacher {
+    color: #65D6CE;
+}
+a.icon_timer {
+    color: #FA9579;
+}
+
+.bg_gradeInfomation-orange {
+    background: #FF7600;
+    border-radius: 0px 0px 40px 0px;
+
+    width: 230px;
+    height: 98px;
+    margin-top: -3px;
+    margin-right: -3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.grade_itemExam {
+    font-weight: bold;
+    font-size: 17px;
+    color: white;
+    text-align: center;
+
+    margin-top: 3px;
+}
+
+
+
+.gradeItem_wrapper button {
+    background: #1AAD8A;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    color: #FFFFFF;
+
+    margin-right: 75px;
+    width: 156px;
+    height: 39px;
+}

@@ -1,0 +1,146 @@
+.auth-form4 {
+    position: absolute;
+    left: 110px;
+    top: 95px;
+}
+
+.auth-form_broad4 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+
+.auth-form_heading4 {
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.auth-form-item4 {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+    margin-top: 68px;
+    margin-left: 24px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+span.account_circle2 {
+    background: -webkit-linear-gradient(#1AAD8A 0%, #4B3869 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 65px;
+}
+
+.auth-form_infor4 {
+    height: 50px;
+    margin-left: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.auth-form_infor4 h4 {
+    font-weight: bold;
+    font-size: 16px;
+}
+.auth-form_infor4 label {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+
+.auth-form_form4 { 
+    width: 656px;
+    margin-top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.auth-form_group4 {
+    width: 656px;
+    margin-bottom: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+
+.auth-form_label4 {
+    margin-bottom: 15px;
+}
+.auth-form_label4 label {
+    margin-left: 103px;
+
+    font-weight: 600;
+    font-size: 16px;
+}
+
+
+.auth-form_input_wrapper4 {
+    width: 656px;
+    margin-bottom: 15px;
+
+    outline: none;
+    border: none;    
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+}
+.auth-form_input_wrapper4 label {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.auth-form_input4 {
+    border: 1px solid #C4C4C4;
+    background: #E5E5E5;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 0 16px;
+}
+.auth-form_input4 input {
+    font-size: 14px;
+    background: #E5E5E5;
+
+    outline: none;
+    border: none;
+    padding: 0 10px;
+
+    width: 495px;
+    height: 40px;
+}
+span.icon-accountMe {
+    color: #C4C4C4;
+}
+
+.form-submit4 {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    background: linear-gradient(270deg, rgba(26, 173, 138, 0.7) 0%, #38EF7D 103.14%);
+    outline: none;
+    border: none;    
+    border-radius: 50px;
+    width: 552px;
+    height: 40px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+.form-submit4:hover {
+    opacity: 0.8;
+}

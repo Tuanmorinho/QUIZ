@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import '../../../../Css/Home.css'
 import { BackgroundImg, LogoHUCE } from '../../../../resrouces/Img'
 import StudentApi from '../../../../API/studentApi';
+import APP_CONSTANTS from '../../../../Constants/appConstants';
 
 function HomeHeader() {
+
     const [account, setAccount] = useState({
         'fullname': '',
         'studentCode': ''
@@ -14,15 +16,29 @@ function HomeHeader() {
             try {
                 const response = await StudentApi.getProfile();
                 if (response) {
-                    setAccount(response);
+                    const basicUserInfor = {
+                        'fullname': response.fullname,
+                        'studentCode': response.studentCode
+                    }
+                    localStorage.removeItem(APP_CONSTANTS.USER_BASIC_INFOR);
+                    localStorage.setItem(APP_CONSTANTS.USER_BASIC_INFOR, JSON.stringify(basicUserInfor));
+                    setAccount(basicUserInfor);
                 }
-            } catch(error) {
+            } catch (error) {
                 console.log('Get profile error', error);
             }
         }
 
         fetchProfile();
-    },[]);
+    }, []);
+
+    const displayInfor = () => {
+        if ((localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR))) {
+            return JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR));
+        } else {
+            return account;
+        }
+    }
 
     return (
         <div className="Home_header-student">
@@ -35,7 +51,7 @@ function HomeHeader() {
                             <h1>Hệ thống thi trực tuyến - QUIZ</h1>
                             <h3>Trường Đại học Xây dựng Hà Nội</h3>
                         </div>
-                        <p>Welcome, {account.fullname} - {account.studentCode}</p>
+                        <p>Welcome, {displayInfor().fullname} - {displayInfor().studentCode}</p>
                     </div>
                 </div>
             </div>

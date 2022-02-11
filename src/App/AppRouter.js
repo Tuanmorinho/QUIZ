@@ -11,7 +11,7 @@ function AppRouter() {
       <Switch>
 
         <RefreshRoute path='/home' />
-        <RefreshRoute path='/exam' />
+        <RefreshRoute path='/test' />
         <RefreshRoute path='/grade' />
         <RefreshRoute path='/join' />
         <RefreshRoute path='/account' />
@@ -19,7 +19,7 @@ function AppRouter() {
         <LoginRoute path='/login' />
         <LoginRoute path='/register' />
 
-        <ProtectedTestRoute path="/test/:id" />
+        <ProtectedTestRoute path='/testing/:id' />
 
         <ProtectedRoute path='/' />
         <ProtectedRoute path='/cover' />
