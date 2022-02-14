@@ -4,8 +4,7 @@ import '../../../../Css/Home.css'
 import HomeContent from './HomeContent/HomeContent'
 import HomeHeader from './HomeHeader'
 
-function Home({route, getLocation}) {
-    
+function Home({route, getLocation}) {    
     let location = useLocation();
     useEffect(() => {
         getLocation(location.pathname);

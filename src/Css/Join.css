@@ -24,12 +24,12 @@
 }
 
 /* Body-student */
-.Home_wrapper-exam2 {
+.Home_wrapper-exam5 {
     position: absolute;
     left: 110px;
     top: 95px;
 }
-.SectionList_wrapper2 {
+.SectionList_wrapper5 {
     width: 1775px;
 
     display: flex;
@@ -37,24 +37,24 @@
     align-items: flex-start;
     justify-content: flex-start;
 }
-.SectionList_headingWrap2 {
+.SectionList_headingWrap5 {
     margin-bottom: 26px;
 }
-.SectionList_heading2 {
+.SectionList_heading5 {
     margin-left: 24px;
 
     font-weight: bold;
     font-size: 24px;
 }
 
-.SectionList_bodyWrap2 {
+.SectionList_bodyWrap5 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
 }
 
-.Exam_examItem2 {
+.Exam_examItem5 {
     background: #FFFFFF;
     border: 1px solid #E5E5E5;
     border-radius: 0px 0px 40px 0px;
@@ -64,20 +64,20 @@
     height: 99px;
     margin-bottom: 32px;
 }
-.green_retangle2 {
+.green_retangle5 {
     width: 5px;
     height: 98px;
-    background: #11998E;
+    background: linear-gradient(180deg, rgba(17, 153, 142, 0.5) 0%, rgba(129, 145, 60, 1) 70%);
 }
-.examItem_wrapper2 {
+.examItem_wrapper5 {
     width: 1770px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
-.item_label-red2 {
+.item_label-red5 {
     height: 57px;
-    width: 1020px;
+    width: 720px;
     margin-left: 18px;
 
     display: flex;
@@ -85,42 +85,44 @@
     align-items: flex-start;
     justify-content: space-between;
 }
-.item_label-red2 label {
+.item_label-red5 label {
     font-weight: normal;
     font-size: 18px;
     color: #000000;
 }
-.item_label-red2 span {
+.item_label-red5 span {
     font-weight: bold;
     font-size: 18px;
     color: #DF2E2E;
 }
-.item_label-red2 h1 {
+.item_label-red5 h1 {
     font-weight: 600;
     font-size: 18px;
     color: #000000;
 }
 
-.item_infomation2 {
-    width: 486px;
+.item_infomation5 {
+    width: 800px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.item_infomation2 div {
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
-.item_infomation2-professor {
-    width: 300px;
+.item_infomation5 div {
+    margin-right: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
-.item_infomation2-time {
-    width: 130px;
+.item_infomation5-professor {
+    width: 400px;
+}
+.item_infomation5-longtime {
+    width: 400px;
     margin-right: 47px;
 }
-.item_infomation2 label {
+.item_infomation5 label {
     font-weight: bold;
     font-size: 14px;
     color: #000000;
@@ -128,7 +130,7 @@
     margin-top: 4px;
     margin-left: 8px;
 }
-.item_infomation2 p {
+.item_infomation5 p {
     font-weight: normal;
     font-size: 14px;
     color: #000000;
@@ -136,7 +138,7 @@
     margin-top: 3.4px;
     margin-left: 8px;
 }
-.item_infomation2 h5 {
+.item_infomation5 h5 {
     font-weight: bold;
     font-size: 14px;
     color: #000000;
@@ -144,14 +146,14 @@
     margin-top: 4px;
     margin-left: 8px;
 }
-span.icon_teacher2 {
+span.icon_teacher5 {
     color: #65D6CE;
 }
-span.icon_timer2 {
+span.icon_timer5 {
     color: #FA9579;
 }
 
-.examItem_wrapper2 button {
+.item_join {
     background: #1AAD8A;
     border: none;
     font-weight: 600;
@@ -161,60 +163,14 @@ span.icon_timer2 {
     margin-right: 75px;
     width: 156px;
     height: 39px;
-
-    cursor: pointer; 
 }
-.examItem_wrapper2 button:hover {
+.joined {
+    background: white;
+}
+.not_joined_yet {
+    cursor: pointer;
+}
+.not_joined_yet:hover {
     opacity: 0.95;
     color: rgba(0, 0, 0, 0.75);
-}
-
-.disable_countdown2 {
-    display: none;
-}
-.countdown2 {
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 0px 0px 40px 0px;
-
-    width: 1775px;
-    height: 99px;
-
-    position: absolute;
-    z-index: 4;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.Bg_countdown-white2 {
-    background: #323232;
-    border-radius: 20px 0px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-
-    width: 320px;
-    height: 70px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.Timer_wrapper2 {
-    height: 55px;
-    margin-left: 27px;
-    margin-right: 27px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-.Timer_wrapper2 h1 {
-    color: white;
-    font-weight: normal;
-    font-size: 16px;
-}
-.Timer_wrapper2 label {
-    color: white;
-    font-weight: 650;
-    font-size: 17px;
 }

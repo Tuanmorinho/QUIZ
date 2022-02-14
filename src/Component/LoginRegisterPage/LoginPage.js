@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../../Css/LoginPage.css';
 import { NavbarLogo } from '../../resrouces/Img';
 import { Link } from 'react-router-dom';
@@ -18,14 +18,6 @@ function LoginPage() {
     const [triggerNotiPopup, setTriggerNotiPopup] = useState(false);
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
-
-    useEffect(() => {
-        if (localStorage.getItem("us") && localStorage.getItem("ps")) {
-            setUsername(localStorage.getItem("us"));
-            setPassword(localStorage.getItem("ps"));
-        }
-
-    },[]);
 
     let history = useHistory();
 

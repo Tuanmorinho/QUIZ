@@ -19,7 +19,7 @@ function ResultTestPage() {
                     <h3 className="auth-form_policy-number">(100.00%)</h3>
                 </div>
                 <div className="auth-form_form">
-                    <Link to='/'>
+                    <Link to='/home'>
                         <button className="form-submit">Trở về trang chính</button>
                     </Link>
                 </div>

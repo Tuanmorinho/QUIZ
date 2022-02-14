@@ -339,3 +339,7 @@ span.choosedQuestion {
 span.icon_teacher {
     color: #65D6CE;
 }
+
+.disableTesting{
+    display: none;
+}

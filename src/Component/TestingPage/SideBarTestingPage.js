@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import APP_CONSTANTS from '../../Constants/appConstants';
 
 function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexCss, submit }) {
 
@@ -34,11 +35,11 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
             <div className="Sidebar_ListTest">
                 <div className="Testing_infor">
                     <div className="Infor_wrapper">
-                        <label>Mã bài thi:&ensp;<span className="IDTest">654321</span></label>
-                        <h3>Bài TH3 môn LTUDM - 63IT2</h3>
+                        <label>Mã bài thi:&ensp;<span className="IDTest">{JSON.parse(localStorage.getItem(APP_CONSTANTS.INF_TESTING_TITLE)).idTest}</span></label>
+                        <h3>{JSON.parse(localStorage.getItem(APP_CONSTANTS.INF_TESTING_TITLE)).title} - {JSON.parse(localStorage.getItem(APP_CONSTANTS.INF_TESTING_TITLE)).class}</h3>
                         <div>
                             <span className="material-icons icon_teacher"> account_box </span>
-                            <p>Giảng viên:&ensp;<span className="TeacherTest">Lê Đức Quang</span></p>
+                            <p>Giảng viên:&ensp;<span className="TeacherTest">{JSON.parse(localStorage.getItem(APP_CONSTANTS.INF_TESTING_TITLE)).professor}</span></p>
                         </div>
                     </div>
                 </div>
@@ -62,8 +63,8 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
                                 listQuestions.map((question, index) => (
                                     <button
                                         key={index}
-                                        className={`ordinalNumQuestion_square ${(idCss.includes(question.idQuestion)) ? "status_choosed" : "status_unchoose"} ${(index === indexCss - 1) ? "status_select" : ""}`}
-                                        onClick={() => { handleOnClickOrdinalNumQuestion(question.idQuestion) }}
+                                        className={`ordinalNumQuestion_square ${(idCss.includes(question.questionId)) ? "status_choosed" : "status_unchoose"} ${(index === indexCss - 1) ? "status_select" : ""}`}
+                                        onClick={() => { handleOnClickOrdinalNumQuestion(question.questionId) }}
                                     >{index + 1}</button>
                                 ))
                             }

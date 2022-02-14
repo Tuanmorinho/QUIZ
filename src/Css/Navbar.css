@@ -127,3 +127,7 @@ span.account_circle {
     
     margin-left: 57px;
 }
+
+.disable {
+    display: none;
+}

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 function ContentTestingPage({ question, index, checked }) {
 
     const [type, setType] = useState("radio");
+    const [typeQuestionContent, setTypeQuestionContent] = useState('')
+
     const [selectedCheckBox, setSelectedCheckBox] = useState([]);
     const [selectedRadio, setSelectedRadio] = useState([{
         idQuestion: '',
@@ -11,24 +13,27 @@ function ContentTestingPage({ question, index, checked }) {
 
     useEffect(() => {
         const typeQuestion = () => {
-            if (question.typeQuestion === 1) {
+            if (question.type === 1) {
                 setType("checkbox");
+                setTypeQuestionContent('Chọn một hoặc nhiều đáp án')
             } else {
                 setType("radio");
+                setTypeQuestionContent('Chọn một đáp án')
             }
         }
-
+        
         typeQuestion();
-    }, [question.typeQuestion]);
+    }, [question.type]);
+
 
     const handleChecked = (idAnswerSelected) => {
-        for (let i = 0; i < question.answers.length; i++) {
-            if (question.answers[i].idAnswer === idAnswerSelected && question.answers[i].your_choice === false) {
-                question.answers[i].your_choice = true;
+        for (let i = 0; i < question.studentssAnswers.length; i++) {
+            if (question.studentssAnswers[i].id === idAnswerSelected && question.studentssAnswers[i].choose === false) {
+                question.studentssAnswers[i].choose = true;
                 break;
             }
-            if (question.answers[i].idAnswer === idAnswerSelected && question.answers[i].your_choice === true) {
-                question.answers[i].your_choice = false;
+            if (question.studentssAnswers[i].id === idAnswerSelected && question.studentssAnswers[i].choose === true) {
+                question.studentssAnswers[i].choose = false;
                 break;
             }
         }
@@ -44,19 +49,19 @@ function ContentTestingPage({ question, index, checked }) {
         }
 
         if (type === "radio") {
-            for (let i = 0; i < question.answers.length; i++) {
-                question.answers[i].your_choice = false;
-                if (question.answers[i].idAnswer === idAnswerSelected) {
-                    question.answers[i].your_choice = true;
+            for (let i = 0; i < question.studentssAnswers.length; i++) {
+                question.studentssAnswers[i].choose = false;
+                if (question.studentssAnswers[i].id === idAnswerSelected) {
+                    question.studentssAnswers[i].choose = true;
                     setSelectedRadio(prev => [...prev, {
-                        idQuestion: question.idQuestion,
+                        idQuestion: question.questionId,
                         idAnswer: idAnswerSelected
                     }]);
                 }
             }
         }
 
-        checked(question.idQuestion, question.answers);
+        checked(question.questionId, question.studentssAnswers);
     }
 
     if (type === "radio") {
@@ -64,21 +69,21 @@ function ContentTestingPage({ question, index, checked }) {
             <div className="QuestionContent_wrapper">
                 <div className="Question_wrapper">
                     <div className="Question">
-                        <h3>Câu {index}:&ensp;<span>({question.typeQuestionContent})</span></h3>
+                        <h3>Câu {index}:&ensp;<span>({typeQuestionContent})</span></h3>
                         <br />
-                        <label>{question.question}</label>
+                        <label>{question.title}</label>
                     </div>
                     <div className="Answer">
                         <div className="answer_items">
                             {
-                                question.answers.map((answer, index) => (
+                                Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
                                     <div key={index}>
                                         <input type="radio"
-                                            checked={answer.your_choice === true}
-                                            onChange={() => { handleChecked(answer.idAnswer) }}
-                                        />&emsp;<label>{answer.answer}</label>
+                                            checked={answer.choose === true}
+                                            onChange={() => { handleChecked(answer.id) }}
+                                        />&emsp;<label>{answer.content}</label>
                                     </div>
-                                ))
+                                )) : ''
                             }
                         </div>
                     </div>
@@ -97,21 +102,21 @@ function ContentTestingPage({ question, index, checked }) {
             <div className="QuestionContent_wrapper">
                 <div className="Question_wrapper">
                     <div className="Question">
-                        <h3>Câu {index}:&ensp;<span>({question.typeQuestionContent})</span></h3>
+                        <h3>Câu {index}:&ensp;<span>(typeQuestionContent)</span></h3>
                         <br />
-                        <label>{question.question}</label>
+                        <label>{question.title}</label>
                     </div>
                     <div className="Answer">
                         <div className="answer_items">
                             {
-                                question.answers.map((answer, index) => (
+                                Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
                                     <div key={index}>
                                         <input type="checkbox"
-                                            checked={selectedCheckBox.includes(answer.idAnswer)}
-                                            onChange={() => { handleChecked(answer.idAnswer) }}
-                                        />&emsp;<label>{answer.answer}</label>
+                                            checked={selectedCheckBox.includes(answer.id)}
+                                            onChange={() => { handleChecked(answer.id) }}
+                                        />&emsp;<label>{answer.content}</label>
                                     </div>
-                                ))
+                                )) : ''
                             }
                         </div>
                     </div>

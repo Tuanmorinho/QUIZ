@@ -10,6 +10,7 @@ import Grade from './ContentMainPages/GradePage/Grade'
 import Account from './ContentMainPages/AccountPage/Account'
 import Join from './ContentMainPages/JoinPage/Join'
 import ResultSearch from '../Popup/ResultSearchPopup/ResultSearch'
+import { ProtectedTestRoute } from '../../Route/ProtectedTestRoute'
 
 const routes = [
     {
@@ -34,7 +35,7 @@ const routes = [
     }
 ]
 
-function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam}) {
+function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam, setCssStatus}) {
 
     //State chứa trạng thái css active của sidebar khi chọn home/exam/grade/account
     const [ClassNameActive, setClassNameActive] = useState({
@@ -45,6 +46,7 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam}) {
         account: ''
     });
     const [pathname, setPathname] = useState('/');
+    const [disableTesting, setDisableTesting] = useState('');
 
 
 
@@ -57,6 +59,8 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam}) {
     // MainPagesRouterSidebar mounted khi nhập url tay hoặc setState
     useEffect(() => {
         if (pathname === '/home' || location.pathname === '/home') {
+            setCssStatus('');
+            setDisableTesting('')
             setClassNameActive({
                 home: 'active',
                 exam: '',
@@ -101,7 +105,11 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam}) {
                 account: 'active'
             })
         }
-    }, [pathname, location.pathname]);
+        if (pathname.includes('/testing')) {
+            setCssStatus('disable');
+            setDisableTesting('disableTesting');
+        }
+    }, [pathname, location.pathname, setCssStatus]);
 
     // Thay đổi state để thay trạng thái ccs active
     const ActiveHome = () => {
@@ -168,7 +176,7 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam}) {
             <ResultSearch trigger={isEmpty(searchTerms)} valueInput={searchTerms} clearText={clear} testResult={resultTest} examResult={resultExam} />
             <div className="App_withSidebar">
                 {/* SideBar */}
-                <div className="App_sidebarWrap">
+                <div className={`App_sidebarWrap ${disableTesting}`}>
                     <div className="Sidebar_wrapper">
                         <div className="Sidebar_list">
                             <li className={ClassNameActive.home}>
@@ -217,6 +225,7 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam}) {
                                     children={<route.component route={Active} getLocation={getLocation} />}
                                 />
                             ))}
+                            <ProtectedTestRoute path='/testing' getLocation={getLocation} />
                         </Switch>
                     </section>
                 </div>

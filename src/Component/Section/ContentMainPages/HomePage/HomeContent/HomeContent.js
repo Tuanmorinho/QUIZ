@@ -11,26 +11,20 @@ function HomeContent({ route }) {
     const [testTookPlace, setTestTookPlace] = useState([]);
 
     useEffect(() => {
-        let testWaitingStore = [];
-        let testTookPlaceStore = [];
-
         const fetchAllTest = async () => {
             try {
-                const resAllTest = await TestApi.getAllTest();
-                if (resAllTest) {
-                    for (let i = 0; i < resAllTest.length; i++) {
-                        if (resAllTest[i].status === 'waiting') {
-                            testWaitingStore = [...testWaitingStore, resAllTest[i]];
-                            localStorage.removeItem(APP_CONSTANTS.WAITING_TEST_INF_H);
-                            localStorage.setItem(APP_CONSTANTS.WAITING_TEST_INF_H, JSON.stringify(testWaitingStore));
-                            setTestWaiting(testWaitingStore);
-                        } else {
-                            testTookPlaceStore = [...testTookPlaceStore, resAllTest[i]];
-                            localStorage.removeItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_H);
-                            localStorage.setItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_H, JSON.stringify(testTookPlaceStore));
-                            setTestTookPlace(testTookPlaceStore);
-                        }
-                    }
+                const resTestWaiting = await TestApi.getTestByStatus('waiting');
+                const resTestTookPlace = await TestApi.getTestByStatus('took_place');
+
+                if (resTestWaiting) {
+                    localStorage.removeItem(APP_CONSTANTS.WAITING_TEST_INF_H);
+                    localStorage.setItem(APP_CONSTANTS.WAITING_TEST_INF_H, JSON.stringify(resTestWaiting));
+                    setTestWaiting(resTestWaiting);
+                }
+                if (resTestTookPlace) {
+                    localStorage.removeItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_H);
+                    localStorage.setItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_H, JSON.stringify(resTestTookPlace));
+                    setTestTookPlace(resTestTookPlace);
                 }
             } catch (error) {
                 console.log('error fetch test: ', error);

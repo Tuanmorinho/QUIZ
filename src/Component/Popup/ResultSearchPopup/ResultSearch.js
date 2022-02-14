@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import '../../../Css/ResultSearchPage.css';
 
@@ -17,17 +17,24 @@ function ResultSearch(props) {
 }
 
 function ConditionRender(props) {
-    const isWaiting = props.children.testResult && props.children.testResult.status === 'waiting';
-    const isPending = props.children.testResult && props.children.testResult.status === 'pending';
-    const isTookPlace = props.children.testResult && props.children.testResult.status === 'took_place';
-    const isExam = props.children.testExam;
+    const [isWaiting, setIsWaiting] = useState(props.children.testResult && props.children.testResult.status === 'waiting');
+    const [isTookPlace, setIsTookPlace] = useState(props.children.testResult && props.children.testResult.status === 'took_place');
+    const [notIsExam, setIsExam] = useState(!props.children.examResult);
 
+    useEffect
 
-    if (isWaiting || isPending) {
+    if (isWaiting && !notIsExam) {
+        return (
+            <>
+                <ResultTest>{props.children}</ResultTest>
+                <ResultExam>{props.children}</ResultExam>
+            </>
+        )
+    } else if (isWaiting) {
         return <ResultTest>{props.children}</ResultTest>
     } else if (isTookPlace) {
         return <ResultGrade>{props.children}</ResultGrade>
-    } else if (isExam) {
+    } else if (!notIsExam) {
         return <ResultExam>{props.children}</ResultExam>
     } else {
         return ''
@@ -103,7 +110,7 @@ function ResultExam(props) {
             </div>
             <hr width="100%" align="center" />
             <div className='result'>
-
+                <ResultExamChild data={props.children.examResult} />
             </div>
         </div>
     )
@@ -119,7 +126,7 @@ function ResultTestChild({ data }) {
                 <div className="green_retangle4"></div>
                 <div className="item_label-red4">
                     <label>Mã bài thi:&ensp;<span>{data.id}</span></label>
-                    <h1>{data.title}&ensp;-&ensp;{data.class}</h1>
+                    <h1>{data.title}&ensp;-&ensp;{data.examCode}</h1>
                 </div>
                 <div className="item_infomation4">
                     <div>
@@ -158,9 +165,34 @@ function ResultGradeChild({ data }) {
                 </div>
                 <div className="bg_gradeInfomation-orange2">
                     <div className="grade_itemExam2">
-                        <h1>{data.correctAnswer}/{data.noq}<br/>({data.score}%)</h1>
+                        <h1>{data.correctAnswer}/{data.noq}<br />({data.score}%)</h1>
                     </div>
                 </div>
+            </div>
+        </section>
+    );
+}
+
+function ResultExamChild({ data }) {
+    return (
+        <section className="Exam_examItem4">
+            <div className="examItem_wrapper4">
+                <div className="green-orange-gradient_retangle2"></div>
+                <div className="item_label-red4">
+                    <label>Mã bài thi:&ensp;<span>{data.examCode}</span></label>
+                    <h1>{data.title}&ensp;-&ensp;{data.class}</h1>
+                </div>
+                <div className="item_infomation4">
+                    <div>
+                        <span className="material-icons icon_teacher4"> account_box </span>
+                        <h5>{data.professor}</h5>
+                    </div>
+                </div>
+                {/* <div className="bg_gradeInfomation-orange2">
+                    <div className="grade_itemExam2">
+                        <h1>{data.correctAnswer}/{data.noq}<br/>({data.score}%)</h1>
+                    </div>
+                </div> */}
             </div>
         </section>
     );

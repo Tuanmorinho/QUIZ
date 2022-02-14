@@ -17,7 +17,7 @@ function GradeListChild({ gradeContent }) {
                 </div>
                 <div className="bg_gradeInfomation-orange">
                     <div className="grade_itemExam">
-                        <h1>{gradeContent.correctAnswer}/{gradeContent.noq}&ensp;-&ensp;({gradeContent.score}%)</h1>
+                        <h1>{gradeContent.correct_answers}/{gradeContent.noq}&ensp;-&ensp;({gradeContent.score}%)</h1>
                     </div>
                 </div>
             </div>

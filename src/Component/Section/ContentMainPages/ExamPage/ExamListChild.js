@@ -1,14 +1,61 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import { Link } from 'react-router-dom';
+import APP_CONSTANTS from '../../../../Constants/appConstants';
 
 function ExamListChild({ testWaitingContent }) {
 
-    const [disable, setDisable] = useState('disable_countdown');
+    const [disable, setDisable] = useState('countdown2');
+    const [timeDisplay, setTimeDisplay] = useState('');
+
+    let timeOutTest = useRef(null);
 
     useEffect(() => {
-        if (testWaitingContent.status === "waiting") {
-            setDisable('countdown2');
+        let startTime = new Date(testWaitingContent.start_time);
+        let realTime = new Date(testWaitingContent.realTime);
+
+        const displayTime = () => {
+            let hours = startTime.toString().slice(16, 18);
+            let minute = startTime.toString().slice(19, 21);
+
+            let hoursDisplay = '';
+
+            if (hours >= 0 && hours <= 12) {
+                hoursDisplay = 'AM'
+            } else {
+                hours = hours % 12;
+                hoursDisplay = 'PM'
+            }
+
+            return String(String(startTime).slice(8, 10) + ' ' + String(startTime).slice(4, 7) + ' ' + String(startTime).slice(11, 15) + ', ' + hours + ':' + minute + ' ' + hoursDisplay);
         }
-    }, [testWaitingContent.status])
+
+        const differentTime = () => {
+            if (startTime - realTime >= 0) { return startTime - realTime };
+        }
+
+        const setTimeOutOpenTest = () => {
+            setTimeDisplay(displayTime());
+            if (timeOutTest.current) {
+                clearTimeout(timeOutTest.current);
+            };
+            timeOutTest.current = setTimeout(() => {
+                setDisable('disable_countdown2');
+            }, differentTime());
+        }
+
+        setTimeOutOpenTest();
+    }, [testWaitingContent.status, testWaitingContent.realTime, testWaitingContent.start_time])
+
+    const storeInfTesting = () => {
+        const inf = {
+            'idTest': testWaitingContent.id,
+            'title': testWaitingContent.title,
+            'class': testWaitingContent.examCode,
+            'professor': testWaitingContent.professor
+        }
+        localStorage.removeItem(APP_CONSTANTS.INF_TESTING_TITLE);
+        localStorage.setItem(APP_CONSTANTS.INF_TESTING_TITLE, JSON.stringify(inf));
+    }
 
     return (
         <section className="Exam_examItem2">
@@ -16,38 +63,32 @@ function ExamListChild({ testWaitingContent }) {
                 <div className="green_retangle2"></div>
                 <div className="item_label-red2">
                     <label>Mã bài thi:&ensp;<span>{testWaitingContent.id}</span></label>
-                    <h1>{testWaitingContent.title}&ensp;-&ensp;{testWaitingContent.class}</h1>
+                    <h1>{testWaitingContent.title}&ensp;-&ensp;{testWaitingContent.examCode}</h1>
                 </div>
                 <div className="item_infomation2">
-                    <div>
+                    <div className='item_infomation2-professor'>
                         <span className="material-icons icon_teacher2"> account_box </span>
                         <p>Giảng viên:&nbsp;</p><h5>{testWaitingContent.professor}</h5>
                     </div>
-                    <div>
+                    <div className='item_infomation2-time'>
                         <span className="material-icons icon_timer2"> alarm </span>
                         <label className="font_weight-bold2">{testWaitingContent.time}&nbsp;phút</label>
                     </div>
                 </div>
-                <button>Bắt đầu thi</button>
+                <Link
+                    to={{
+                        pathname: '/testing',
+                        search: `id=${testWaitingContent.id}`
+                    }}
+                    onClick={storeInfTesting}
+                >
+                    <button>Bắt đầu thi</button>
+                </Link>
                 <div className={disable}>
                     <div className="Bg_countdown-white2">
                         <div className="Timer_wrapper2">
-                            <div className="Timer count_days2">
-                                <h1>05</h1>
-                                <label>Days</label>
-                            </div>
-                            <div className="Timer count_hours2">
-                                <h1>11</h1>
-                                <label>Hours</label>
-                            </div>
-                            <div className="Timer count_minutes2">
-                                <h1>56</h1>
-                                <label>Minutes</label>
-                            </div>
-                            <div className="Timer count_seconds2">
-                                <h1>20</h1>
-                                <label>Seconds</label>
-                            </div>
+                            <h1>Bài thi sẽ được mở lúc:</h1>
+                            <label>{timeDisplay}</label>
                         </div>
                     </div>
                 </div>
