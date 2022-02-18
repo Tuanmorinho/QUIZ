@@ -99,6 +99,12 @@ hr {
     height: 80px;
     max-width: 480px;
     max-height: 80px;
+
+    cursor: pointer;
+}
+.Exam_examItem4:hover {
+    background: #f5f5f5;
+    border: none;
 }
 .green_retangle4 {
     width: 5px;
@@ -114,7 +120,6 @@ hr {
 .item_label-red4 {
     height: 50px;
     width: 260px;
-    margin-left: 5px;
 
     display: flex;
     flex-direction: column;
@@ -138,20 +143,20 @@ hr {
 }
 
 .item_infomation4 {
-    width: 135px;
+    width: 170px;
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .item_infomation4 div {
-    margin-top: 3px;
-    margin-bottom: 3px;
-
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 .item_infomation4 label {
     font-weight: bold;
@@ -166,7 +171,6 @@ hr {
     font-size: 12px;
     color: #000000;
 
-    margin-top: 4px;
     margin-left: 8px;
 }
 span.icon_teacher4 {
@@ -182,10 +186,10 @@ span.icon_timer4 {
     background: #1AAD8A;
     border: none;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     color: #FFFFFF;
 
-    width: 50px;
+    width: 45px;
     height: 80px;
     
     cursor: pointer;
@@ -217,4 +221,10 @@ span.icon_timer4 {
     font-size: 15px;
     color: white;
     text-align: center;
+}
+
+.green_retangle6 {
+    width: 5px;
+    height: 80px;
+    background: linear-gradient(180deg, rgba(17, 153, 142, 0.5) 0%, rgba(129, 145, 60, 1) 70%);
 }

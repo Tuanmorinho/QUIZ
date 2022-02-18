@@ -1,17 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import '../../../../Css/Join.css';
-import JoinList from './JoinList';
+import JoinList from './JoinList/JoinList';
+import JoinListSearch from './JoinListSearch/JoinListSearch';
 import TestApi from '../../../../API/testApi';
 import APP_CONSTANTS from '../../../../Constants/appConstants';
+import ExamApi from '../../../../API/examApi';
 
 function Join({ getLocation }) {
 
     const [joinedExam, setJoinedExam] = useState([]);
+    const [searchExam, setSearchExam] = useState([]);
+
+    const [displayResultExam, setDisplayResultExam] = useState('disableResult');
 
     let location = useLocation();
     useEffect(() => {
         getLocation(location.pathname);
+
+        const resultExamSearch = async () => {
+            if (new URLSearchParams(location.search).get("p")) {
+                try {
+                    const resultExam = await ExamApi.searchExam(new URLSearchParams(location.search).get("p"));
+                    if (resultExam) {
+                        localStorage.removeItem(APP_CONSTANTS.INF_EXAM_SEARCH);
+                        localStorage.setItem(APP_CONSTANTS.INF_EXAM_SEARCH, JSON.stringify(resultExam));
+                        setSearchExam(resultExam)
+                    }
+                } catch (error) {
+                    console.log('error search: ', error);
+                }
+                setDisplayResultExam('disableResult');
+            } else {
+                setDisplayResultExam('disableResult');
+            }
+        }
 
         const fetchAllTestForExam = async () => {
             try {
@@ -28,12 +51,12 @@ function Join({ getLocation }) {
             }
         }
 
-
+        resultExamSearch();
         fetchAllTestForExam();
     }, [getLocation, location.pathname]);
 
 
-    const displayExam = () => {
+    const displayExamJoined = () => {
         if (localStorage.getItem(APP_CONSTANTS.INF_EXAM_JOINED)) {
             return JSON.parse(localStorage.getItem(APP_CONSTANTS.INF_EXAM_JOINED));
         } else {
@@ -41,15 +64,31 @@ function Join({ getLocation }) {
         }
     }
 
+    const displayExamSearch = () => {
+        if (localStorage.getItem(APP_CONSTANTS.INF_EXAM_SEARCH)) {
+            return JSON.parse(localStorage.getItem(APP_CONSTANTS.INF_EXAM_SEARCH));
+        } else {
+            return searchExam;
+        }
+    }
+
 
     return (
         <div className="Home_wrapper-exam5">
+            <div className={`SectionList_wrapper5 ${displayResultExam}`} style={{'marginBottom': 50}}>
+                <div className="SectionList_headingWrap5">
+                    <h2 className="SectionList_heading5">Kì thi đã tham gia</h2>
+                </div>
+                <div className="SectionList_bodyWrap5">
+                    <JoinListSearch exams={displayExamSearch()} />
+                </div>
+            </div>
             <div className="SectionList_wrapper5">
                 <div className="SectionList_headingWrap5">
                     <h2 className="SectionList_heading5">Kì thi đã tham gia</h2>
                 </div>
                 <div className="SectionList_bodyWrap5">
-                    <JoinList exams={displayExam()} />
+                    <JoinList exams={displayExamJoined()} />
                 </div>
             </div>
         </div>

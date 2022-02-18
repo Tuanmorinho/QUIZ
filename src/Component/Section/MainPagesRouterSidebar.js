@@ -35,8 +35,7 @@ const routes = [
     }
 ]
 
-function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam, setCssStatus}) {
-
+function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam, setCssStatus, blurSearch}) {
     //State chứa trạng thái css active của sidebar khi chọn home/exam/grade/account
     const [ClassNameActive, setClassNameActive] = useState({
         home: 'active',
@@ -48,7 +47,7 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam, set
     const [pathname, setPathname] = useState('/');
     const [disableTesting, setDisableTesting] = useState('');
 
-
+    const [trigger, setTrigger] = useState();
 
     const getLocation = (path) => {
         setPathname(path);
@@ -58,57 +57,61 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam, set
     // Mỗi khi MainPagesRouterSidebar mounted sẽ kiểm tra xem url là gì để set thái trạng thái css active của sidebar
     // MainPagesRouterSidebar mounted khi nhập url tay hoặc setState
     useEffect(() => {
-        if (pathname === '/home' || location.pathname === '/home') {
-            setCssStatus('');
-            setDisableTesting('')
-            setClassNameActive({
-                home: 'active',
-                exam: '',
-                grade: '',
-                join: '',
-                account: ''
-            })
+        const checkPathname = () => {
+            if (pathname === '/home' || location.pathname === '/home') {
+                setCssStatus('');
+                setDisableTesting('')
+                setClassNameActive({
+                    home: 'active',
+                    exam: '',
+                    grade: '',
+                    join: '',
+                    account: ''
+                })
+            }
+            if (pathname === '/test') {
+                setClassNameActive({
+                    home: '',
+                    exam: 'active',
+                    grade: '',
+                    join: '',
+                    account: ''
+                })
+            }
+            if (pathname === '/grade') {
+                setClassNameActive({
+                    home: '',
+                    exam: '',
+                    grade: 'active',
+                    join: '',
+                    account: ''
+                })
+            }
+            if (pathname === '/join') {
+                setClassNameActive({
+                    home: '',
+                    exam: '',
+                    grade: '',
+                    join: 'active',
+                    account: ''
+                })
+            }
+            if (pathname === '/account') {
+                setClassNameActive({
+                    home: '',
+                    exam: '',
+                    grade: '',
+                    join: '',
+                    account: 'active'
+                })
+            }
+            if (pathname.includes('/testing')) {
+                setCssStatus('disable');
+                setDisableTesting('disableTesting');
+            }
         }
-        if (pathname === '/test') {
-            setClassNameActive({
-                home: '',
-                exam: 'active',
-                grade: '',
-                join: '',
-                account: ''
-            })
-        }
-        if (pathname === '/grade') {
-            setClassNameActive({
-                home: '',
-                exam: '',
-                grade: 'active',
-                join: '',
-                account: ''
-            })
-        }
-        if (pathname === '/join') {
-            setClassNameActive({
-                home: '',
-                exam: '',
-                grade: '',
-                join: 'active',
-                account: ''
-            })
-        }
-        if (pathname === '/account') {
-            setClassNameActive({
-                home: '',
-                exam: '',
-                grade: '',
-                join: '',
-                account: 'active'
-            })
-        }
-        if (pathname.includes('/testing')) {
-            setCssStatus('disable');
-            setDisableTesting('disableTesting');
-        }
+
+        checkPathname();
     }, [pathname, location.pathname, setCssStatus]);
 
     // Thay đổi state để thay trạng thái ccs active

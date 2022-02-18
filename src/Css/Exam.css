@@ -218,3 +218,7 @@ span.icon_timer2 {
     font-weight: 650;
     font-size: 17px;
 }
+
+.disableResult {
+    display: none;
+}

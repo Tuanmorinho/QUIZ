@@ -1,8 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../Css/ResultSearchPage.css';
+import APP_CONSTANTS from '../../../Constants/appConstants';
 
 function ResultSearch(props) {
+
+    const [isWaiting, setIsWaiting] = useState(false);
+    const [isTookPlace, setIsTookPlace] = useState(false);
+    const [isExam, setIsExam] = useState(false);
+
+    useEffect(() => {
+        const checkResult = () => {
+            if (props.testResult && props.testResult.status === 'waiting') {
+                setIsWaiting(true);
+            } else {
+                setIsWaiting(false);
+            }
+            if (props.testResult && props.testResult.status === 'took_place') {
+                setIsTookPlace(true);
+            } else {
+                setIsTookPlace(false);
+            }
+            if (props.examResult && props.examResult.examCode !== null) {
+                setIsExam(true);
+            } else {
+                setIsExam(false);
+            }
+        }
+
+        checkResult();
+    }, [props.testResult, props.examResult])
+
     return (props.trigger) ? (
         <div className='popupSearch'>
             <div className='popupSearch-inner'>
@@ -10,31 +38,28 @@ function ResultSearch(props) {
                     <span className="material-icons icon-resultSearch"> search </span>
                     <label>Kết quả cho ID: '<span>{props.valueInput}</span>'</label>
                 </div>
-                <ConditionRender>{props}</ConditionRender>
+                <ConditionRender triggWaiting={isWaiting} triggTookPlace={isTookPlace} triggExam={isExam}>{props}</ConditionRender>
             </div>
         </div>
     ) : '';
 }
 
 function ConditionRender(props) {
-    const [isWaiting, setIsWaiting] = useState(props.children.testResult && props.children.testResult.status === 'waiting');
-    const [isTookPlace, setIsTookPlace] = useState(props.children.testResult && props.children.testResult.status === 'took_place');
-    const [notIsExam, setIsExam] = useState(!props.children.examResult);
-
-    useEffect
-
-    if (isWaiting && !notIsExam) {
+    if (props.triggWaiting && props.triggExam) {
         return (
             <>
                 <ResultTest>{props.children}</ResultTest>
                 <ResultExam>{props.children}</ResultExam>
             </>
         )
-    } else if (isWaiting) {
+    }
+    if (props.triggWaiting) {
         return <ResultTest>{props.children}</ResultTest>
-    } else if (isTookPlace) {
+    }
+    if (props.triggTookPlace) {
         return <ResultGrade>{props.children}</ResultGrade>
-    } else if (!notIsExam) {
+    }
+    if (props.triggExam) {
         return <ResultExam>{props.children}</ResultExam>
     } else {
         return ''
@@ -60,7 +85,7 @@ function ResultTest(props) {
             </div>
             <hr width="100%" align="center" />
             <div className='result'>
-                <ResultTestChild data={props.children.testResult} />
+                <ResultTestChild data={props.children.testResult} data2={props.children.examResult} clearText={props.children.clearText}/>
             </div>
         </div>
     )
@@ -85,7 +110,7 @@ function ResultGrade(props) {
             </div>
             <hr width="100%" align="center" />
             <div className='result'>
-                <ResultGradeChild data={props.children.testResult} />
+                <ResultGradeChild data={props.children.testResult} clearText={props.children.clearText} />
             </div>
         </div>
     )
@@ -110,91 +135,114 @@ function ResultExam(props) {
             </div>
             <hr width="100%" align="center" />
             <div className='result'>
-                <ResultExamChild data={props.children.examResult} />
+                <ResultExamChild data={props.children.examResult} clearText={props.children.clearText} />
             </div>
         </div>
     )
 }
 
-function ResultTestChild({ data }) {
-
-    // const is= data.status === '';
-
+function ResultTestChild({ data, data2, clearText }) {
     return (
-        <section className="Exam_examItem4">
-            <div className="examItem_wrapper4">
-                <div className="green_retangle4"></div>
-                <div className="item_label-red4">
-                    <label>Mã bài thi:&ensp;<span>{data.id}</span></label>
-                    <h1>{data.title}&ensp;-&ensp;{data.examCode}</h1>
-                </div>
-                <div className="item_infomation4">
-                    <div>
-                        <span className="material-icons icon_teacher4"> account_box </span>
-                        <h5>{data.professor}</h5>
+        <Link
+            style={{
+                'textDecorationLine': 'none',
+                'color': 'gray'
+            }}
+            to={{
+                pathname: '/test',
+                search: `p=${data2.examCode}`
+            }}
+            onClick={() => clearText('')}
+        >
+            <section className="Exam_examItem4">
+                <div className="examItem_wrapper4">
+                    <div className="green_retangle4"></div>
+                    <div className="item_label-red4">
+                        <label>Mã bài thi:&ensp;<span>{data.id}</span></label>
+                        <h1>{data.title}&ensp;-&ensp;{data2.examCode}</h1>
                     </div>
-                    <div>
-                        <span className="material-icons icon_timer4"> alarm </span>
-                        <label className="font_weight-bold4">{data.time}&nbsp;phút</label>
+                    <div className="item_infomation4">
+                        <div>
+                            <span className="material-icons icon_teacher4"> account_box </span>
+                            <h5>{data.professor}</h5>
+                        </div>
+                        <div>
+                            <span className="material-icons icon_timer4"> alarm </span>
+                            <label className="font_weight-bold4">{data.time}&nbsp;phút</label>
+                        </div>
                     </div>
                 </div>
-                {/* <>
-                    {
-                        isWaitingTest ? (<button>Thi</button>) : (<button>Join</button>)
-                    }
-                </> */}
-            </div>
-        </section>
+            </section>
+        </Link>
     );
 }
 
-function ResultGradeChild({ data }) {
+function ResultGradeChild({ data, data2, clearText }) {
     return (
-        <section className="Exam_examItem4">
-            <div className="examItem_wrapper4">
-                <div className="green-orange-gradient_retangle2"></div>
-                <div className="item_label-red4">
-                    <label>Mã bài thi:&ensp;<span>{data.id}</span></label>
-                    <h1>{data.title}&ensp;-&ensp;{data.class}</h1>
-                </div>
-                <div className="item_infomation4">
-                    <div>
-                        <span className="material-icons icon_teacher4"> account_box </span>
-                        <h5>{data.professor}</h5>
+        <Link
+            style={{
+                'textDecorationLine': 'none',
+                'color': 'gray'
+            }}
+            to={{
+                pathname: '/grade',
+                search: `p=${data2.examCode}`
+            }}
+            onClick={() => clearText('')}
+        >
+            <section className="Exam_examItem4">
+                <div className="examItem_wrapper4">
+                    <div className="green-orange-gradient_retangle2"></div>
+                    <div className="item_label-red4">
+                        <label>Mã bài thi:&ensp;<span>{data.id}</span></label>
+                        <h1>{data.title}&ensp;-&ensp;{data2.examCode}</h1>
+                    </div>
+                    <div className="item_infomation4">
+                        <div>
+                            <span className="material-icons icon_teacher4"> account_box </span>
+                            <h5>{data.professor}</h5>
+                        </div>
+                    </div>
+                    <div className="bg_gradeInfomation-orange2">
+                        <div className="grade_itemExam2">
+                            <h1>{data.correctAnswer}/{data.noq}<br />({data.score}%)</h1>
+                        </div>
                     </div>
                 </div>
-                <div className="bg_gradeInfomation-orange2">
-                    <div className="grade_itemExam2">
-                        <h1>{data.correctAnswer}/{data.noq}<br />({data.score}%)</h1>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        </Link>
     );
 }
 
-function ResultExamChild({ data }) {
+function ResultExamChild({ data, clearText }) {
     return (
-        <section className="Exam_examItem4">
-            <div className="examItem_wrapper4">
-                <div className="green-orange-gradient_retangle2"></div>
-                <div className="item_label-red4">
-                    <label>Mã bài thi:&ensp;<span>{data.examCode}</span></label>
-                    <h1>{data.title}&ensp;-&ensp;{data.class}</h1>
-                </div>
-                <div className="item_infomation4">
-                    <div>
-                        <span className="material-icons icon_teacher4"> account_box </span>
-                        <h5>{data.professor}</h5>
+        <Link
+            style={{
+                'textDecorationLine': 'none',
+                'color': 'gray'
+            }}
+            to={{
+                pathname: '/join',
+                search: `p=${data.examCode}`
+            }}
+            onClick={() => clearText('')}
+        >
+            <section className="Exam_examItem4">
+                <div className="examItem_wrapper4">
+                    <div className="green_retangle6"></div>
+                    <div className="item_label-red4">
+                        <label>Mã kì thi:&ensp;<span>{data.examCode}</span></label>
+                        <h1>{data.title}&ensp;</h1>
+                    </div>
+                    <div className="item_infomation4">
+                        <div>
+                            <span className="material-icons icon_teacher4"> account_box </span>
+                            <h5>{data.professor}</h5>
+                        </div>
                     </div>
                 </div>
-                {/* <div className="bg_gradeInfomation-orange2">
-                    <div className="grade_itemExam2">
-                        <h1>{data.correctAnswer}/{data.noq}<br/>({data.score}%)</h1>
-                    </div>
-                </div> */}
-            </div>
-        </section>
+            </section>
+        </Link>
     );
 }
 

@@ -5,7 +5,7 @@ import '../Css/Navbar.css'
 import { NavbarLogo } from '../resrouces/Img'
 import NotiSuccessPopup from './Popup/NotiPopup/NotiSuccessPopup';
 
-function Navbar({ getInputValue, valueInput, clearText, onSubmitSearch, disableForTesting}) {
+function Navbar({ getInputValue, valueInput, clearText, onSubmitSearch, disableForTesting, setBlurSearch}) {
 
     const [borderSearch, setBorderSearch] = useState('');
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
@@ -19,9 +19,9 @@ function Navbar({ getInputValue, valueInput, clearText, onSubmitSearch, disableF
             clearTimeout(typingTimeoutRef.current);
         };
         typingTimeoutRef.current = setTimeout(() => {
-            const id = e.target.value;
-            onSubmitSearch(id);
-        },500);
+            // const id = e.target.value;
+            onSubmitSearch(e.target.value);
+        },300);
         getInputValue(e.target.value);
     }
 
@@ -72,7 +72,7 @@ function Navbar({ getInputValue, valueInput, clearText, onSubmitSearch, disableF
                                 placeholder="Tìm kiếm kì thi theo ID"
                                 value={valueInput}
                                 onFocus={() => { setBorderSearch('border-red') }}
-                                onBlur={() => { setBorderSearch('') }}
+                                onBlur={() => {setBorderSearch(''); setBlurSearch(false)}}
                                 onChange={handleSearch}
                             />
                             <div onClick={() => { clearText() }}>

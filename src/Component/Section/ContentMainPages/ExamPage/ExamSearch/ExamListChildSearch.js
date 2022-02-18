@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
-import APP_CONSTANTS from '../../../../Constants/appConstants';
+import APP_CONSTANTS from '../../../../../Constants/appConstants';
 
-function ExamListChild({ testWaitingContent }) {
+function ExamListChildSearch({ testWaitingContent }) {
 
     const [disable, setDisable] = useState('countdown2');
     const [timeDisplay, setTimeDisplay] = useState('');
@@ -10,7 +10,7 @@ function ExamListChild({ testWaitingContent }) {
     let timeOutTest = useRef(null);
 
     useEffect(() => {
-        let startTime = new Date(testWaitingContent.start_time);
+        let startTime = new Date(testWaitingContent.startTime);
         let realTime = new Date(testWaitingContent.realTime);
 
         const displayTime = () => {
@@ -44,7 +44,7 @@ function ExamListChild({ testWaitingContent }) {
         }
 
         setTimeOutOpenTest();
-    }, [testWaitingContent.status, testWaitingContent.realTime, testWaitingContent.start_time])
+    }, [testWaitingContent.status, testWaitingContent.realTime, testWaitingContent.startTime])
 
     const storeInfTesting = () => {
         const inf = {
@@ -97,4 +97,4 @@ function ExamListChild({ testWaitingContent }) {
     );
 }
 
-export default ExamListChild;
+export default ExamListChildSearch;

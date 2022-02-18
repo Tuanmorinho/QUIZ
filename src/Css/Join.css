@@ -174,3 +174,7 @@ span.icon_timer5 {
     opacity: 0.95;
     color: rgba(0, 0, 0, 0.75);
 }
+
+.disableResult {
+    display: none;
+}

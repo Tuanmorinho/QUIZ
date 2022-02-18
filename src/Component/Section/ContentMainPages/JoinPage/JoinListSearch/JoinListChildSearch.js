@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import ExamApi from '../../../../API/examApi';
+import React, { useEffect, useState } from 'react';
+import ExamApi from '../../../../../API/examApi';
 import { useHistory } from 'react-router-dom';
-import ErrorPopup from '../../../Popup/ErrorPopup/ErrorPopup';
-import NotiSuccessPopup from '../../../Popup/NotiPopup/NotiSuccessPopup';
+import ErrorPopup from '../../../../Popup/ErrorPopup/ErrorPopup';
+import NotiSuccessPopup from '../../../../Popup/NotiPopup/NotiSuccessPopup';
 
-function JoinListChild({ exam }) {
+function JoinListChildSearch({ exam }) {
 
     const [timeStartDisplay, setTimeStartDisplay] = useState('');
     const [joinedCss, setJoinedCss] = useState('joined');
@@ -115,4 +115,4 @@ function JoinListChild({ exam }) {
     )
 }
 
-export default JoinListChild
+export default JoinListChildSearch

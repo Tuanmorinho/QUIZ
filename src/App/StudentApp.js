@@ -11,6 +11,7 @@ function StudentApp() {
   const [searchTerm, setSearchTerm] = useState('');
   const [resultTest, setResultTest] = useState('');
   const [resultExam, setResultExam] = useState('');
+  const [blur, setBlur] = useState();
 
   const [disablCss, setDisableCss] = useState('');
 
@@ -26,10 +27,17 @@ function StudentApp() {
     try {
       const resTest = await TestApi.searchTestByExamCode(examCode);
       const resExam = await ExamApi.searchExam(examCode);
-      if (resTest) {
+
+      if (resTest && resExam) {
         setResultTest(resTest);
+        setResultExam(resExam);
       }
-      if (resExam) {
+      if (resTest && !resExam) {
+        setResultTest(resTest);
+        setResultExam('');
+      }
+      if (!resTest && resExam) {
+        setResultTest('');
         setResultExam(resExam);
       }
     } catch (error) {
@@ -43,10 +51,14 @@ function StudentApp() {
     setResultExam('');
   }
 
+  const blurSearch = (val) => {
+    setBlur(val);
+  } 
+
   return (
     <div className="App" >
-      <Navbar getInputValue={getSearchTerm} valueInput={searchTerm} clearText={clearState} onSubmitSearch={submitSearch} disableForTesting={disablCss} />
-      <MainPagesRouterSidebar searchTerms={searchTerm} clear={clearState} resultTest={resultTest} resultExam={resultExam} setCssStatus={getCssStatus} />
+      <Navbar getInputValue={getSearchTerm} valueInput={searchTerm} clearText={clearState} onSubmitSearch={submitSearch} disableForTesting={disablCss} setBlurSearch={blurSearch}/>
+      <MainPagesRouterSidebar searchTerms={searchTerm} clear={clearState} resultTest={resultTest} resultExam={resultExam} setCssStatus={getCssStatus} blurSearch={blur}/>
       <Footer disableForTesting={disablCss} />
     </div >
   );
