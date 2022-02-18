@@ -30,7 +30,7 @@ function Join({ getLocation }) {
                 } catch (error) {
                     console.log('error search: ', error);
                 }
-                setDisplayResultExam('disableResult');
+                setDisplayResultExam('');
             } else {
                 setDisplayResultExam('disableResult');
             }
@@ -77,7 +77,7 @@ function Join({ getLocation }) {
         <div className="Home_wrapper-exam5">
             <div className={`SectionList_wrapper5 ${displayResultExam}`} style={{'marginBottom': 50}}>
                 <div className="SectionList_headingWrap5">
-                    <h2 className="SectionList_heading5">Kì thi đã tham gia</h2>
+                    <h2 className="SectionList_heading5">Kì thi tìm kiếm</h2>
                 </div>
                 <div className="SectionList_bodyWrap5">
                     <JoinListSearch exams={displayExamSearch()} />

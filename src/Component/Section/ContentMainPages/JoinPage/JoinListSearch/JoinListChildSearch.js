@@ -5,6 +5,7 @@ import ErrorPopup from '../../../../Popup/ErrorPopup/ErrorPopup';
 import NotiSuccessPopup from '../../../../Popup/NotiPopup/NotiSuccessPopup';
 
 function JoinListChildSearch({ exam }) {
+    console.log(exam);
 
     const [timeStartDisplay, setTimeStartDisplay] = useState('');
     const [joinedCss, setJoinedCss] = useState('joined');
@@ -16,6 +17,14 @@ function JoinListChildSearch({ exam }) {
 
     useEffect(() => {
         let startTime = new Date(exam.start_time);
+
+        const checkJoined = () => {
+            if (exam.status === 'not_yet') {
+                setJoinedCss('not_joined_yet');
+            } else {
+                setJoinedCss('joined');
+            }
+        }
 
         const displayTime = () => {
             let hours = startTime.toString().slice(16, 18);
@@ -33,8 +42,9 @@ function JoinListChildSearch({ exam }) {
             setTimeStartDisplay(String(String(startTime).slice(8, 10) + ' ' + String(startTime).slice(4, 7) + ' ' + String(startTime).slice(11, 15) + ', ' + hours + ':' + minute + ' ' + hoursDisplay));
         }
 
+        checkJoined();
         displayTime();
-    }, [exam.start_time]);
+    }, [exam]);
 
     const joinExam = async () => {
         try {
@@ -43,7 +53,7 @@ function JoinListChildSearch({ exam }) {
                 setTriggerSuccessPopup(true);
                 setTimeout(() => {
                     setTriggerSuccessPopup(false);
-                    history.replace('/');
+                    history.replace('/exam');
                 }, 1200);
             } else {
                 setTriggerErrorPopup(true);

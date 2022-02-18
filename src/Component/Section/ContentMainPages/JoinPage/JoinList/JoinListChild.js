@@ -17,6 +17,14 @@ function JoinListChild({ exam }) {
     useEffect(() => {
         let startTime = new Date(exam.start_time);
 
+        const checkJoined = () => {
+            if (exam.status === 'not_yet') {
+                setJoinedCss('not_joined_yet');
+            } else {
+                setJoinedCss('joined');
+            }
+        }
+
         const displayTime = () => {
             let hours = startTime.toString().slice(16, 18);
             let minute = startTime.toString().slice(19, 21);
@@ -33,6 +41,7 @@ function JoinListChild({ exam }) {
             setTimeStartDisplay(String(String(startTime).slice(8, 10) + ' ' + String(startTime).slice(4, 7) + ' ' + String(startTime).slice(11, 15) + ', ' + hours + ':' + minute + ' ' + hoursDisplay));
         }
 
+        checkJoined();
         displayTime();
     }, [exam.start_time]);
 
