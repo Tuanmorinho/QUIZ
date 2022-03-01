@@ -1,5 +1,5 @@
 const APP_CONSTANTS = {
-    API_BASE_URL: 'https://springbootmysqlcrudaws-env.eba-y8w9wmhv.ap-northeast-1.elasticbeanstalk.com',
+    API_BASE_URL: 'http://springbootmysqlcrudaws-env.eba-y8w9wmhv.ap-northeast-1.elasticbeanstalk.com',
     USER_TOKEN: 'X-Auth-Token',
     USER_BASIC_INFOR: 'US-IN4',
     USER_BASIC_INFOR_A: 'US-IN4_A',
