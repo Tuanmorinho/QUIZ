@@ -110,7 +110,7 @@ function ResultGrade(props) {
             </div>
             <hr width="100%" align="center" />
             <div className='result'>
-                <ResultGradeChild data={props.children.testResult} clearText={props.children.clearText} />
+                <ResultGradeChild data={props.children.testResult} data2={props.children.examResult} clearText={props.children.clearText} />
             </div>
         </div>
     )
@@ -201,11 +201,6 @@ function ResultGradeChild({ data, data2, clearText }) {
                         <div>
                             <span className="material-icons icon_teacher4"> account_box </span>
                             <h5>{data.professor}</h5>
-                        </div>
-                    </div>
-                    <div className="bg_gradeInfomation-orange2">
-                        <div className="grade_itemExam2">
-                            <h1>{data.correctAnswer}/{data.noq}<br />({data.score}%)</h1>
                         </div>
                     </div>
                 </div>

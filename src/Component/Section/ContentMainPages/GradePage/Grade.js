@@ -1,18 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import '../../../../Css/Grade.css';
 import { useLocation } from 'react-router-dom';
-import GradeList from './GradeList';
+import GradeList from './GradeList/GradeList';
 import TestApi from '../../../../API/testApi';
 import APP_CONSTANTS from '../../../../Constants/appConstants';
+import GradeListSearch from './GradeSearch/GradeListSearch';
 
-function Grade({getLocation}) {
+function Grade({ getLocation }) {
 
     const [testsTookPlace, setTestsTookPlace] = useState([]);
+    const [testsTookPlaceSearch, setTestsTookPlaceSearch] = useState([]);
+    const [displayResultTestTookPlace, setDisplayResultTestTookPlace] = useState('disableResult');
 
     let location = useLocation();
 
     useEffect(() => {
         getLocation(location.pathname);
+
+        const resultGradeSearch = async () => {
+            if (new URLSearchParams(location.search).get("p")) {
+                try {
+                    const resultGrade = await TestApi.searchTestByExamCode(new URLSearchParams(location.search).get("p"));
+                    if (resultGrade) {
+                        localStorage.removeItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_S);
+                        localStorage.setItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_S, JSON.stringify(resultGrade));
+                        setTestsTookPlaceSearch(resultGrade);
+                    }
+                } catch (error) {
+                    console.log('error search: ', error);
+                }
+                setDisplayResultTestTookPlace('');
+            } else {
+                setDisplayResultTestTookPlace('disableResult');
+            }
+        }
 
         const fetchTestTookPlace = async () => {
             try {
@@ -23,12 +44,13 @@ function Grade({getLocation}) {
                     setTestsTookPlace(resTestsTookPlace);
                 }
             } catch (error) {
-                console.log('error fetch test waiting: ', error);
+                console.log('error fetch test took place: ', error);
             }
         }
 
+        resultGradeSearch();
         fetchTestTookPlace();
-    },[getLocation, location.pathname]);
+    }, [getLocation, location.pathname, location.search]);
 
     const displayTestTookPlace = () => {
         if (localStorage.getItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_G)) {
@@ -38,14 +60,30 @@ function Grade({getLocation}) {
         }
     }
 
+    const displayTestTookPlaceResultSearch = () => {
+        if (localStorage.getItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_S)) {
+            return JSON.parse(localStorage.getItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_S));
+        } else {
+            return testsTookPlaceSearch;
+        }
+    }
+
     return (
         <div className="Home_wrapper-grade">
+            <div className={`SectionList_wrapper3 ${displayResultTestTookPlace}`} style={{'marginBottom': 50}}    >
+                <div className="SectionList_headingWrap3">
+                    <h2 className="SectionList_heading3">Bài đã thi tìm kiếm</h2>
+                </div>
+                <div className="SectionList_bodyWrap3">
+                    <GradeListSearch grades={displayTestTookPlaceResultSearch()} />
+                </div>
+            </div>
             <div className="SectionList_wrapper3">
                 <div className="SectionList_headingWrap3">
                     <h2 className="SectionList_heading3">Bài đã thi</h2>
                 </div>
                 <div className="SectionList_bodyWrap3">
-                    <GradeList grades={ displayTestTookPlace()} />
+                    <GradeList grades={displayTestTookPlace()} />
                 </div>
             </div>
         </div>

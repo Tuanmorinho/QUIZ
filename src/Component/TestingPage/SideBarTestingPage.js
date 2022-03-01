@@ -1,11 +1,60 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import TestApi from '../../API/testApi';
 import APP_CONSTANTS from '../../Constants/appConstants';
 
 function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexCss, submit }) {
 
     const [submitActive, setSubmitActive] = useState('unfinish');
 
+    const [timerHours, setTimerHours] = useState('0');
+    const [timerMinutes, setTimerMinutes] = useState('0');
+    const [timerSeconds, setTimerSeconds] = useState('0');
+
+    let interval = useRef();
+
+    let location = useLocation();
+
     useEffect(() => {
+
+        let query = new URLSearchParams(location.search);
+
+        const startTimer = (object) => {
+            // let distanceTime = new Date(object.submissionTime).getTime() - new Date(object.realTime).getTime();
+
+            let distanceTime = new Date(object.startTime).getTime() + new Date(object.time).getTime() - new Date(object.realTime).getTime();
+            if (interval.current) {
+                clearInterval(interval.current);
+            };
+            interval.current = setInterval(() => {
+                distanceTime = distanceTime - 1000;
+
+                const hours = Math.floor((distanceTime % (1000 * 60 * 60 * 24) / (1000 * 60 * 60)));
+                const minutes = Math.floor((distanceTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distanceTime % (1000 * 60) / 1000));
+
+                if (distanceTime < 0) {
+                    submit();
+                    clearInterval(interval.current);
+                } else {
+                    setTimerSeconds(seconds);
+                    setTimerMinutes(minutes);
+                    setTimerHours(hours);
+                }
+            }, 1000);
+        }
+
+        const getTestInf = async () => {
+            try {
+                const response = await TestApi.getTestByTestID(query.get("id"));
+                if (response) {
+                    startTimer(response);
+                }
+            } catch (error) {
+                console.log('error fetch inf test: ', error);
+            }
+        }
+
         const finsishSubmit = () => {
             if (listQuestions.length === 0) {
                 setSubmitActive('unfinish');
@@ -16,6 +65,7 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
             }
         }
 
+        getTestInf();
         finsishSubmit();
     }, [countCheck, listQuestions.length]);
 
@@ -26,6 +76,7 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
 
     const handleSubmit = () => {
         if (submitActive === 'finish') {
+            clearInterval(interval.current);
             submit();
         }
     }
@@ -47,7 +98,11 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
                 <div className="Testing_time_actions">
                     <div className="Time_Actions_wrapper">
                         <div className="time_wrapper">
-                            <h4>Thời gian:&nbsp;<span>02</span>&nbsp;giờ&nbsp;<span>40</span>&nbsp;phút&nbsp;<span>12</span>&nbsp;giây</h4>
+                            <div className="time_wrapper-static">
+                                <span><div>{timerHours < 10 ? `0${timerHours}` : `${timerHours}`}</div></span>
+                                <h4>:</h4><span><div>{timerMinutes < 10 ? `0${timerMinutes}` : `${timerMinutes}`}</div></span>
+                                <h4>:</h4><span><div>{timerSeconds < 10 ? `0${timerSeconds}` : `${timerSeconds}`}</div></span>
+                            </div>
                         </div>
                         <div className="actions_wrapper">
                             <button className={`status_${submitActive}`} onClick={handleSubmit}>Nộp bài</button>

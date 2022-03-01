@@ -6,8 +6,10 @@ import { useHistory } from 'react-router-dom';
 import NotiPopup from '../Popup/NotiPopup/NotiPopup';
 import ErrorPopup from '../Popup/ErrorPopup/ErrorPopup';
 import logApi from '../../API/logApi';
+import StudentApi from '../../API/studentApi';
 import NotiSuccessPopup from '../Popup/NotiPopup/NotiSuccessPopup';
 import APP_CONSTANTS from '../../Constants/appConstants';
+import { isJwtExpired } from 'jwt-check-expiration';
 
 function LoginPage() {
 
@@ -36,7 +38,18 @@ function LoginPage() {
                 const response = await logApi.login(params);
                 if (response && response.code === 0) {
                     localStorage.setItem(APP_CONSTANTS.USER_TOKEN, response.jwt);
+
+
+                    // setTimeout(() => {
+                    //     localStorage.clear();
+                    //     history.replace('/');
+                    // }, 36000*1000);
+                    // setTimeout(() => {
+                    //     localStorage.clear();
+                    //     history.replace('/');
+                    // }, 15000);
                     setTriggerSuccessPopup(true);
+                    fetchProfile();
                     setTimeout(() => {
                         setTriggerSuccessPopup(false);
                         history.replace('/');
@@ -50,6 +63,22 @@ function LoginPage() {
             }
         } else {
             setTriggerNotiPopup(true);
+        }
+    }
+
+    const fetchProfile = async () => {
+        try {
+            const response = await StudentApi.getProfile();
+            if (response) {
+                const basicUserInfor = {
+                    'fullname': response.fullname,
+                    'studentCode': response.studentCode
+                }
+                localStorage.removeItem(APP_CONSTANTS.USER_BASIC_INFOR);
+                localStorage.setItem(APP_CONSTANTS.USER_BASIC_INFOR, JSON.stringify(basicUserInfor));
+            }
+        } catch (error) {
+            console.log('Get profile error', error);
         }
     }
 

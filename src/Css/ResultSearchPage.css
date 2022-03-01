@@ -53,13 +53,13 @@
 .result_wrapper {
     max-height: 185px;
 
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 .result_wrapper-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
 }
 
 .result_wrapper-header label {

@@ -180,3 +180,7 @@ a.icon_timer {
     width: 156px;
     height: 39px;
 }
+
+.disableResult {
+    display: none;
+}

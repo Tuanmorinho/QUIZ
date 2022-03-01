@@ -6,39 +6,39 @@ import APP_CONSTANTS from '../../../../Constants/appConstants';
 
 function HomeHeader() {
 
-    const [account, setAccount] = useState({
-        'fullname': '',
-        'studentCode': ''
-    });
+    // const [account, setAccount] = useState({
+    //     'fullname': '',
+    //     'studentCode': ''
+    // });
 
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const response = await StudentApi.getProfile();
-                if (response) {
-                    const basicUserInfor = {
-                        'fullname': response.fullname,
-                        'studentCode': response.studentCode
-                    }
-                    localStorage.removeItem(APP_CONSTANTS.USER_BASIC_INFOR);
-                    localStorage.setItem(APP_CONSTANTS.USER_BASIC_INFOR, JSON.stringify(basicUserInfor));
-                    setAccount(basicUserInfor);
-                }
-            } catch (error) {
-                console.log('Get profile error', error);
-            }
-        }
+    // useEffect(() => {
+    //     const fetchProfile = async () => {
+    //         try {
+    //             const response = await StudentApi.getProfile();
+    //             if (response) {
+    //                 const basicUserInfor = {
+    //                     'fullname': response.fullname,
+    //                     'studentCode': response.studentCode
+    //                 }
+    //                 localStorage.removeItem(APP_CONSTANTS.USER_BASIC_INFOR);
+    //                 localStorage.setItem(APP_CONSTANTS.USER_BASIC_INFOR, JSON.stringify(basicUserInfor));
+    //                 setAccount(basicUserInfor);
+    //             }
+    //         } catch (error) {
+    //             console.log('Get profile error', error);
+    //         }
+    //     }
 
-        fetchProfile();
-    }, []);
+    //     fetchProfile();
+    // }, []);
 
-    const displayInfor = () => {
-        if ((localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR))) {
-            return JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR));
-        } else {
-            return account;
-        }
-    }
+    // const displayInfor = () => {
+    //     if ((localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR))) {
+    //         return JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR));
+    //     } else {
+    //         return account;
+    //     }
+    // }
 
     return (
         <div className="Home_header-student">
@@ -51,7 +51,7 @@ function HomeHeader() {
                             <h1>Hệ thống thi trực tuyến - QUIZ</h1>
                             <h3>Trường Đại học Xây dựng Hà Nội</h3>
                         </div>
-                        <p>Welcome, {displayInfor().fullname} - {displayInfor().studentCode}</p>
+                        <p>Welcome, {JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR)).fullname} - {JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR)).studentCode}</p>
                     </div>
                 </div>
             </div>

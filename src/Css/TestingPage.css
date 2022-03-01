@@ -74,7 +74,7 @@ span.TeacherTest {
     border-style: solid;
     border-color: #E5E5E5;
 
-    height: 160px;
+    height: 130px;
 
     display: flex;
     align-items:center;
@@ -82,19 +82,51 @@ span.TeacherTest {
 }
 .Time_Actions_wrapper {
     width: 320px;
-    height: 95px;
+    height: 85px;
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
 }
+/* .time_wrapper {
+    background-color: cornflowerblue;
+
+    width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+.time_wrapper-static {
+    /* background-color:brown; */
+    width: 320px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+}
+.time_wrapper-static div {
+    width: 40px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
 .time_wrapper h4{
-    font-size: 18px;
+    /* background-color: #1AAD8A; */
+    width: 15px;
+    font-size: 22px;
+
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
 }
 .time_wrapper span{
+    /* background-color:cadetblue; */
+    font-weight: 700;
     color: #FF7600;
-    font-size: 22px;
+    font-size: 28px;
 }
 .actions_wrapper {
     width: 320px;
@@ -138,7 +170,7 @@ span.TeacherTest {
     border-style: solid;
     border-color: #E5E5E5;
 
-    height: 540px;
+    height: 550px;
 
     display: flex;
     flex-direction: column;
@@ -342,4 +374,21 @@ span.icon_teacher {
 
 .disableTesting{
     display: none;
+}
+
+
+
+.QuestionContent_wrapper2 {
+    position: absolute;
+    left: 400px;
+
+    height: 928px;
+    width: 1510px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.guide {
+    color: #dddddd;
 }

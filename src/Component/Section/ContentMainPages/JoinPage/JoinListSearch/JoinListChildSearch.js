@@ -5,7 +5,6 @@ import ErrorPopup from '../../../../Popup/ErrorPopup/ErrorPopup';
 import NotiSuccessPopup from '../../../../Popup/NotiPopup/NotiSuccessPopup';
 
 function JoinListChildSearch({ exam }) {
-    console.log(exam);
 
     const [timeStartDisplay, setTimeStartDisplay] = useState('');
     const [joinedCss, setJoinedCss] = useState('joined');
@@ -53,7 +52,7 @@ function JoinListChildSearch({ exam }) {
                 setTriggerSuccessPopup(true);
                 setTimeout(() => {
                     setTriggerSuccessPopup(false);
-                    history.replace('/exam');
+                    history.replace('/join');
                 }, 1200);
             } else {
                 setTriggerErrorPopup(true);

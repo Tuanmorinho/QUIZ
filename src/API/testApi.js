@@ -12,6 +12,11 @@ const TestApi = {
         const url = `/student-test/get/own/test/${examCode}`;
         return axiosClient.get(url);
     },
+
+    getTestByTestID: (id) => {
+        const url = `/student-test/${id}`;
+        return axiosClient.get(url)
+    },
     
     // Mở bài thi
     openTest: (id) => {
@@ -20,9 +25,9 @@ const TestApi = {
     },
 
     // Nộp bài thi
-    submitTest: (id, params) => {
+    submitTest: (id, data) => {
         const url = `/student-test/submit/${id}`;
-        return axiosClient.put(url, params);
+        return axiosClient.put(url, data);
     }
 
     // Trả về điểm thi

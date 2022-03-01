@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import ExamListH from './ExamListHome/ExamListH'
-import GradeListH from './GradeListHome/GradeListH'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ExamListH from './ExamListHome/ExamListH';
+import GradeListH from './GradeListHome/GradeListH';
+import PopupLoading from '../../../../Popup/PopupLoading/PopupLoading';
 import TestApi from '../../../../../API/testApi';
 import APP_CONSTANTS from '../../../../../Constants/appConstants';
 
@@ -31,7 +32,6 @@ function HomeContent({ route }) {
             }
         }
 
-
         fetchAllTest();
     }, [])
 
@@ -49,31 +49,37 @@ function HomeContent({ route }) {
         }
     }
 
-    return (
-        <div className="Home_wrapper-student">
-            <div className="SectionList_wrapper">
-                <div className="SectionList_headingWrap">
-                    <h2 className="SectionList_heading">Bài thi sắp diễn ra</h2>
-                    <Link to='/exam' onClick={() => { route(0) }}>Xem tất cả <span className="material-icons icon_seeAll">
-                        chevron_right </span></Link>
+    if (displayTest().testsWaiting || displayTest.testTookPlace) {
+        return (
+            <div className="Home_wrapper-student">
+                <div className="SectionList_wrapper">
+                    <div className="SectionList_headingWrap">
+                        <h2 className="SectionList_heading">Bài thi sắp diễn ra</h2>
+                        <Link to='/exam' onClick={() => { route(0) }}>Xem tất cả <span className="material-icons icon_seeAll">
+                            chevron_right </span></Link>
+                    </div>
+                    <div id="scrollHorizontally" className="SectionList_bodyWrap">
+                        <ExamListH tests={displayTest().testsWaiting} />
+                    </div>
                 </div>
-                <div id="scrollHorizontally" className="SectionList_bodyWrap">
-                    <ExamListH tests={displayTest().testsWaiting} />
+    
+                <div className="SectionList_wrapper">
+                    <div className="SectionList_headingWrap">
+                        <h2 className="SectionList_heading">Bài đã thi</h2>
+                        <Link to='/grade' onClick={() => { route(1) }}>Xem tất cả <span className="material-icons icon_seeAll">
+                            chevron_right </span></Link>
+                    </div>
+                    <div id="hoover_scrollButton2" className="SectionList_bodyWrap">
+                        <GradeListH grades={displayTest().testsTookPlace} />
+                    </div>
                 </div>
             </div>
-
-            <div className="SectionList_wrapper">
-                <div className="SectionList_headingWrap">
-                    <h2 className="SectionList_heading">Bài đã thi</h2>
-                    <Link to='/grade' onClick={() => { route(1) }}>Xem tất cả <span className="material-icons icon_seeAll">
-                        chevron_right </span></Link>
-                </div>
-                <div id="hoover_scrollButton2" className="SectionList_bodyWrap">
-                    <GradeListH grades={displayTest().testsTookPlace} />
-                </div>
-            </div>
-        </div>
-    )
+        )
+    } else {
+        return (
+            <PopupLoading trigger={true} />
+        )
+    }
 }
 
 export default HomeContent

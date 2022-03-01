@@ -21,7 +21,7 @@ function ContentTestingPage({ question, index, checked }) {
                 setTypeQuestionContent('Chọn một đáp án')
             }
         }
-        
+
         typeQuestion();
     }, [question.type]);
 
@@ -64,68 +64,76 @@ function ContentTestingPage({ question, index, checked }) {
         checked(question.questionId, question.studentssAnswers);
     }
 
-    if (type === "radio") {
-        return (
-            <div className="QuestionContent_wrapper">
-                <div className="Question_wrapper">
-                    <div className="Question">
-                        <h3>Câu {index}:&ensp;<span>({typeQuestionContent})</span></h3>
-                        <br />
-                        <label>{question.title}</label>
+    if (question && Object.keys(question).length !== 0) {
+        if (type === "radio") {
+            return (
+                <div className="QuestionContent_wrapper">
+                    <div className="Question_wrapper">
+                        <div className="Question">
+                            <h3>Câu {index}:&ensp;<span>({typeQuestionContent})</span></h3>
+                            <br />
+                            <label>{question.title}</label>
+                        </div>
+                        <div className="Answer">
+                            <div className="answer_items">
+                                {
+                                    Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
+                                        <div key={index}>
+                                            <input type="radio"
+                                                checked={answer.choose === true}
+                                                onChange={() => { handleChecked(answer.id) }}
+                                            />&emsp;<label>{answer.content}</label>
+                                        </div>
+                                    )) : ''
+                                }
+                            </div>
+                        </div>
                     </div>
-                    <div className="Answer">
-                        <div className="answer_items">
-                            {
-                                Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
-                                    <div key={index}>
-                                        <input type="radio"
-                                            checked={answer.choose === true}
-                                            onChange={() => { handleChecked(answer.id) }}
-                                        />&emsp;<label>{answer.content}</label>
-                                    </div>
-                                )) : ''
-                            }
+                    <div className="Image_wrapper">
+                        <div className="image_place">
+                            <span className="material-icons-outlined"> image </span>
                         </div>
                     </div>
                 </div>
-                <div className="Image_wrapper">
-                    <div className="image_place">
-                        <span className="material-icons-outlined"> image </span>
+            )
+        }
+
+        if (type === "checkbox") {
+            return (
+                <div className="QuestionContent_wrapper">
+                    <div className="Question_wrapper">
+                        <div className="Question">
+                            <h3>Câu {index}:&ensp;<span>(typeQuestionContent)</span></h3>
+                            <br />
+                            <label>{question.title}</label>
+                        </div>
+                        <div className="Answer">
+                            <div className="answer_items">
+                                {
+                                    Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
+                                        <div key={index}>
+                                            <input type="checkbox"
+                                                checked={selectedCheckBox.includes(answer.id)}
+                                                onChange={() => { handleChecked(answer.id) }}
+                                            />&emsp;<label>{answer.content}</label>
+                                        </div>
+                                    )) : ''
+                                }
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        )
-    }
-    
-    if (type === "checkbox") {
-        return (
-            <div className="QuestionContent_wrapper">
-                <div className="Question_wrapper">
-                    <div className="Question">
-                        <h3>Câu {index}:&ensp;<span>(typeQuestionContent)</span></h3>
-                        <br />
-                        <label>{question.title}</label>
-                    </div>
-                    <div className="Answer">
-                        <div className="answer_items">
-                            {
-                                Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
-                                    <div key={index}>
-                                        <input type="checkbox"
-                                            checked={selectedCheckBox.includes(answer.id)}
-                                            onChange={() => { handleChecked(answer.id) }}
-                                        />&emsp;<label>{answer.content}</label>
-                                    </div>
-                                )) : ''
-                            }
+                    <div className="Image_wrapper">
+                        <div className="image_place">
+                            <span className="material-icons-outlined"> image </span>
                         </div>
                     </div>
                 </div>
-                <div className="Image_wrapper">
-                    <div className="image_place">
-                        <span className="material-icons-outlined"> image </span>
-                    </div>
-                </div>
+            )
+        }
+    } else {
+        return (
+            <div className="QuestionContent_wrapper2">
+                <h2 className="guide">Chọn câu hỏi để hiển thị</h2>
             </div>
         )
     }

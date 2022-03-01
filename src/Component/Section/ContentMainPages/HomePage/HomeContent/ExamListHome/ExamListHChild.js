@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import APP_CONSTANTS from '../../../../../../Constants/appConstants';
 
 function ExamListHChild({ testContent }) {
+
     const [disable, setDisable] = useState('countdown');
     const [timeDisplay, setTimeDisplay] = useState('');
 
@@ -15,7 +16,6 @@ function ExamListHChild({ testContent }) {
         const displayTime = () => {
             let hours = startTime.toString().slice(16, 18);
             let minute = startTime.toString().slice(19, 21);
-            // let second = startTime.toString().slice(22,24);
 
             let hoursDisplay = '';
 

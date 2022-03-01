@@ -8,14 +8,17 @@ import ResultPage from '../Popup/ResultTestPage/ResultTestPage';
 import { useLocation } from 'react-router-dom';
 
 import TestApi from '../../API/testApi';
+import APP_CONSTANTS from '../../Constants/appConstants';
+import PopupLoading from '../Popup/PopupLoading/PopupLoading';
 
 function TestingPage({ getLocation }) {
 
     const [tests, setTests] = useState([]);
     const [test, setTest] = useState({});
-    const [index, setIndex] = useState(1);
+    const [index, setIndex] = useState();
     const [choosedCount, setChoosedCount] = useState(0);
     const [showResultPage, setShowResultPage] = useState(false);
+    const [showLoading, setShowLoading] = useState(false);
 
     let idStore = useRef([]);
     let idStore2 = useRef([]);
@@ -31,29 +34,40 @@ function TestingPage({ getLocation }) {
         const fetchOpenTest = async () => {
             try {
                 const response = await TestApi.openTest(query.get("id"));
-                setTests(response);
-                setTest(response[0]);
+                if (response) {
+                    setTests(response);
+                }
             } catch (error) {
                 console.log('open test error: ', error);
             }
         }
-
         fetchOpenTest();
-    }, [getLocation, location.pathname]);
+
+    }, []);
 
     const getIDListQuestion = (value) => {
-        for (var i = 0; i < tests.length; i++) {
-            if (tests[i].questionId === value) {
-                setTest(tests[i]);
-                setIndex(i + 1);
+        if (tests.length !== 0) {
+            for (var i = 0; i < tests.length; i++) {
+                if (tests[i].questionId === value) {
+                    setTest(tests[i]);
+                    setIndex(i + 1);
+                }
             }
         }
     }
 
-    const submit = () => {
-        console.log(tests);
-
-        setShowResultPage(true);
+    const submit = async () => {
+        let query = new URLSearchParams(location.search);
+        try {
+            setShowLoading(true);
+            const response = await TestApi.submitTest(query.get("id"), tests);
+            if (response) {
+                setShowLoading(false);
+                setShowResultPage(true);
+            }
+        } catch (error) {
+            console.log('error submit test: ', error);
+        }
     }
 
     const getChecked = (id, question_choice) => {
@@ -71,25 +85,26 @@ function TestingPage({ getLocation }) {
         setChoosedCount(idStore.current.length);
     }
 
-    return (
-        showResultPage ? <ResultPage /> :
-            <React.Fragment>
-                <Prompt
-                    when={true}
-                    message='The system will automatically submit your test if you leave this page!'
-                />
-                <div className="App_withSidebar">
-                    <div className="App_sidebarWrap">
-                        <SideBarTestingPage listQuestions={tests} getIndex={getIDListQuestion} countCheck={choosedCount} idCss={idStore.current} indexCss={index} submit={submit} />
-                        <div className="App_withSidebarContent">
-                            <section className="Section_content">
-                                <ContentTestingPage key={index} question={test} index={index} checked={getChecked} />
-                            </section>
+    if (tests.length !== 0) {
+        return (
+            showResultPage ? <ResultPage /> :
+                <React.Fragment>
+                    <PopupLoading trigger={showLoading} />
+                    <div className="App_withSidebar">
+                        <div className="App_sidebarWrap">
+                            <SideBarTestingPage listQuestions={tests} getIndex={getIDListQuestion} countCheck={choosedCount} idCss={idStore.current} indexCss={index} submit={submit} />
+                            <div className="App_withSidebarContent">
+                                <section className="Section_content">
+                                    <ContentTestingPage key={index} question={test} index={index} checked={getChecked} />
+                                </section>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </React.Fragment>
-    )
+                </React.Fragment>
+        )
+    } else {
+        return <PopupLoading trigger={true} />
+    }
 }
 
 export default TestingPage;

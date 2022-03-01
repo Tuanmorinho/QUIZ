@@ -31,7 +31,7 @@ function Exam({ getLocation }) {
                 }
                 setDisplayResultTest('');
             } else {
-                setDisplayResultTest('disableResult')
+                setDisplayResultTest('disableResult');
             }
         }
 
@@ -50,7 +50,7 @@ function Exam({ getLocation }) {
 
         resultTestSearch();
         fetchTestsWaiting();
-    }, [getLocation, location.pathname]);
+    }, [getLocation, location.pathname, location.search]);
 
     const displayTestWaiting = () => {
         if (localStorage.getItem(APP_CONSTANTS.WAITING_TEST_INF_T)) {

@@ -1,6 +1,6 @@
 .popup {
     position: fixed;
-    z-index: 22;
+    z-index: 99;
     top: 0;
     left: 0;
     width: 100%;
@@ -20,6 +20,16 @@
     border-radius: 25px;
     background-color: #FFF;
 }
+.square {
+    width: 340px;
+    height: 300px;
+    max-height: 300px;
+    max-width: 340px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .popup-inner .close-noti {
     position: absolute;
@@ -31,3 +41,24 @@
 .close-noti:hover {
     opacity: 0.5;
 }
+
+.loader {
+    border: 12px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 12px solid #FF7600;
+    border-bottom: 12px solid #11998E;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
