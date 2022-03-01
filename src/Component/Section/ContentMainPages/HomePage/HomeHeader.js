@@ -5,41 +5,6 @@ import StudentApi from '../../../../API/studentApi';
 import APP_CONSTANTS from '../../../../Constants/appConstants';
 
 function HomeHeader() {
-
-    // const [account, setAccount] = useState({
-    //     'fullname': '',
-    //     'studentCode': ''
-    // });
-
-    // useEffect(() => {
-    //     const fetchProfile = async () => {
-    //         try {
-    //             const response = await StudentApi.getProfile();
-    //             if (response) {
-    //                 const basicUserInfor = {
-    //                     'fullname': response.fullname,
-    //                     'studentCode': response.studentCode
-    //                 }
-    //                 localStorage.removeItem(APP_CONSTANTS.USER_BASIC_INFOR);
-    //                 localStorage.setItem(APP_CONSTANTS.USER_BASIC_INFOR, JSON.stringify(basicUserInfor));
-    //                 setAccount(basicUserInfor);
-    //             }
-    //         } catch (error) {
-    //             console.log('Get profile error', error);
-    //         }
-    //     }
-
-    //     fetchProfile();
-    // }, []);
-
-    // const displayInfor = () => {
-    //     if ((localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR))) {
-    //         return JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR));
-    //     } else {
-    //         return account;
-    //     }
-    // }
-
     return (
         <div className="Home_header-student">
             <div className="Header_wrapper-student">

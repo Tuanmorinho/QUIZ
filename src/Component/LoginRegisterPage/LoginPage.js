@@ -39,15 +39,6 @@ function LoginPage() {
                 if (response && response.code === 0) {
                     localStorage.setItem(APP_CONSTANTS.USER_TOKEN, response.jwt);
 
-
-                    // setTimeout(() => {
-                    //     localStorage.clear();
-                    //     history.replace('/');
-                    // }, 36000*1000);
-                    // setTimeout(() => {
-                    //     localStorage.clear();
-                    //     history.replace('/');
-                    // }, 15000);
                     setTriggerSuccessPopup(true);
                     fetchProfile();
                     setTimeout(() => {
