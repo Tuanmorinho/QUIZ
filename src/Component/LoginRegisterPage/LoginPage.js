@@ -60,11 +60,9 @@ function LoginPage() {
     }
 
     const fetchProfile = async () => {
-        setTriggerLoadingPopup(true);
         try {
             const response = await StudentApi.getProfile();
             if (response) {
-                setTriggerLoadingPopup(false);
                 const basicUserInfor = {
                     'fullname': response.fullname,
                     'studentCode': response.studentCode

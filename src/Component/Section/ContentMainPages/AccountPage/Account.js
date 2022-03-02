@@ -13,8 +13,7 @@ function Account({ getLocation }) {
     const [account, setAccount] = useState({
         'fullname': '',
         'studentCode': '',
-        'username': '',
-        'password': ''
+        'username': ''
     });
 
     const [studentCode, setStudentCode] = useState("");
@@ -32,11 +31,14 @@ function Account({ getLocation }) {
         getLocation(location.pathname);
 
         const fetchProfile = async () => {
+            setTriggerLoadingPopup(true);
             try {
                 const response = await StudentApi.getProfile();
                 if (response) {
+                    setTriggerLoadingPopup(false);
                     const userInfor = {
                         'studentCode': response.studentCode,
+                        'fullname': response.fullname,
                         'username': response.username
                     }
                     localStorage.removeItem(APP_CONSTANTS.USER_BASIC_INFOR_A);

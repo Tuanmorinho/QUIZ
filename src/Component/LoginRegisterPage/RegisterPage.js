@@ -32,11 +32,9 @@ function RegisterPage() {
     let history = useHistory();
 
     const loginAfterRegister = async (params) => {
-        setTriggerLoadingPopup(true);
         try {
             const responseLog = await logApi.login(params);
             if (responseLog && responseLog.code === 0) {
-                setTriggerLoadingPopup(false);
                 localStorage.setItem(APP_CONSTANTS.USER_TOKEN, responseLog.jwt);
             } else {
                 setTriggerErrorPopup(true);
