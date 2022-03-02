@@ -8,8 +8,8 @@ import ErrorPopup from '../Popup/ErrorPopup/ErrorPopup';
 import logApi from '../../API/logApi';
 import StudentApi from '../../API/studentApi';
 import NotiSuccessPopup from '../Popup/NotiPopup/NotiSuccessPopup';
+import PopupLoading from '../Popup/PopupLoading/PopupLoading';
 import APP_CONSTANTS from '../../Constants/appConstants';
-import { isJwtExpired } from 'jwt-check-expiration';
 
 function LoginPage() {
 
@@ -20,6 +20,7 @@ function LoginPage() {
     const [triggerNotiPopup, setTriggerNotiPopup] = useState(false);
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
+    const [triggerLoadingPopup, setTriggerLoadingPopup] = useState(false);
 
     let history = useHistory();
 
@@ -31,14 +32,15 @@ function LoginPage() {
             const params = {
                 "username": username,
                 "password": password
-                // "role": checkedRoleLogin[0]
             }
 
+            setTriggerLoadingPopup(true);
             try {
                 const response = await logApi.login(params);
                 if (response && response.code === 0) {
                     localStorage.setItem(APP_CONSTANTS.USER_TOKEN, response.jwt);
 
+                    setTriggerLoadingPopup(false);
                     setTriggerSuccessPopup(true);
                     fetchProfile();
                     setTimeout(() => {
@@ -58,9 +60,11 @@ function LoginPage() {
     }
 
     const fetchProfile = async () => {
+        setTriggerLoadingPopup(true);
         try {
             const response = await StudentApi.getProfile();
             if (response) {
+                setTriggerLoadingPopup(false);
                 const basicUserInfor = {
                     'fullname': response.fullname,
                     'studentCode': response.studentCode
@@ -91,6 +95,7 @@ function LoginPage() {
 
     return (
         <React.Fragment>
+            <PopupLoading trigger={triggerLoadingPopup}/>
             <NotiPopup trigger={triggerNotiPopup} setTrigger={setTriggerNotiPopup}>
                 <div style={{
                     'display': 'flex',

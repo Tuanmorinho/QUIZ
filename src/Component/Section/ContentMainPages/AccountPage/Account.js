@@ -6,6 +6,7 @@ import APP_CONSTANTS from '../../../../Constants/appConstants';
 import NotiPopup from '../../../Popup/NotiPopup/NotiPopup';
 import NotiSuccessPopup from '../../../Popup/NotiPopup/NotiSuccessPopup';
 import ErrorPopup from '../../../Popup/ErrorPopup/ErrorPopup';
+import PopupLoading from '../../../Popup/PopupLoading/PopupLoading';
 
 function Account({ getLocation }) {
 
@@ -16,15 +17,13 @@ function Account({ getLocation }) {
         'password': ''
     });
 
-    const [fullName, setFullName] = useState("");
     const [studentCode, setStudentCode] = useState("");
-    const [newEmail, setNewEmail] = useState("")
     const [newUsername, setNewUsername] = useState("");
-    const [newPassword, setNewPassword] = useState("");
 
     const [triggerNotiPopup, setTriggerNotiPopup] = useState(false);
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
+    const [triggerLoadingPopup, setTriggerLoadingPopup] = useState(false);
 
     let callbackFetchProfile = useRef(null);
 
@@ -37,10 +36,8 @@ function Account({ getLocation }) {
                 const response = await StudentApi.getProfile();
                 if (response) {
                     const userInfor = {
-                        'fullname': response.fullname,
                         'studentCode': response.studentCode,
-                        'username': response.username,
-                        'password': response.password
+                        'username': response.username
                     }
                     localStorage.removeItem(APP_CONSTANTS.USER_BASIC_INFOR_A);
                     localStorage.setItem(APP_CONSTANTS.USER_BASIC_INFOR_A, JSON.stringify(userInfor));
@@ -58,20 +55,18 @@ function Account({ getLocation }) {
         if (isNotEmpty(account.fullname) && isNotEmpty(account.studentCode) && isNotEmpty(account.username) && isNotEmpty(account.password)) {
             const paramEditProfile = {
                 "studentCode": studentCode,
-                "fullname": fullName,
-                "email": newEmail,
                 "username": newUsername,
-                "password": newPassword,
                 "role": "student"
             }
+            setTriggerLoadingPopup(true);
             try {
                 const response = await StudentApi.editProfile(paramEditProfile);
                 if (response && response.code === 0) {
+                    setTriggerLoadingPopup(false);
                     setTriggerSuccessPopup(true);
                     setTimeout(() => {
                         callbackFetchProfile.current = callbackFetchProfile.current + 1;
                         setTriggerSuccessPopup(false);
-                        
                     }, 1200);
                 } else {
                     setTriggerErrorPopup(true);
@@ -99,6 +94,7 @@ function Account({ getLocation }) {
 
     return (
         <React.Fragment>
+            <PopupLoading trigger={triggerLoadingPopup} />
             <NotiPopup trigger={triggerNotiPopup} setTrigger={setTriggerNotiPopup}>
                 <div style={{
                     'display': 'flex',
@@ -114,7 +110,7 @@ function Account({ getLocation }) {
                         'marginTop': 2.5
                     }}>Thông báo</h1>
                 </div>
-                <p style={{ 'fontSize': 19 }}>Vui lòng điền đầy đủ thông tin.</p>
+                <p style={{ 'fontSize': 19 }}>Vui lòng điền đầy đủ thông tin cá nhân.</p>
             </NotiPopup>
             <ErrorPopup trigger={triggerErrorPopup} setTrigger={setTriggerErrorPopup}>
                 <div style={{
@@ -131,7 +127,7 @@ function Account({ getLocation }) {
                         'marginTop': 2.5
                     }}>Lỗi</h1>
                 </div>
-                <p style={{ 'fontSize': 19 }}>Lỗi cập nhập thông tin tài khoản, vui lòng thử lại.</p>
+                <p style={{ 'fontSize': 19 }}>Lỗi cập nhập thông tin cá nhân, vui lòng thử lại.</p>
             </ErrorPopup>
             <NotiSuccessPopup trigger={triggerSuccessPopup} setTrigger={setTriggerSuccessPopup}>
                 <div style={{
@@ -148,12 +144,12 @@ function Account({ getLocation }) {
                         'marginTop': 2.5
                     }}>Thành công</h1>
                 </div>
-                <p style={{ 'fontSize': 19 }}>Lưu thông tin tài khoản thành công.</p>
+                <p style={{ 'fontSize': 19 }}>Lưu thông tin cá nhân thành công.</p>
             </NotiSuccessPopup>
             <div className="auth-form4">
                 <div className="auth-form_broad4">
                     <div className="auth-form_header4">
-                        <h1 className="auth-form_heading4">Tài khoản của tôi</h1>
+                        <h1 className="auth-form_heading4">Thông tin của tôi</h1>
                     </div>
                     <div className="auth-form-item4">
                         <span className="material-icons account_circle2"> account_circle </span>
@@ -167,7 +163,7 @@ function Account({ getLocation }) {
                             <div className="auth-form_label4">
                                 <label>Thông tin cá nhân</label>
                             </div>
-                            <div className="auth-form_input_wrapper4">
+                            {/* <div className="auth-form_input_wrapper4">
                                 <label for="Hoten">Họ tên</label>
                                 <div className="auth-form_input4">
                                     <span className="material-icons icon-accountMe"> person </span>
@@ -180,7 +176,7 @@ function Account({ getLocation }) {
                                         onChange={(e) => setAccount(e.target.value)}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="auth-form_input_wrapper4">
                                 <label for="MSSV">MSSV</label>
                                 <div className="auth-form_input4">
@@ -211,7 +207,7 @@ function Account({ getLocation }) {
                                     />
                                 </div>
                             </div>
-                            <div className="auth-form_input_wrapper4">
+                            {/* <div className="auth-form_input_wrapper4">
                                 <label for="Passwork">Passwork </label>
                                 <div className="auth-form_input4">
                                     <span className="material-icons icon-accountMe"> lock </span>
@@ -223,7 +219,7 @@ function Account({ getLocation }) {
                                         defaultValue={account.password}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <button type="submit" className="form-submit4" onClick={() => handleSubmit()}>Sửa thông tin</button>
                     </div>

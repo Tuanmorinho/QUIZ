@@ -1,6 +1,8 @@
 {
   "name": "quiz",
   "version": "0.1.0",
+  "proxy": "http://springbootmysqlcrudaws-env.eba-y8w9wmhv.ap-northeast-1.elasticbeanstalk.com",
+  "homepage": "http://localhost:3000",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -17,7 +19,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env BROWSER=chrome react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

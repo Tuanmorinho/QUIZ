@@ -47,8 +47,6 @@ function MainPagesRouterSidebar({searchTerms, clear, resultTest, resultExam, set
     const [pathname, setPathname] = useState('/');
     const [disableTesting, setDisableTesting] = useState('');
 
-    const [trigger, setTrigger] = useState();
-
     const getLocation = (path) => {
         setPathname(path);
     }
