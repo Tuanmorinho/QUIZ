@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../Css/ResultSearchPage.css';
-import APP_CONSTANTS from '../../../Constants/appConstants';
 
 function ResultSearch(props) {
 

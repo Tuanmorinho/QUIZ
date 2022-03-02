@@ -28,6 +28,10 @@ function StudentApp() {
       const resTest = await TestApi.searchTestByExamCode(examCode);
       const resExam = await ExamApi.searchExam(examCode);
 
+      if (resTest === 403 || resExam === 403) {
+        localStorage.clear();
+      }
+
       if (resTest && resExam) {
         setResultTest(resTest);
         setResultExam(resExam);

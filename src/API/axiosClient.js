@@ -24,10 +24,13 @@ axiosClient.interceptors.request.use(async (config) => {
 });
 
 axiosClient.interceptors.response.use((response) => {
+    if (response.status === 403) {
+        localStorage.clear();
+    }
     if (response) {
         return response.data;
-    }
-    return response;
+    } 
+    return response.status;
 }, (error) => {
     // Handle errors
     throw error;

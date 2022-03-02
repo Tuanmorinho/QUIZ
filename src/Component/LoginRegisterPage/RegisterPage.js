@@ -8,6 +8,7 @@ import ErrorPopup from '../Popup/ErrorPopup/ErrorPopup';
 import logApi from '../../API/logApi';
 import NotiSuccessPopup from '../Popup/NotiPopup/NotiSuccessPopup';
 import APP_CONSTANTS from '../../Constants/appConstants';
+import PopupLoading from '../Popup/PopupLoading/PopupLoading';
 
 function RegisterPage() {
 
@@ -24,15 +25,18 @@ function RegisterPage() {
     const [triggerPopup, setTriggerPopup] = useState(false);
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
+    const [triggerLoadingPopup, setTriggerLoadingPopup] = useState(false);
 
     const [inputDate, setInputDate] = useState("text")
 
     let history = useHistory();
 
     const loginAfterRegister = async (params) => {
+        setTriggerLoadingPopup(true);
         try {
             const responseLog = await logApi.login(params);
             if (responseLog && responseLog.code === 0) {
+                setTriggerLoadingPopup(false);
                 localStorage.setItem(APP_CONSTANTS.USER_TOKEN, responseLog.jwt);
             } else {
                 setTriggerErrorPopup(true);
@@ -63,12 +67,13 @@ function RegisterPage() {
             const paramLogin = {
                 "username": newUsername,
                 "password": newPassword
-                // "role": checkedRoleRegister[0]
             }
 
+            setTriggerLoadingPopup(true);
             try {
                 const response = await logApi.register(paramRegister);
                 if (response && response.code === 0) {
+                    setTriggerLoadingPopup(false);
                     setTriggerSuccessPopup(true);
                     loginAfterRegister(paramLogin);
                     setTimeout(() => {
@@ -104,6 +109,7 @@ function RegisterPage() {
 
     return (
         <React.Fragment>
+            <PopupLoading trigger={triggerLoadingPopup}/>
             <NotiPopup trigger={triggerPopup} setTrigger={setTriggerPopup}>
                 <div style={{
                     'display': 'flex',

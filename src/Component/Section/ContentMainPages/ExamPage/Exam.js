@@ -5,12 +5,15 @@ import ExamList from './ExamList/ExamList';
 import ExamListSearch from './ExamSearch/ExamListSearch';
 import TestApi from '../../../../API/testApi';
 import APP_CONSTANTS from '../../../../Constants/appConstants';
+import PopupLoading from '../../../Popup/PopupLoading/PopupLoading';
 
 function Exam({ getLocation }) {
 
     const [testsWaiting, setTestsWaiting] = useState([]);
     const [testsWaitingSearch, setTestsWaitingSearch] = useState([]);
     const [displayResultTest, setDisplayResultTest] = useState('disableResult');
+
+    const [triggerLoadingPopup, setTriggerLoadingPopup] = useState(true);
 
     let location = useLocation();
 
@@ -19,9 +22,11 @@ function Exam({ getLocation }) {
 
         const resultTestSearch = async () => {
             if (new URLSearchParams(location.search).get("p")) {
+                setTriggerLoadingPopup(true);
                 try {
                     const resultTest = await TestApi.searchTestByExamCode(new URLSearchParams(location.search).get("p"));
                     if (resultTest) {
+                        setTriggerLoadingPopup(false);
                         localStorage.removeItem(APP_CONSTANTS.WAITING_TEST_INF_S);
                         localStorage.setItem(APP_CONSTANTS.WAITING_TEST_INF_S, JSON.stringify(resultTest));
                         setTestsWaitingSearch(resultTest);
@@ -39,6 +44,7 @@ function Exam({ getLocation }) {
             try {
                 const resTestsWaiting = await TestApi.getTestByStatus('waiting');
                 if (resTestsWaiting) {
+                    setTriggerLoadingPopup(false);
                     localStorage.removeItem(APP_CONSTANTS.WAITING_TEST_INF_T);
                     localStorage.setItem(APP_CONSTANTS.WAITING_TEST_INF_T, JSON.stringify(resTestsWaiting));
                     setTestsWaiting(resTestsWaiting);
@@ -50,7 +56,7 @@ function Exam({ getLocation }) {
 
         resultTestSearch();
         fetchTestsWaiting();
-    }, [getLocation, location.pathname, location.search]);
+    }, [location.search]);
 
     const displayTestWaiting = () => {
         if (localStorage.getItem(APP_CONSTANTS.WAITING_TEST_INF_T)) {
@@ -69,24 +75,28 @@ function Exam({ getLocation }) {
     }
 
     return (
-        <div className="Home_wrapper-exam2">
-            <div className={`SectionList_wrapper2 ${displayResultTest}`} style={{'marginBottom': 50}}>
-                <div className="SectionList_headingWrap2">
-                    <h2 className="SectionList_heading2">Bài thi tìm kiếm</h2>
+        <React.Fragment>
+            <PopupLoading trigger={triggerLoadingPopup} />
+            <div className="Home_wrapper-exam2">
+                <div className={`SectionList_wrapper2 ${displayResultTest}`} style={{ 'marginBottom': 50 }}>
+                    <div className="SectionList_headingWrap2">
+                        <h2 className="SectionList_heading2">Bài thi tìm kiếm</h2>
+                    </div>
+                    <div className="SectionList_bodyWrap2">
+                        <ExamListSearch tests={displayTestResult()} />
+                    </div>
                 </div>
-                <div className="SectionList_bodyWrap2">
-                    <ExamListSearch tests={displayTestResult()} />
+                <div className="SectionList_wrapper2">
+                    <div className="SectionList_headingWrap2">
+                        <h2 className="SectionList_heading2">Bài thi sắp diễn ra</h2>
+                    </div>
+                    <div className="SectionList_bodyWrap2">
+                        {/* <ExamList tests={displayTestWaiting()} /> */}
+                        <ExamList tests={testsWaiting} />
+                    </div>
                 </div>
             </div>
-            <div className="SectionList_wrapper2">
-                <div className="SectionList_headingWrap2">
-                    <h2 className="SectionList_heading2">Bài thi sắp diễn ra</h2>
-                </div>
-                <div className="SectionList_bodyWrap2">
-                    <ExamList tests={displayTestWaiting()} />
-                </div>
-            </div>
-        </div>
+        </React.Fragment>
     )
 }
 
