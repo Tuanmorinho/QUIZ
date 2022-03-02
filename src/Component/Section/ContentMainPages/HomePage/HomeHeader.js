@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../../../../Css/Home.css'
 import { BackgroundImg, LogoHUCE } from '../../../../resrouces/Img'
-import StudentApi from '../../../../API/studentApi';
 import APP_CONSTANTS from '../../../../Constants/appConstants';
 
 function HomeHeader() {
