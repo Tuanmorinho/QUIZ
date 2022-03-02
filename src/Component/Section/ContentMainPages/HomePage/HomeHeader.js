@@ -16,7 +16,7 @@ function HomeHeader() {
                             <h1>Hệ thống thi trực tuyến - QUIZ</h1>
                             <h3>Trường Đại học Xây dựng Hà Nội</h3>
                         </div>
-                        {/* <p>Welcome, {JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR)).fullname} - {JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR)).studentCode}</p> */}
+                        <p>Welcome, {JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR)).fullname} - {JSON.parse(localStorage.getItem(APP_CONSTANTS.USER_BASIC_INFOR)).studentCode}</p>
                     </div>
                 </div>
             </div>
