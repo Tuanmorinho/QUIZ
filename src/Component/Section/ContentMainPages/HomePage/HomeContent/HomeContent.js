@@ -11,18 +11,23 @@ function HomeContent({ route }) {
     const [testWaiting, setTestWaiting] = useState([]);
     const [testTookPlace, setTestTookPlace] = useState([]);
 
+    const [triggerLoadingPopup, setTriggerLoadingPopup] = useState(true);
+
     useEffect(() => {
         const fetchAllTest = async () => {
+            setTriggerLoadingPopup(true);
             try {
                 const resTestWaiting = await TestApi.getTestByStatus('waiting');
                 const resTestTookPlace = await TestApi.getTestByStatus('took_place');
 
                 if (resTestWaiting) {
+                    setTriggerLoadingPopup(false);
                     localStorage.removeItem(APP_CONSTANTS.WAITING_TEST_INF_H);
                     localStorage.setItem(APP_CONSTANTS.WAITING_TEST_INF_H, JSON.stringify(resTestWaiting));
                     setTestWaiting(resTestWaiting);
                 }
                 if (resTestTookPlace) {
+                    setTriggerLoadingPopup(false);
                     localStorage.removeItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_H);
                     localStorage.setItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_H, JSON.stringify(resTestTookPlace));
                     setTestTookPlace(resTestTookPlace);
@@ -48,9 +53,9 @@ function HomeContent({ route }) {
             };
         }
     }
-
-    if (displayTest().testsWaiting || displayTest.testTookPlace) {
-        return (
+    return (
+        <React.Fragment>
+            <PopupLoading trigger={triggerLoadingPopup} />
             <div className="Home_wrapper-student">
                 <div className="SectionList_wrapper">
                     <div className="SectionList_headingWrap">
@@ -62,7 +67,7 @@ function HomeContent({ route }) {
                         <ExamListH tests={displayTest().testsWaiting} />
                     </div>
                 </div>
-    
+
                 <div className="SectionList_wrapper">
                     <div className="SectionList_headingWrap">
                         <h2 className="SectionList_heading">Bài đã thi</h2>
@@ -74,12 +79,8 @@ function HomeContent({ route }) {
                     </div>
                 </div>
             </div>
-        )
-    } else {
-        return (
-            <PopupLoading trigger={true} />
-        )
-    }
+        </React.Fragment>
+    )
 }
 
 export default HomeContent
