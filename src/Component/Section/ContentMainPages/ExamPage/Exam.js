@@ -91,8 +91,8 @@ function Exam({ getLocation }) {
                         <h2 className="SectionList_heading2">Bài thi sắp diễn ra</h2>
                     </div>
                     <div className="SectionList_bodyWrap2">
-                        {/* <ExamList tests={displayTestWaiting()} /> */}
-                        <ExamList tests={testsWaiting} />
+                        <ExamList tests={displayTestWaiting()} />
+                        {/* <ExamList tests={testsWaiting} /> */}
                     </div>
                 </div>
             </div>
