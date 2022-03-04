@@ -44,6 +44,7 @@ function ExamListHChild({ testContent }) {
         }
 
         const setTimeOutOpenTest = () => {
+            setDisable('countdown');
             setTimeDisplay(displayTime());
             if (timeOutTest.current) {
                 clearTimeout(timeOutTest.current);
@@ -74,6 +75,8 @@ function ExamListHChild({ testContent }) {
             setTimeDisplay('Vui lòng chỉnh lại múi giờ');
             setTriggerErrorPopup(true);
         }
+
+        setTimeOutOpenTest();
 
     }, [testContent.status, testContent.realTime, testContent.startTest]);
 

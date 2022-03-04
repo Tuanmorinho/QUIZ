@@ -27,8 +27,10 @@ function ExamListChild({ testWaitingContent }) {
 
             let hoursDisplay = '';
 
-            if (hours >= 0 && hours <= 12) {
+            if (hours >= 0 && hours < 12) {
                 hoursDisplay = 'AM'
+            } else if (hours = 12) {
+                hoursDisplay = 'PM'
             } else {
                 hours = hours % 12;
                 hoursDisplay = 'PM'
@@ -42,6 +44,7 @@ function ExamListChild({ testWaitingContent }) {
         }
 
         const setTimeOutOpenTest = () => {
+            setDisable('countdown2');
             setTimeDisplay(displayTime());
             if (timeOutTest.current) {
                 clearTimeout(timeOutTest.current);
@@ -73,6 +76,7 @@ function ExamListChild({ testWaitingContent }) {
             setTriggerErrorPopup(true);
         }
 
+        setTimeOutOpenTest();
     }, [testWaitingContent.status, testWaitingContent.realTime, testWaitingContent.startTest])
 
     const submit = async () => {
