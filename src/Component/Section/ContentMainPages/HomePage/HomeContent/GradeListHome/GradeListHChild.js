@@ -15,7 +15,7 @@ function GradeListHChild({ gradeContent }) {
                     </div>
                 </div>
                 <div className="item_bottom orangeBottom">
-                    <h1>{gradeContent.correct_answers}/{gradeContent.noq}&ensp;-&ensp;({gradeContent.score}%)</h1>
+                    <h1>{`${gradeContent.correct_answers}/${gradeContent.noq} - (${gradeContent.correct_answers !== 0 ? (gradeContent.correct_answers/gradeContent.noq)*100 : 0}%)`}</h1>
                 </div>
             </div>
         </section>

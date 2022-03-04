@@ -55,11 +55,22 @@ function TestingPage({ getLocation }) {
                     };
                     setTestInf(responseTestInf);
                     setTests(response.questions);
+                    checkTimeSubmit(responseTestInf);
                 }
             } catch (error) {
                 console.log('open test error: ', error);
             }
         }
+
+        const checkTimeSubmit = (object) => {
+            let endTest = new Date(new Date(object.end_test).getTime() - 7*60*60*1000);
+            let realTime = new Date(new Date(object.real_time).getTime() - 7*60*60*1000);
+            
+            if (endTest - realTime <= 0) {
+                submit();
+            }
+        }
+
         fetchOpenTest();
 
     }, []);
