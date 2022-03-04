@@ -8,9 +8,9 @@ const StudentApi = {
     },
 
     // editProfile
-    editProfile: () => {
+    editProfile: (param) => {
         const url = '/student/edit';
-        return axiosClient.put(url);
+        return axiosClient.put(url, param);
     }
 }
 

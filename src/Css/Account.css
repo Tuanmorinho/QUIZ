@@ -75,7 +75,7 @@ span.account_circle2 {
 
 
 .auth-form_label4 {
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 .auth-form_label4 label {
     margin-left: 103px;
@@ -87,7 +87,7 @@ span.account_circle2 {
 
 .auth-form_input_wrapper4 {
     width: 656px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
     outline: none;
     border: none;    
@@ -125,6 +125,27 @@ span.account_circle2 {
 }
 span.icon-accountMe {
     color: #C4C4C4;
+}
+
+.inputRadio10 {
+    width: 650px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+.inputRadio_wrapper10 {
+    display: flex;
+    align-items: center;
+}
+.inputRadio_wrapper10 label{
+    font-size: 14px;
+}
+.inputRadio10 input {
+    height: 16px;
+    margin-right: 10px;
 }
 
 .form-submit4 {

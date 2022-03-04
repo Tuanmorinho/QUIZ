@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
-import TestApi from '../../API/testApi';
 import APP_CONSTANTS from '../../Constants/appConstants';
 
-function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexCss, submit }) {
-
+function SideBarTestingPage({testInf, listQuestions, getIndex, countCheck, idCss, indexCss, submit }) {
     const [submitActive, setSubmitActive] = useState('unfinish');
 
     const [timerHours, setTimerHours] = useState('0');
@@ -13,16 +10,28 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
 
     let interval = useRef();
 
-    let location = useLocation();
-
     useEffect(() => {
 
-        let query = new URLSearchParams(location.search);
+        const startTimer = () => {
+            let distanceTime;
 
-        const startTimer = (object) => {
-            // let distanceTime = new Date(object.submissionTime).getTime() - new Date(object.realTime).getTime();
+            if (testInf.status === 'waiting') {
+                let subEndReal = new Date(testInf.end_test).getTime() - new Date(testInf.real_time).getTime();
+                if (subEndReal <= testInf.time) {
+                    distanceTime = subEndReal;
+                } else {
+                    distanceTime = testInf.time;
+                }
+            }
+            if (testInf.status === 'going_on') {
+                let addStartTime = new Date(testInf.start).getTime() + new Date(testInf.time).getTime()*60000;
+                if (addStartTime <= new Date(testInf.end_test).getTime()) {
+                    distanceTime = addStartTime - new Date(testInf.real_time).getTime();
+                } else {
+                    distanceTime = new Date(testInf.end_test).getTime() - new Date(testInf.real_time);
+                }
+            }
 
-            let distanceTime = new Date(object.startTime).getTime() + new Date(object.time).getTime() - new Date(object.realTime).getTime();
             if (interval.current) {
                 clearInterval(interval.current);
             };
@@ -44,17 +53,6 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
             }, 1000);
         }
 
-        const getTestInf = async () => {
-            try {
-                const response = await TestApi.getTestByTestID(query.get("id"));
-                if (response) {
-                    startTimer(response);
-                }
-            } catch (error) {
-                console.log('error fetch inf test: ', error);
-            }
-        }
-
         const finsishSubmit = () => {
             if (listQuestions.length === 0) {
                 setSubmitActive('unfinish');
@@ -65,7 +63,6 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
             }
         }
 
-        getTestInf();
         finsishSubmit();
     }, [countCheck, listQuestions.length]);
 
@@ -118,8 +115,8 @@ function SideBarTestingPage({ listQuestions, getIndex, countCheck, idCss, indexC
                                 listQuestions.map((question, index) => (
                                     <button
                                         key={index}
-                                        className={`ordinalNumQuestion_square ${(idCss.includes(question.questionId)) ? "status_choosed" : "status_unchoose"} ${(index === indexCss - 1) ? "status_select" : ""}`}
-                                        onClick={() => { handleOnClickOrdinalNumQuestion(question.questionId) }}
+                                        className={`ordinalNumQuestion_square ${(idCss.includes(question.id)) ? "status_choosed" : "status_unchoose"} ${(index === indexCss - 1) ? "status_select" : ""}`}
+                                        onClick={() => { handleOnClickOrdinalNumQuestion(question.id) }}
                                     >{index + 1}</button>
                                 ))
                             }

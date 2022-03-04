@@ -1,17 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import APP_CONSTANTS from '../../../../../../Constants/appConstants';
+import ErrorPopup from '../../../../../Popup/ErrorPopup/ErrorPopup'
 
 function ExamListHChild({ testContent }) {
 
     const [disable, setDisable] = useState('countdown');
     const [timeDisplay, setTimeDisplay] = useState('');
 
+    const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
+
     let timeOutTest = useRef(null);
 
     useEffect(() => {
-        let startTime = new Date(testContent.start_time);
+        let startTime = new Date(testContent.startTest);
         let realTime = new Date(testContent.realTime);
+
+        console.log(new Date(new Date(testContent.realTime).getTime() - 7*60*60*1000));
+
+        console.log('start: ', startTime);
+        console.log('real: ', realTime);
 
         const displayTime = () => {
             let hours = startTime.toString().slice(16, 18);
@@ -43,10 +51,14 @@ function ExamListHChild({ testContent }) {
             }, differentTime());
         }
 
-        displayTime();
-        setTimeOutOpenTest();
+        if (realTime.toString().slice(29, 31) === '07') {
+            setTimeOutOpenTest();
+        } else {
+            setTimeDisplay('Vui lòng chỉnh lại múi giờ');
+            setTriggerErrorPopup(true);
+        }
 
-    }, [testContent.status, testContent.realTime, testContent.start_time]);
+    }, [testContent.status, testContent.realTime, testContent.startTest]);
 
     const storeInfTesting = () => {
         const inf = {
@@ -60,42 +72,61 @@ function ExamListHChild({ testContent }) {
     }
 
     return (
-        <section className="Home_examItem">
-            <div className="examItem_wrapper">
-                <div className="item_label red">
-                    <label>Mã bài thi:&ensp;<span>{testContent.id}</span></label>
-                    <h1>{testContent.title}&ensp;-&ensp;{testContent.examCode}</h1>
+        <React.Fragment>
+            <ErrorPopup trigger={triggerErrorPopup} setTrigger={setTriggerErrorPopup}>
+                <div style={{
+                    'display': 'flex',
+                    'alignItems': 'center'
+                }}>
+                    <span className="material-icons" style={{
+                        'color': '#FC4F4F',
+                        'fontSize': 38
+                    }}> error </span>
+                    <h1 style={{
+                        'fontSize': 24,
+                        'marginLeft': 10,
+                        'marginTop': 2.5
+                    }}>Lỗi</h1>
                 </div>
-                <div className="item_infomation">
-                    <div>
-                        <span className="material-icons icon_teacher"> account_box </span>
-                        <p>Giảng viên:</p><h5>{testContent.professor}</h5>
+                <p style={{ 'fontSize': 19 }}>Múi giờ hiện tại bị sai, vui lòng chỉnh lại múi giờ.</p>
+            </ErrorPopup>
+            <section className="Home_examItem">
+                <div className="examItem_wrapper">
+                    <div className="item_label red">
+                        <label>Mã bài thi:&ensp;<span>{testContent.id}</span></label>
+                        <h1>{testContent.title}&ensp;-&ensp;{testContent.examCode}</h1>
                     </div>
-                    <div>
-                        <span className="material-icons icon_timer"> alarm </span>
-                        <label className="font_weight-bold">{testContent.time}&nbsp;phút</label>
+                    <div className="item_infomation">
+                        <div>
+                            <span className="material-icons icon_teacher"> account_box </span>
+                            <p>Giảng viên:</p><h5>{testContent.professor}</h5>
+                        </div>
+                        <div>
+                            <span className="material-icons icon_timer"> alarm </span>
+                            <label className="font_weight-bold">{testContent.time}&nbsp;phút</label>
+                        </div>
                     </div>
-                </div>
-                <div className="item_bottom greenBottom">
-                    <Link to={{
-                        pathname: '/testing',
-                        search: `id=${testContent.id}`
-                    }}
-                        onClick={storeInfTesting}
-                    >
-                        <button>Bắt đầu thi</button>
-                    </Link>
-                </div>
-                <div className={disable}>
-                    <div className="Bg_countdown-white">
-                        <div className="Timer_wrapper">
-                            <h1>Bài thi sẽ được mở lúc:</h1>
-                            <label>{timeDisplay}</label>
+                    <div className="item_bottom greenBottom">
+                        <Link to={{
+                            pathname: '/testing',
+                            search: `id=${testContent.id}`
+                        }}
+                            onClick={storeInfTesting}
+                        >
+                            <button>Bắt đầu thi</button>
+                        </Link>
+                    </div>
+                    <div className={disable}>
+                        <div className="Bg_countdown-white">
+                            <div className="Timer_wrapper">
+                                <h1>Bài thi sẽ được mở lúc:</h1>
+                                <label>{timeDisplay}</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </React.Fragment>
     )
 }
 

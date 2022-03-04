@@ -30,8 +30,11 @@ function Grade({ getLocation }) {
                         localStorage.removeItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_S);
                         localStorage.setItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_S, JSON.stringify(resultGrade));
                         setTestsTookPlaceSearch(resultGrade);
+                    } else {
+                        setTriggerLoadingPopup(false);
                     }
                 } catch (error) {
+                    setTriggerLoadingPopup(false);
                     console.log('error search: ', error);
                 }
                 setDisplayResultTestTookPlace('');
@@ -41,6 +44,7 @@ function Grade({ getLocation }) {
         }
 
         const fetchTestTookPlace = async () => {
+            setTriggerLoadingPopup(true);
             try {
                 const resTestsTookPlace = await TestApi.getTestByStatus('took_place');
                 if (resTestsTookPlace) {
@@ -48,8 +52,11 @@ function Grade({ getLocation }) {
                     localStorage.removeItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_G);
                     localStorage.setItem(APP_CONSTANTS.TOOK_PLACE_TEST_INF_G, JSON.stringify(resTestsTookPlace));
                     setTestsTookPlace(resTestsTookPlace);
+                } else {
+                    setTriggerLoadingPopup(false);
                 }
             } catch (error) {
+                setTriggerLoadingPopup(false);
                 console.log('error fetch test took place: ', error);
             }
         }

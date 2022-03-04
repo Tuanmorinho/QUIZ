@@ -8,21 +8,30 @@ import ResultPage from '../Popup/ResultTestPage/ResultTestPage';
 import { useLocation } from 'react-router-dom';
 
 import TestApi from '../../API/testApi';
-import APP_CONSTANTS from '../../Constants/appConstants';
 import PopupLoading from '../Popup/PopupLoading/PopupLoading';
+import ErrorPopup from '../Popup/ErrorPopup/ErrorPopup';
 
 function TestingPage({ getLocation }) {
 
     const [tests, setTests] = useState([]);
     const [test, setTest] = useState({});
+    const [testInf, setTestInf] = useState({
+        "id": "",
+        "start": "",
+        "end_test": "",
+        "time": "",
+        "real_time": ""
+    });
     const [index, setIndex] = useState();
     const [choosedCount, setChoosedCount] = useState(0);
     const [showResultPage, setShowResultPage] = useState(false);
     const [showLoading, setShowLoading] = useState(false);
+    const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
 
     let idStore = useRef([]);
     let idStore2 = useRef([]);
     let idAnswerChoiceFalse = useRef([]);
+    let answersSubmit = [];
 
     let location = useLocation();
 
@@ -35,7 +44,15 @@ function TestingPage({ getLocation }) {
             try {
                 const response = await TestApi.openTest(query.get("id"));
                 if (response) {
-                    setTests(response);
+                    const responseTestInf = {
+                        "id": response.id,
+                        "start": response.start,
+                        "end_test": response.end_test,
+                        "time": response.time,
+                        "real_time": response.real_time
+                    };
+                    setTestInf(responseTestInf);
+                    setTests(response.questions);
                 }
             } catch (error) {
                 console.log('open test error: ', error);
@@ -48,7 +65,7 @@ function TestingPage({ getLocation }) {
     const getIDListQuestion = (value) => {
         if (tests.length !== 0) {
             for (var i = 0; i < tests.length; i++) {
-                if (tests[i].questionId === value) {
+                if (tests[i].id === value) {
                     setTest(tests[i]);
                     setIndex(i + 1);
                 }
@@ -57,15 +74,30 @@ function TestingPage({ getLocation }) {
     }
 
     const submit = async () => {
+        for (var i = 0; i < tests.length; i++) {
+            for (var j = 0; j < tests[j].answers.length; j++) {
+                answersSubmit = [...answersSubmit, tests[i].answers[j]];
+            }
+        }
+
+        console.log(answersSubmit);
+
         let query = new URLSearchParams(location.search);
+
         try {
             setShowLoading(true);
-            const response = await TestApi.submitTest(query.get("id"), tests);
+            const response = await TestApi.submitTest(query.get("id"), answersSubmit);
             if (response) {
+
                 setShowLoading(false);
                 setShowResultPage(true);
+            } else {
+                setShowLoading(false);
+                setTriggerErrorPopup(true);
             }
         } catch (error) {
+            setShowLoading(false);
+            setTriggerErrorPopup(true);
             console.log('error submit test: ', error);
         }
     }
@@ -90,9 +122,26 @@ function TestingPage({ getLocation }) {
             showResultPage ? <ResultPage /> :
                 <React.Fragment>
                     <PopupLoading trigger={showLoading} />
+                    <ErrorPopup trigger={triggerErrorPopup} setTrigger={setTriggerErrorPopup}>
+                        <div style={{
+                            'display': 'flex',
+                            'alignItems': 'center'
+                        }}>
+                            <span className="material-icons" style={{
+                                'color': '#FC4F4F',
+                                'fontSize': 38
+                            }}> error </span>
+                            <h1 style={{
+                                'fontSize': 24,
+                                'marginLeft': 10,
+                                'marginTop': 2.5
+                            }}>Lỗi</h1>
+                        </div>
+                        <p style={{ 'fontSize': 19 }}>Lỗi nộp bài thi, vui lòng thử lại</p>
+                    </ErrorPopup>
                     <div className="App_withSidebar">
                         <div className="App_sidebarWrap">
-                            <SideBarTestingPage listQuestions={tests} getIndex={getIDListQuestion} countCheck={choosedCount} idCss={idStore.current} indexCss={index} submit={submit} />
+                            <SideBarTestingPage testInf={testInf} listQuestions={tests} getIndex={getIDListQuestion} countCheck={choosedCount} idCss={idStore.current} indexCss={index} submit={submit} />
                             <div className="App_withSidebarContent">
                                 <section className="Section_content">
                                     <ContentTestingPage key={index} question={test} index={index} checked={getChecked} />

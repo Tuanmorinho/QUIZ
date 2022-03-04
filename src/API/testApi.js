@@ -21,7 +21,7 @@ const TestApi = {
     // Mở bài thi
     openTest: (id) => {
         const url = `/student-test/take-a-test/${id}`;
-        return axiosClient.get(url);
+        return axiosClient.put(url);
     },
 
     // Nộp bài thi

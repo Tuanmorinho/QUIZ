@@ -30,8 +30,11 @@ function Exam({ getLocation }) {
                         localStorage.removeItem(APP_CONSTANTS.WAITING_TEST_INF_S);
                         localStorage.setItem(APP_CONSTANTS.WAITING_TEST_INF_S, JSON.stringify(resultTest));
                         setTestsWaitingSearch(resultTest);
+                    } else {
+                        setTriggerLoadingPopup(false);
                     }
                 } catch (error) {
+                    setTriggerLoadingPopup(false);
                     console.log('error search: ', error);
                 }
                 setDisplayResultTest('');
@@ -48,8 +51,11 @@ function Exam({ getLocation }) {
                     localStorage.removeItem(APP_CONSTANTS.WAITING_TEST_INF_T);
                     localStorage.setItem(APP_CONSTANTS.WAITING_TEST_INF_T, JSON.stringify(resTestsWaiting));
                     setTestsWaiting(resTestsWaiting);
+                } else {
+                    setTriggerLoadingPopup(false);
                 }
             } catch (error) {
+                setTriggerLoadingPopup(false);
                 console.log('error fetch test waiting: ', error);
             }
         }
