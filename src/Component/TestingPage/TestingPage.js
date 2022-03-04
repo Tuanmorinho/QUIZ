@@ -22,6 +22,7 @@ function TestingPage({ getLocation }) {
         "time": "",
         "real_time": ""
     });
+    const [testResult, setTestResult] = useState();
     const [index, setIndex] = useState();
     const [choosedCount, setChoosedCount] = useState(0);
     const [showResultPage, setShowResultPage] = useState(false);
@@ -49,7 +50,8 @@ function TestingPage({ getLocation }) {
                         "start": response.start,
                         "end_test": response.end_test,
                         "time": response.time,
-                        "real_time": response.real_time
+                        "real_time": response.real_time,
+                        "status": response.status
                     };
                     setTestInf(responseTestInf);
                     setTests(response.questions);
@@ -80,15 +82,13 @@ function TestingPage({ getLocation }) {
             }
         }
 
-        console.log(answersSubmit);
-
         let query = new URLSearchParams(location.search);
-
+        
+        setShowLoading(true);
         try {
-            setShowLoading(true);
             const response = await TestApi.submitTest(query.get("id"), answersSubmit);
             if (response) {
-
+                setTestResult(response);
                 setShowLoading(false);
                 setShowResultPage(true);
             } else {
@@ -119,7 +119,7 @@ function TestingPage({ getLocation }) {
 
     if (tests.length !== 0) {
         return (
-            showResultPage ? <ResultPage /> :
+            showResultPage ? <ResultPage>{testResult}</ResultPage> :
                 <React.Fragment>
                     <PopupLoading trigger={showLoading} />
                     <ErrorPopup trigger={triggerErrorPopup} setTrigger={setTriggerErrorPopup}>

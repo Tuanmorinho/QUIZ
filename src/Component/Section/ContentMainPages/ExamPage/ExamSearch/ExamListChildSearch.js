@@ -13,8 +13,8 @@ function ExamListChildSearch({ testWaitingContent }) {
     let timeOutTest = useRef(null);
 
     useEffect(() => {
-        let startTime = new Date(testWaitingContent.startTest);
-        let realTime = new Date(testWaitingContent.realTime);
+        let startTime = new Date(new Date(testWaitingContent.startTest).getTime() - 7*60*60*1000);
+        let realTime = new Date(new Date(testWaitingContent.realTime).getTime() - 7*60*60*1000);
 
         const displayTime = () => {
             let hours = startTime.toString().slice(16, 18);
@@ -46,6 +46,7 @@ function ExamListChildSearch({ testWaitingContent }) {
             }, differentTime());
         }
 
+        console.log(realTime.toString().slice(29, 31))
         if (realTime.toString().slice(29, 31) === '07') {
             setTimeOutOpenTest();
         } else {

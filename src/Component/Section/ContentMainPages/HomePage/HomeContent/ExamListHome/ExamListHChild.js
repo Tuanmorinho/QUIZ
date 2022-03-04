@@ -13,13 +13,8 @@ function ExamListHChild({ testContent }) {
     let timeOutTest = useRef(null);
 
     useEffect(() => {
-        let startTime = new Date(testContent.startTest);
-        let realTime = new Date(testContent.realTime);
-
-        console.log(new Date(new Date(testContent.realTime).getTime() - 7*60*60*1000));
-
-        console.log('start: ', startTime);
-        console.log('real: ', realTime);
+        let startTime = new Date(new Date(testContent.startTest).getTime() - 7*60*60*1000);
+        let realTime = new Date(new Date(testContent.realTime).getTime() - 7*60*60*1000);
 
         const displayTime = () => {
             let hours = startTime.toString().slice(16, 18);

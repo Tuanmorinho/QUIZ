@@ -63,6 +63,7 @@ function SideBarTestingPage({testInf, listQuestions, getIndex, countCheck, idCss
             }
         }
 
+        startTimer();
         finsishSubmit();
     }, [countCheck, listQuestions.length]);
 
