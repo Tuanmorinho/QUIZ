@@ -31,6 +31,8 @@ function Join({ getLocation }) {
                         localStorage.removeItem(APP_CONSTANTS.INF_EXAM_SEARCH);
                         localStorage.setItem(APP_CONSTANTS.INF_EXAM_SEARCH, JSON.stringify(resultExam));
                         setSearchExam(resultExam)
+                    } else {
+                        setTriggerLoadingPopup(false);
                     }
                 } catch (error) {
                     console.log('error search: ', error);
@@ -52,6 +54,8 @@ function Join({ getLocation }) {
                     localStorage.removeItem(APP_CONSTANTS.INF_EXAM_JOINED);
                     localStorage.setItem(APP_CONSTANTS.INF_EXAM_JOINED, JSON.stringify(resTestWaiting.concat(resTestTookPlace)));
                     setJoinedExam(resTestWaiting.concat(resTestTookPlace));
+                } else {
+                    setTriggerLoadingPopup(false);
                 }
             } catch (error) {
                 console.log('error fetch test: ', error);

@@ -35,7 +35,7 @@ function LoginPage() {
             }
 
             setTriggerLoadingPopup(true);
-            try {
+            try { 
                 const response = await logApi.login(params);
                 if (response && response.code === 0) {
                     localStorage.setItem(APP_CONSTANTS.USER_TOKEN, response.jwt);
@@ -48,10 +48,12 @@ function LoginPage() {
                         history.replace('/');
                     }, 1200);
                 } else {
+                    setTriggerLoadingPopup(false);
                     setTriggerErrorPopup(true);
                 }
             } catch (error) {
                 console.log('error login: ', error);
+                setTriggerLoadingPopup(false);
                 setTriggerErrorPopup(true);
             }
         } else {

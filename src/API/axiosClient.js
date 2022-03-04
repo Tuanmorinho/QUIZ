@@ -1,6 +1,7 @@
 // api/axiosClient.js
 import axios from 'axios';
 import queryString from 'query-string';
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import APP_CONSTANTS from '../Constants/appConstants'
 
 // Set up default config for http requests here
@@ -26,11 +27,12 @@ axiosClient.interceptors.request.use(async (config) => {
 axiosClient.interceptors.response.use((response) => {
     if (response.status === 403) {
         localStorage.clear();
+        return <Redirect to='/cover' />
     }
     if (response) {
         return response.data;
     } 
-    return response.status;
+    return response;
 }, (error) => {
     // Handle errors
     throw error;

@@ -79,9 +79,11 @@ function RegisterPage() {
                         history.replace('/');
                     }, 1200);
                 } else {
+                    setTriggerLoadingPopup(false);
                     setTriggerErrorPopup(true);
                 }
             } catch (error) {
+                setTriggerLoadingPopup(false);
                 setTriggerErrorPopup(true);
                 console.log('error login: ', error);
             }

@@ -27,13 +27,13 @@ function ContentTestingPage({ question, index, checked }) {
 
 
     const handleChecked = (idAnswerSelected) => {
-        for (let i = 0; i < question.studentssAnswers.length; i++) {
-            if (question.studentssAnswers[i].id === idAnswerSelected && question.studentssAnswers[i].choose === false) {
-                question.studentssAnswers[i].choose = true;
+        for (let i = 0; i < question.answers.length; i++) {
+            if (question.answers[i].id === idAnswerSelected && question.answers[i].choose === false) {
+                question.answers[i].choose = true;
                 break;
             }
-            if (question.studentssAnswers[i].id === idAnswerSelected && question.studentssAnswers[i].choose === true) {
-                question.studentssAnswers[i].choose = false;
+            if (question.answers[i].id === idAnswerSelected && question.answers[i].choose === true) {
+                question.answers[i].choose = false;
                 break;
             }
         }
@@ -49,19 +49,19 @@ function ContentTestingPage({ question, index, checked }) {
         }
 
         if (type === "radio") {
-            for (let i = 0; i < question.studentssAnswers.length; i++) {
-                question.studentssAnswers[i].choose = false;
-                if (question.studentssAnswers[i].id === idAnswerSelected) {
-                    question.studentssAnswers[i].choose = true;
+            for (let i = 0; i < question.answers.length; i++) {
+                question.answers[i].choose = false;
+                if (question.answers[i].id === idAnswerSelected) {
+                    question.answers[i].choose = true;
                     setSelectedRadio(prev => [...prev, {
-                        idQuestion: question.questionId,
+                        idQuestion: question.id,
                         idAnswer: idAnswerSelected
                     }]);
                 }
             }
         }
 
-        checked(question.questionId, question.studentssAnswers);
+        checked(question.id, question.answers);
     }
 
     if (question && Object.keys(question).length !== 0) {
@@ -77,7 +77,7 @@ function ContentTestingPage({ question, index, checked }) {
                         <div className="Answer">
                             <div className="answer_items">
                                 {
-                                    Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
+                                    Object.entries(question).length !== 0 ? question.answers.map((answer, index) => (
                                         <div key={index}>
                                             <input type="radio"
                                                 checked={answer.choose === true}
@@ -110,7 +110,7 @@ function ContentTestingPage({ question, index, checked }) {
                         <div className="Answer">
                             <div className="answer_items">
                                 {
-                                    Object.entries(question).length !== 0 ? question.studentssAnswers.map((answer, index) => (
+                                    Object.entries(question).length !== 0 ? question.answers.map((answer, index) => (
                                         <div key={index}>
                                             <input type="checkbox"
                                                 checked={selectedCheckBox.includes(answer.id)}

@@ -4,12 +4,18 @@ import '../../../Css/ResultSearchPage.css';
 
 function ResultSearch(props) {
 
+    const [isGoingOn, setIsGoingOn] = useState(false);
     const [isWaiting, setIsWaiting] = useState(false);
     const [isTookPlace, setIsTookPlace] = useState(false);
     const [isExam, setIsExam] = useState(false);
 
     useEffect(() => {
         const checkResult = () => {
+            if (props.testResult && props.testResult.status === 'going_on') {
+                setIsGoingOn(true);
+            } else {
+                setIsGoingOn(false);
+            }
             if (props.testResult && props.testResult.status === 'waiting') {
                 setIsWaiting(true);
             } else {
@@ -37,7 +43,7 @@ function ResultSearch(props) {
                     <span className="material-icons icon-resultSearch"> search </span>
                     <label>Kết quả cho ID: '<span>{props.valueInput}</span>'</label>
                 </div>
-                <ConditionRender triggWaiting={isWaiting} triggTookPlace={isTookPlace} triggExam={isExam}>{props}</ConditionRender>
+                <ConditionRender triggGoingOn={isGoingOn} triggWaiting={isWaiting} triggTookPlace={isTookPlace} triggExam={isExam}>{props}</ConditionRender>
             </div>
         </div>
     ) : '';
@@ -58,11 +64,29 @@ function ConditionRender(props) {
     if (props.triggTookPlace) {
         return <ResultGrade>{props.children}</ResultGrade>
     }
+    if (props.triggGoingOn) {
+        return <ResultGoingOn>{props.children}</ResultGoingOn>
+    }
     if (props.triggExam) {
         return <ResultExam>{props.children}</ResultExam>
     } else {
         return ''
     }
+}
+
+function ResultGoingOn(props) {
+    return (
+        <div className='result_wrapper'>
+            <div className='result_wrapper-header'>
+                <label>BÀI ĐANG THI</label>
+                <p className='link-searchPage'>Mở bài thi</p>
+            </div>
+            <hr width="100%" align="center" />
+            <div className='result'>
+                <ResultGoingOnChild data={props.children.testResult} data2={props.children.examResult} clearText={props.children.clearText}/>
+            </div>
+        </div>
+    )
 }
 
 function ResultTest(props) {
@@ -139,6 +163,43 @@ function ResultExam(props) {
         </div>
     )
 }
+
+function ResultGoingOnChild({ data, data2, clearText }) {
+    return (
+        <Link
+            style={{
+                'textDecorationLine': 'none',
+                'color': 'gray'
+            }}
+            to={{
+                pathname: '/testing',
+                search: `id=${data.id}`
+            }}
+            onClick={() => clearText('')}
+        >
+            <section className="Exam_examItem4">
+                <div className="examItem_wrapper4">
+                    <div className="green_retangle4"></div>
+                    <div className="item_label-red4">
+                        <label>Mã bài thi:&ensp;<span>{data.id}</span></label>
+                        <h1>{data.title}&ensp;-&ensp;{data2.examCode}</h1>
+                    </div>
+                    <div className="item_infomation4">
+                        <div>
+                            <span className="material-icons icon_teacher4"> account_box </span>
+                            <h5>{data.professor}</h5>
+                        </div>
+                        <div>
+                            <span className="material-icons icon_timer4"> alarm </span>
+                            <label className="font_weight-bold4">{data.time}&nbsp;phút</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </Link>
+    );
+}
+
 
 function ResultTestChild({ data, data2, clearText }) {
     return (

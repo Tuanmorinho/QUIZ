@@ -2,7 +2,7 @@ import React from 'react'
 import '../../../Css/ResultTestPage.css'
 import {Link} from 'react-router-dom'
 
-function ResultTestPage() {
+function ResultTestPage(props) {
     return (
         <div className="auth-form">
             <div className="auth-form_broad">
@@ -13,10 +13,10 @@ function ResultTestPage() {
                     <h5 className="auth-form_policy-link">Kết quả</h5>
                 </div>
                 <div className="auth-form_text">
-                    <h2 className="auth-form_policy-text">20/20</h2>
+                    <h2 className="auth-form_policy-text">{props.children.correctAnswer}/{props.children.noq}</h2>
                 </div>
                 <div className="auth-form_number">
-                    <h3 className="auth-form_policy-number">(100.00%)</h3>
+                    <h3 className="auth-form_policy-number">{`(${(props.children.correctAnswer/props.children.noq)*100}% - ${props.children.score})`}</h3>
                 </div>
                 <div className="auth-form_form">
                     <Link to='/home'>

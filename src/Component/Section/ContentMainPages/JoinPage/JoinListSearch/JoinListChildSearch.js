@@ -3,19 +3,19 @@ import ExamApi from '../../../../../API/examApi';
 import { useHistory } from 'react-router-dom';
 import ErrorPopup from '../../../../Popup/ErrorPopup/ErrorPopup';
 import NotiSuccessPopup from '../../../../Popup/NotiPopup/NotiSuccessPopup';
+import PopupLoading from '../../../../Popup/PopupLoading/PopupLoading';
 
 function JoinListChildSearch({ exam }) {
 
-    const [timeStartDisplay, setTimeStartDisplay] = useState('');
     const [joinedCss, setJoinedCss] = useState('joined');
 
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
     const [triggerSuccessPopup, setTriggerSuccessPopup] = useState(false);
+    const [triggerLoadingPopup, setTriggerLoadingPopup] = useState(false);
 
     let history = useHistory();
 
     useEffect(() => {
-        let startTime = new Date(exam.start_time);
 
         const checkJoined = () => {
             if (exam.status === 'not_yet') {
@@ -25,40 +25,27 @@ function JoinListChildSearch({ exam }) {
             }
         }
 
-        const displayTime = () => {
-            let hours = startTime.toString().slice(16, 18);
-            let minute = startTime.toString().slice(19, 21);
-
-            let hoursDisplay = '';
-
-            if (hours >= 0 && hours <= 12) {
-                hoursDisplay = 'AM'
-            } else {
-                hours = hours % 12;
-                hoursDisplay = 'PM'
-            }
-
-            setTimeStartDisplay(String(String(startTime).slice(8, 10) + ' ' + String(startTime).slice(4, 7) + ' ' + String(startTime).slice(11, 15) + ', ' + hours + ':' + minute + ' ' + hoursDisplay));
-        }
-
         checkJoined();
-        displayTime();
     }, [exam]);
 
     const joinExam = async () => {
+        setTriggerLoadingPopup(true);
         try {
             const response = await ExamApi.joinExam(exam.examCode);
             if (response && response.code === 0) {
+                setTriggerLoadingPopup(false);
                 setTriggerSuccessPopup(true);
                 setTimeout(() => {
                     setTriggerSuccessPopup(false);
                     history.replace('/join');
                 }, 1200);
             } else {
+                setTriggerLoadingPopup(false);
                 setTriggerErrorPopup(true);
             }
         } catch (error) {
             console.log('error join: ', error);
+            setTriggerLoadingPopup(false);
             setTriggerErrorPopup(true);
         }
     }
@@ -66,6 +53,7 @@ function JoinListChildSearch({ exam }) {
 
     return (
         <React.Fragment>
+            <PopupLoading trigger={triggerLoadingPopup}/>
             <ErrorPopup trigger={triggerErrorPopup} setTrigger={setTriggerErrorPopup}>
                 <div style={{
                     'display': 'flex',
@@ -111,10 +99,6 @@ function JoinListChildSearch({ exam }) {
                         <div className='item_infomation5-professor'>
                             <span className="material-icons icon_teacher5"> account_box </span>
                             <p>Giảng viên:&nbsp;</p><h5>{exam.professor}</h5>
-                        </div>
-                        <div className='item_infomation5-longtime'>
-                            <span className="material-icons icon_timer5"> alarm </span>
-                            <p>Thời gian bắt đầu:&nbsp;</p><label className="font_weight-bold">{timeStartDisplay}&nbsp;</label>
                         </div>
                     </div>
                     <button className={`item_join ${joinedCss}`} onClick={joinExam}>Tham gia</button>
