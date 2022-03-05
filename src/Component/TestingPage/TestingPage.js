@@ -93,8 +93,6 @@ function TestingPage({ getLocation }) {
             }
         }
 
-        console.log(answersSubmit);
-
         let query = new URLSearchParams(location.search);
         
         setShowLoading(true);
