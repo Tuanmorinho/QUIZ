@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ErrorPopup from '../../../../Popup/ErrorPopup/ErrorPopup';
+import TestApi from '../../../../../API/testApi';
 import APP_CONSTANTS from '../../../../../Constants/appConstants';
 
 function ExamListChild({ testWaitingContent }) {
@@ -10,11 +11,15 @@ function ExamListChild({ testWaitingContent }) {
 
     const [triggerErrorPopup, setTriggerErrorPopup] = useState(false);
 
+    const [tests, setTests] = useState([]);
+
     let timeOutTest = useRef(null);
+    let answersSubmit = [];
 
     useEffect(() => {
-        let startTime = new Date(new Date(testWaitingContent.startTest).getTime() - 7*60*60*1000);
-        let realTime = new Date(new Date(testWaitingContent.realTime).getTime() - 7*60*60*1000);
+        let startTime = new Date(new Date(testWaitingContent.startTest).getTime() - 7 * 60 * 60 * 1000);
+        let realTime = new Date(new Date(testWaitingContent.realTime).getTime() - 7 * 60 * 60 * 1000);
+        let endTime = new Date(new Date(testWaitingContent.startTest).getTime() - 7 * 60 * 60 * 1000 + testWaitingContent.time * 60 * 1000);
 
         const displayTime = () => {
             let hours = startTime.toString().slice(16, 18);
@@ -22,8 +27,10 @@ function ExamListChild({ testWaitingContent }) {
 
             let hoursDisplay = '';
 
-            if (hours >= 0 && hours <= 12) {
+            if (hours >= 0 && hours < 12) {
                 hoursDisplay = 'AM'
+            } else if (hours = 12) {
+                hoursDisplay = 'PM'
             } else {
                 hours = hours % 12;
                 hoursDisplay = 'PM'
@@ -37,6 +44,7 @@ function ExamListChild({ testWaitingContent }) {
         }
 
         const setTimeOutOpenTest = () => {
+            setDisable('countdown2');
             setTimeDisplay(displayTime());
             if (timeOutTest.current) {
                 clearTimeout(timeOutTest.current);
@@ -46,14 +54,47 @@ function ExamListChild({ testWaitingContent }) {
             }, differentTime());
         }
 
+        const fetchOpenTest = async () => {
+            try {
+                const response = await TestApi.openTest(testWaitingContent.id);
+                if (response) {
+                    setTests(response.questions);
+                }
+            } catch (error) {
+                console.log('open test error: ', error);
+            }
+        }
+
         if (realTime.toString().slice(29, 31) === '07') {
+            if (endTime - realTime <= 0) {
+                fetchOpenTest();
+                submit();
+            }
             setTimeOutOpenTest();
         } else {
             setTimeDisplay('Vui lòng chỉnh lại múi giờ');
             setTriggerErrorPopup(true);
         }
 
+        setTimeOutOpenTest();
     }, [testWaitingContent.status, testWaitingContent.realTime, testWaitingContent.startTest])
+
+    const submit = async () => {
+        for (var i = 0; i < tests.length; i++) {
+            for (var j = 0; j < tests[j].answers.length; j++) {
+                answersSubmit = [...answersSubmit, tests[i].answers[j]];
+            }
+        }
+
+        try {
+            const response = await TestApi.submitTest(testWaitingContent.id, answersSubmit);
+            if (response) {
+                return <Redirect to='/home' />
+            }
+        } catch (error) {
+            console.log('error submit test: ', error);
+        }
+    }
 
     const storeInfTesting = () => {
         const inf = {

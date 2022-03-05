@@ -16,19 +16,19 @@ function SideBarTestingPage({testInf, listQuestions, getIndex, countCheck, idCss
             let distanceTime;
 
             if (testInf.status === 'waiting') {
-                let subEndReal = new Date(testInf.end_test).getTime() - new Date(testInf.real_time).getTime();
-                if (subEndReal <= testInf.time) {
+                let subEndReal = new Date(new Date(testInf.end_test).getTime() - 7*60*60*1000).getTime() - new Date(new Date(testInf.real_time).getTime() - 7*60*60*1000).getTime();
+                if (subEndReal <= testInf.time*60*1000) {
                     distanceTime = subEndReal;
                 } else {
-                    distanceTime = testInf.time;
+                    distanceTime = testInf.time*60*1000;
                 }
             }
             if (testInf.status === 'going_on') {
-                let addStartTime = new Date(testInf.start).getTime() + new Date(testInf.time).getTime()*60000;
-                if (addStartTime <= new Date(testInf.end_test).getTime()) {
-                    distanceTime = addStartTime - new Date(testInf.real_time).getTime();
+                let addStartTime = new Date(new Date(testInf.start).getTime() - 7*60*60*1000).getTime() + new Date(testInf.time).getTime()*60000;
+                if (addStartTime <= new Date(new Date(testInf.end_test).getTime() - 7*60*60*1000).getTime()) {
+                    distanceTime = addStartTime - new Date(new Date(testInf.real_time).getTime() - 7*60*60*1000).getTime();
                 } else {
-                    distanceTime = new Date(testInf.end_test).getTime() - new Date(testInf.real_time);
+                    distanceTime = new Date(new Date(testInf.end_test).getTime() - 7*60*60*1000).getTime() - new Date(new Date(testInf.real_time).getTime() - 7*60*60*1000).getTime();
                 }
             }
 
